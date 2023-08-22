@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const backendLink = process.env.NODE_ENV !== "production" 
-	? "https://api-tracker.twyxify.online" 
-	: "https://api-tracker.twyxify.com";
+	? "https://api.jourloy.online" 
+	: "https://api.jourloy.com";
 
 export default class BackendContext {
 	public static link = backendLink;

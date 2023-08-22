@@ -13,12 +13,8 @@ export default function Check() {
 		const avatar = searchParams.get(`avatar`);
 		const username = searchParams.get(`username`);
 
-		console.log(`Test 1: ${store.getState().userReducer.avatar}`);
-
 		if (username) store.dispatch(userActions.changeUsername(username));
 		if (avatar) store.dispatch(userActions.changeAvatar(avatar));
-
-		console.log(`Test 2: ${store.getState().userReducer.avatar}`);
 
 		if (success) {
 			navigate(`/`);

@@ -2,7 +2,8 @@ import "./App.css";
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Main from "./pages";
 import Login from "./pages/login";
-import Party from "./pages/party";
+import PartyIndex from "./pages/party";
+import Check from "./pages/login/check";
 
 export default function App() {
 
@@ -10,8 +11,11 @@ export default function App() {
 		<BrowserRouter>
 			<Routes>
 				<Route element={<Main />} path="/" />
+
 				<Route element={<Login />} path="/login" />
-				<Route element={<Party />} path="/party" />
+				<Route element={<Check />} path="/login/check" />
+
+				<Route element={<PartyIndex />} path="/party" />
 			</Routes>
 		</BrowserRouter>
 	);

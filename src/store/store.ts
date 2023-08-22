@@ -1,9 +1,11 @@
 import {configureStore} from "@reduxjs/toolkit";
 import userReducer from "./features/user.slice";
+import partyReducer from "./features/party.slice";
 
 export const store = configureStore({
 	reducer: {
 		userReducer,
+		partyReducer,
 	},
 	devTools: process.env.NODE_ENV !== "production",
 });
