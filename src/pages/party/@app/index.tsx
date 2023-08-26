@@ -33,6 +33,10 @@ export default function PartyApp(props: TProps) {
 	const [clearMembersDisable, setClearMembersDisable] = useState(true);
 	const [clearMembersLoading, setClearMembersLoading] = useState(true);
 
+
+	const [removeAllPositionsLoading, setRemoveAllPositionsLoading] = useState(false);
+	const [removeAllPositionsDisable, setRemoveAllPositionsDisable] = useState(true);
+
 	const removeAllMembers = () => {
 		setClearMembersLoading(true);
 		backend
@@ -48,11 +52,32 @@ export default function PartyApp(props: TProps) {
 			});
 	};
 
+	const removeAllPositions = () => {
+		setRemoveAllPositionsLoading(true);
+		backend.removePositions(calculator.id)
+			.then(() => {
+				toast.success(`Список позиций очищен`);
+			})
+			.catch(() => {
+				toast.error(`Что-то пошло не так`);
+			})
+			.finally(() => {
+				store.dispatch(partyActions.updateCalculator());
+				setRemoveAllPositionsLoading(false);
+			})
+	}
+
 	useEffect(() => {
 		if (calculator.members.length <= 1) setClearMembersDisable(true);
 		else setClearMembersDisable(false);
 		setClearMembersLoading(false);
 	}, [calculator.members]);
+
+	useEffect(() => {
+		if (calculator.positions.length <= 1) setRemoveAllPositionsDisable(true);
+		else setRemoveAllPositionsDisable(false);
+		setRemoveAllPositionsLoading(false);
+	}, [calculator.positions]);
 
 	return (
 		<>
@@ -137,6 +162,7 @@ export default function PartyApp(props: TProps) {
 											<Button
 												fullWidth
 												color={`red`}
+												variant={`outline`}
 												disabled={clearMembersDisable}
 												loading={clearMembersLoading}
 												onClick={removeAllMembers}
@@ -170,7 +196,14 @@ export default function PartyApp(props: TProps) {
 								</Grid.Col>
 
 								<Grid.Col span={4}>
-									<Button fullWidth variant={`outline`} color={`red`} disabled>
+									<Button 
+										fullWidth 
+										variant={`outline`} 
+										color={`red`} 
+										disabled={removeAllPositionsDisable}
+										loading={removeAllPositionsLoading}
+										onClick={removeAllPositions}
+									>
 										Очистить список
 									</Button>
 								</Grid.Col>
@@ -180,15 +213,15 @@ export default function PartyApp(props: TProps) {
 						</Card>
 					</Grid.Col>
 
-					<Grid.Col>
+					<Grid.Col hidden>
 						<Divider />
 					</Grid.Col>
 
-					<Grid.Col>
+					<Grid.Col hidden>
 						<Card withBorder>
 							<Grid>
 								<Grid.Col>
-									<Title align={`center`}>Заметка</Title>
+									<Title align={`center`} tt={`uppercase`}>Заметка</Title>
 								</Grid.Col>
 
 								<Grid.Col>

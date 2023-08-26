@@ -46,4 +46,12 @@ export default class PartyAPI {
 	public createPosition(data: {calculatorId: number, name: string, cost: number, memberIds?: number[]}) {
 		return this.context.post(`/position`, data, {withCredentials: true});
 	}
+
+	public removePosition(positionId: number) {
+		return this.context.delete(`/position/${positionId}`, {withCredentials: true});
+	}
+
+	public removePositions(calculatorId: number) {
+		return this.context.delete(`/position/all/${calculatorId}`, {withCredentials: true});
+	}
 }

@@ -18,6 +18,9 @@ import {
 import {store} from "../../../../store/store";
 import {useState} from "react";
 import {TMember, TPosition} from "../../../../types";
+import PartyAPI from "../../api";
+import { toast } from "react-toastify";
+import { partyActions } from "../../../../store/features/party.slice";
 
 const formatter = new Intl.NumberFormat("ru", {
 	style: `currency`,
@@ -26,6 +29,8 @@ const formatter = new Intl.NumberFormat("ru", {
 });
 
 export default function PartyPositions() {
+	const backend = new PartyAPI;
+
 	const [calculator, setCalculator] = useState(store.getState().partyReducer.calculator);
 	const [positionPages, setPositionPages] = useState(store.getState().partyReducer.positionPages);
 	const [positionPage, setPositionPage] = useState(1);
@@ -33,9 +38,11 @@ export default function PartyPositions() {
 	store.subscribe(() => {
 		const calc = store.getState().partyReducer.calculator;
 		const pages = store.getState().partyReducer.positionPages;
-		setCalculator(calc);
-		setPositionPages(pages);
+		if (calc !== calculator) setCalculator(calc);
+		if (pages !== positionPages) setPositionPages(pages);
 	});
+
+	const [removePositionLoading, setRemovePositionLoading] = useState(false);
 
 	const [currentPosition, setCurrentPosition] = useState<TPosition | null>(null);
 	const [positionModal, setPositionModal] = useState(false);
@@ -96,10 +103,14 @@ export default function PartyPositions() {
 		return data;
 	};
 
-	const getMembersAsString = () => {
+	const getMembersAsString = (positionId?: number) => {
+		if (!positionId) return;
+
 		const arr: string[] = [];
-		for (const member of calculator.members) {
-			arr.push(member.id.toString());
+		const position = calculator.positions.filter(p => p.id === positionId)[0];
+		if (!position) return [];
+		for (const member of position.memberIds) {
+			arr.push(member.toString());
 		}
 		return arr;
 	};
@@ -108,6 +119,23 @@ export default function PartyPositions() {
 
 	for (let i = (positionPage - 1) * 10; i < positionPage * 10 ; i++) {
 		if (calculator.positions[i]) positions.push(calculator.positions[i]);
+	}
+
+	const removePosition = (positionId: number) => {
+		setRemovePositionLoading(true);
+		backend.removePosition(positionId)
+			.then(() => {
+				toast.success(`Позиция удалена`);
+			})
+			.catch(() => {
+				toast.error(`Что-то пошло не так`);
+			})
+			.finally(() => {
+				store.dispatch(partyActions.updateCalculator());
+				setRemovePositionLoading(false);
+				closePosition();
+			})
+		
 	}
 
 	const getMap = () =>
@@ -163,7 +191,7 @@ export default function PartyPositions() {
 					</Grid.Col>
 
 					<Grid.Col>
-						<MultiSelect label={`Прикреплены`} data={getData()} defaultValue={getMembersAsString()} />
+						<MultiSelect label={`Прикреплены`} data={getData()} defaultValue={getMembersAsString(currentPosition?.id)} />
 					</Grid.Col>
 
 					<Grid.Col mt={`15px`}>
@@ -171,7 +199,15 @@ export default function PartyPositions() {
 					</Grid.Col>
 					
 					<Grid.Col>
-						<Button fullWidth variant={`outline`} color={`red`}>Удалить</Button>
+						<Button 
+							fullWidth 
+							variant={`outline`}
+							color={`red`}
+							onClick={() => removePosition(currentPosition!.id)}
+							loading={removePositionLoading}
+						>
+							Удалить
+						</Button>
 					</Grid.Col>
 				</Grid>
 			</Modal>
