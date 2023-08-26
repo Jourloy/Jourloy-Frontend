@@ -1,22 +1,27 @@
-import {Button, Card, Flex, Grid, Title, Divider} from "@mantine/core";
-import {useState} from "react";
+import {Button, Card, Flex, Grid, Title, Divider, Text} from "@mantine/core";
+import {useEffect, useState} from "react";
 import {store} from "../../../store/store";
 import PartyMembers from "./@members";
 import PartyPositions from "./@positions";
 import PartyAddMemberModal from "./@members/addModal";
 import {CancelToken} from "axios";
 import PartyAddPositionModal from "./@positions/addModal";
+import PartyAPI from "../api";
+import {toast} from "react-toastify";
+import {partyActions} from "../../../store/features/party.slice";
 
 type TProps = {
 	updateCalculator: (token?: CancelToken) => Promise<boolean>;
 };
 
 export default function PartyApp(props: TProps) {
+	const backend = new PartyAPI();
+
 	const [calculator, setCalculator] = useState(store.getState().partyReducer.calculator);
 
 	store.subscribe(() => {
 		const calc = store.getState().partyReducer.calculator;
-		if (calculator !== calc) setCalculator(calc);
+		setCalculator(calc);
 	});
 
 	const [addMember, setAddMember] = useState(false);
@@ -24,6 +29,30 @@ export default function PartyApp(props: TProps) {
 
 	const [addPosition, setAddPosition] = useState(false);
 	const closeAddPosition = () => setAddPosition(false);
+
+	const [clearMembersDisable, setClearMembersDisable] = useState(true);
+	const [clearMembersLoading, setClearMembersLoading] = useState(true);
+
+	const removeAllMembers = () => {
+		setClearMembersLoading(true);
+		backend
+			.removeMembers(calculator.id)
+			.then(() => {
+				toast.success(`Все участники удалены `);
+			})
+			.catch(() => {
+				toast.error(`Что-то пошло не так`);
+			})
+			.finally(() => {
+				store.dispatch(partyActions.updateCalculator());
+			});
+	};
+
+	useEffect(() => {
+		if (calculator.members.length <= 1) setClearMembersDisable(true);
+		else setClearMembersDisable(false);
+		setClearMembersLoading(false);
+	}, [calculator.members]);
 
 	return (
 		<>
@@ -88,28 +117,35 @@ export default function PartyApp(props: TProps) {
 					<Grid.Col>
 						<Grid>
 							<Grid.Col>
-								<Card withBorder p={5}>
-										<Grid>
-											<Grid.Col>
-												<Title order={3} align={`center`}>
-													Участники
-												</Title>
-											</Grid.Col>
-											<PartyMembers />
-										</Grid>
+								<Card withBorder>
+									<Grid>
+										<Grid.Col>
+											<Title order={3} align={`center`}>
+												Участники
+											</Title>
+										</Grid.Col>
+										
+										<PartyMembers />
+
+										<Grid.Col span={8}>
+											<Button fullWidth variant={`outline`} onClick={() => setAddMember(true)}>
+												Добавить
+											</Button>
+										</Grid.Col>
+
+										<Grid.Col span={4}>
+											<Button
+												fullWidth
+												color={`red`}
+												disabled={clearMembersDisable}
+												loading={clearMembersLoading}
+												onClick={removeAllMembers}
+											>
+												Очистить список
+											</Button>
+										</Grid.Col>
+									</Grid>
 								</Card>
-							</Grid.Col>
-
-							<Grid.Col span={8}>
-								<Button fullWidth variant={`outline`} onClick={() => setAddMember(true)}>
-									Добавить
-								</Button>
-							</Grid.Col>
-
-							<Grid.Col span={4}>
-								<Button fullWidth color={`red`}>
-									Очистить список
-								</Button>
 							</Grid.Col>
 						</Grid>
 					</Grid.Col>
@@ -127,13 +163,46 @@ export default function PartyApp(props: TProps) {
 									<Divider />
 								</Grid.Col>
 
-								<Grid.Col>
+								<Grid.Col span={8}>
 									<Button fullWidth variant={`outline`} onClick={() => setAddPosition(true)}>
 										Добавить
 									</Button>
 								</Grid.Col>
 
+								<Grid.Col span={4}>
+									<Button fullWidth variant={`outline`} color={`red`} disabled>
+										Очистить список
+									</Button>
+								</Grid.Col>
+
 								<PartyPositions />
+							</Grid>
+						</Card>
+					</Grid.Col>
+
+					<Grid.Col>
+						<Divider />
+					</Grid.Col>
+
+					<Grid.Col>
+						<Card withBorder>
+							<Grid>
+								<Grid.Col>
+									<Title align={`center`}>Заметка</Title>
+								</Grid.Col>
+
+								<Grid.Col>
+									<Text align={`center`}>
+										Party Калькулятор находится еще в процессе реализации. Текущее состояние можно
+										назвать бета версией. Поэтому если что-то идет не поплану, не отображается или
+										не нажимается, то будет круто, если ты нажмешь на кнопку ниже и вкратце опишешь
+										ситуацию
+									</Text>
+								</Grid.Col>
+
+								<Grid.Col>
+									<Button fullWidth>У меня не работает!</Button>
+								</Grid.Col>
 							</Grid>
 						</Card>
 					</Grid.Col>

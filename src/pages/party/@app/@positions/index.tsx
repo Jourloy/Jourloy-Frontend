@@ -33,8 +33,8 @@ export default function PartyPositions() {
 	store.subscribe(() => {
 		const calc = store.getState().partyReducer.calculator;
 		const pages = store.getState().partyReducer.positionPages;
-		if (calculator !== calc) setCalculator(calc);
-		if (positionPages !== pages) setPositionPages(pages);
+		setCalculator(calc);
+		setPositionPages(pages);
 	});
 
 	const [currentPosition, setCurrentPosition] = useState<TPosition | null>(null);
@@ -106,7 +106,7 @@ export default function PartyPositions() {
 
 	const positions: TPosition[] = [];
 
-	for (let i = (positionPage - 1) * 5; i < positionPage * 5; i++) {
+	for (let i = (positionPage - 1) * 10; i < positionPage * 10 ; i++) {
 		if (calculator.positions[i]) positions.push(calculator.positions[i]);
 	}
 
@@ -167,7 +167,11 @@ export default function PartyPositions() {
 					</Grid.Col>
 
 					<Grid.Col mt={`15px`}>
-						<Button fullWidth>Изменить</Button>
+						<Button fullWidth disabled>Изменить</Button>
+					</Grid.Col>
+					
+					<Grid.Col>
+						<Button fullWidth variant={`outline`} color={`red`}>Удалить</Button>
 					</Grid.Col>
 				</Grid>
 			</Modal>

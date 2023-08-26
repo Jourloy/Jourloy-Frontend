@@ -19,7 +19,7 @@ export default function PartyAddPositionModal(props: TProps) {
 	
 	store.subscribe(() => {
 		const calc = store.getState().partyReducer.calculator;
-		if (calculator !== calc) setCalculator(calc);
+		setCalculator(calc);
 	});
 	
 	const [positionName, setPositionName] = useState(``);

@@ -24,7 +24,7 @@ export default function PartyIndex() {
 			.getCalculator(token)
 			.then(d => {
 				if (d && d.data && d.data.id) {
-					store.dispatch(partyActions.updateCalculator(d.data));
+					store.dispatch(partyActions.forceUpdateCalculator(d.data));
 
 					const memberPages = Math.ceil(d.data.members.length / 5);
 					store.dispatch(partyActions.updateMemberPages(memberPages));

@@ -4,6 +4,7 @@ import PartyAPI from "../../api";
 import { toast } from "react-toastify";
 import { CancelToken } from "axios";
 import { store } from "../../../../store/store";
+import { partyActions } from "../../../../store/features/party.slice";
 
 type TProps = {
 	opened: boolean;
@@ -18,7 +19,7 @@ export default function PartyAddMemberModal(props: TProps) {
 	
 	store.subscribe(() => {
 		const calc = store.getState().partyReducer.calculator;
-		if (calculator !== calc) setCalculator(calc);
+		setCalculator(calc);
 	});
 
 	const [memberName, setMemberName] = useState(``);
@@ -26,7 +27,7 @@ export default function PartyAddMemberModal(props: TProps) {
 	const submit = () => {
 		backend.createMember(calculator.id, memberName)
 			.then(() => {
-				props.updateCalculator();
+				store.dispatch(partyActions.updateCalculator());
 				setMemberName(``);
 				toast.success(`Участник добавлен 🎉`);
 				props.onClose();
