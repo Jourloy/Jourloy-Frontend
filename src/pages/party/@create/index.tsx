@@ -1,6 +1,8 @@
 import {Button, Card, Flex, Grid, Text, Title} from "@mantine/core";
 import PartyAPI from "../api";
 import {toast} from "react-toastify";
+import {partyActions} from "../../../store/features/party.slice";
+import {store} from "../../../store/store";
 
 export default function PartyCreate() {
 	const backend = new PartyAPI();
@@ -13,6 +15,9 @@ export default function PartyCreate() {
 			})
 			.catch(() => {
 				toast.error(`Что-то пошло не так, попробуй позже`);
+			})
+			.finally(() => {
+				store.dispatch(partyActions.updateCalculator());
 			});
 	};
 
