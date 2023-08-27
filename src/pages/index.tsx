@@ -35,7 +35,7 @@ export default function Main() {
 							</Grid.Col>
 
 							<Grid.Col span={6}>
-								<Button fullWidth>Фильмы</Button>
+								<Button fullWidth disabled>Фильмы</Button>
 							</Grid.Col>
 						</Grid>
 					</Card>
@@ -49,19 +49,19 @@ export default function Main() {
 							</Grid.Col>
 
 							<Grid.Col>
-								<Button fullWidth color={`orange`}>Денежный трекер</Button>
+								<Button disabled fullWidth color={`orange`}>Денежный трекер</Button>
 							</Grid.Col>
 						</Grid>
 					</Card>
 				</Grid.Col>
 
-				<Grid.Col span={6}>
+				<Grid.Col span={6} hidden>
 					<Button fullWidth variant={`outline`}>
 						Связаться
 					</Button>
 				</Grid.Col>
 
-				<Grid.Col span={6}>
+				<Grid.Col span={6} hidden>
 					<Button fullWidth variant={`outline`}>
 						Купить кофе
 					</Button>

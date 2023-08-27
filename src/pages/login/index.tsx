@@ -10,10 +10,14 @@ export default function Login() {
 	const backend = new LoginAPI();
 	const navigate = useNavigate();
 
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 
 	const googleRedirect = () => {
 		window.location.href = `${backend.context.getUri()}/google`;
+	}
+
+	const toMain = () => {
+		navigate(`/`);
 	}
 
 	useEffect(() => {
@@ -49,7 +53,7 @@ export default function Login() {
 			}}
 		>
 			<Grid columns={6} maw={`700px`} w={`100%`} p={0} align={`center`}>
-				<Button mb={`5px`} ml={`15px`} variant={`subtle`} p={0} compact>
+				<Button mb={`5px`} ml={`15px`} variant={`subtle`} p={0} compact onClick={toMain}>
 					<Flex>
 						<IconArrowNarrowLeft stroke={1.3} />
 						<Text mt={`2px`}>Вернуться на главную</Text>
@@ -64,38 +68,15 @@ export default function Login() {
 
 						<Grid.Col>
 							<Text c={`dimmed`} align={`center`} mt={`-10px`}>
-								Если аккаунта нет, то вводи новые данные, а мы автоматически создадим аккаунт у себя в
-								системе
+								Если аккаунта нет, то автоматически создаться новый
 							</Text>
-						</Grid.Col>
-
-						<Grid.Col>
-							<Divider />
-						</Grid.Col>
-
-						<Grid.Col>
-							<TextInput w={`100%`} label={`Имя`} placeholder={`Twyxify`} disabled />
-						</Grid.Col>
-
-						<Grid.Col>
-							<PasswordInput w={`100%`} label={`Пароль`} placeholder={`Password`} disabled />
-						</Grid.Col>
-
-						<Grid.Col>
-							<Button w={`100%`} mt={`15px`} fullWidth disabled>
-								Войти
-							</Button>
-						</Grid.Col>
-
-						<Grid.Col>
-							<Text align={`center`} color={`red`} size={`sm`} mt={`-5px`}>Это тестовая версия и на данный момент вход доступен только через Google</Text>
 						</Grid.Col>
 					
 						<Grid.Col>
 							<Divider
 								label={
 									<Text size={`md`} tt={`uppercase`}>
-										или войти через
+										войти через
 									</Text>
 								}
 								labelPosition={`center`}
