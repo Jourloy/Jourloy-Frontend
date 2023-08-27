@@ -2,7 +2,7 @@ import {useEffect} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {toast} from "react-toastify";
 import {userActions} from "../../../store/features/user.slice";
-import { store } from "../../../store/store";
+import {store} from "../../../store/store";
 
 export default function Check() {
 	const [searchParams] = useSearchParams();

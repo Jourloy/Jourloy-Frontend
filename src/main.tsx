@@ -6,9 +6,9 @@ import "react-toastify/dist/ReactToastify.css";
 import DefaultContainer from "./containers/index.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-	<React.StrictMode>
-		<DefaultContainer>
-			<App />
-		</DefaultContainer>
-	</React.StrictMode>
+	//<React.StrictMode>
+	<DefaultContainer>
+		<App />
+	</DefaultContainer>
+	//</React.StrictMode>
 );
