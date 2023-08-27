@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+    app:
+        container_name: Jourloy-Frontend
+        build:
+            context: .
+        volumes:
+            - .:/app
+            - /app/node_modules
+        command: yarn start:dev
+        env_file:
+            - .env
+        ports:
+            - "10000:10000"
+        restart: always
+
+volumes:
+    app:
