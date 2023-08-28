@@ -1,6 +1,6 @@
-import axios, { CancelToken } from "axios";
+import axios, {CancelToken} from "axios";
 import BackendContext from "../../context/backend.context";
-import { TCalculator, TMember } from "../../types";
+import {TCalculator, TMember} from "../../types";
 
 export default class PartyAPI {
 	private context = BackendContext.getContext(`/party`);
@@ -29,7 +29,7 @@ export default class PartyAPI {
 		return this.context.get<TMember[]>(`/member/all/${calculatorId}`, {withCredentials: true});
 	}
 
-	public updateMembers(props: {name?: string, avatar?: string}, memberId: number) {
+	public updateMembers(props: {name?: string; avatar?: string}, memberId: number) {
 		return this.context.patch(`/member/${memberId}`, props, {withCredentials: true});
 	}
 
@@ -43,8 +43,12 @@ export default class PartyAPI {
 
 	/* POSITIONS */
 
-	public createPosition(data: {calculatorId: number, name: string, cost: number, memberIds?: number[]}) {
+	public createPosition(data: {calculatorId: number; name: string; cost: number; memberIds?: number[]}) {
 		return this.context.post(`/position`, data, {withCredentials: true});
+	}
+
+	public updatePosition(data: {positionId: number; name?: string; cost?: number; memberIds?: number[]}) {
+		return this.context.patch(`/position`, data, {withCredentials: true});
 	}
 
 	public removePosition(positionId: number) {

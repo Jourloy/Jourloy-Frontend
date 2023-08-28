@@ -1,42 +1,44 @@
-import {Button, Card, Container, Divider, Flex, Grid, Loader, PasswordInput, Text, TextInput, Title} from "@mantine/core";
+import {Button, Card, Container, Divider, Flex, Grid, Text, Title} from "@mantine/core";
 import {IconArrowNarrowLeft} from "@tabler/icons-react";
 import LoginAPI from "./api";
-import { useEffect, useState } from "react";
-import { store } from "../../store/store";
-import { userActions } from "../../store/features/user.slice";
-import { useNavigate } from "react-router-dom";
+import {useEffect, useState} from "react";
+import {store} from "../../store/store";
+import {userActions} from "../../store/features/user.slice";
+import {useNavigate} from "react-router-dom";
+import DefaultLoading from "../@loading";
 
 export default function Login() {
 	const backend = new LoginAPI();
 	const navigate = useNavigate();
 
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 
 	const googleRedirect = () => {
 		window.location.href = `${backend.context.getUri()}/google`;
-	}
+	};
 
 	const toMain = () => {
 		navigate(`/`);
-	}
+	};
 
 	useEffect(() => {
 		const source = backend.getToken();
 
-		backend.checkUser(source.token)
+		backend
+			.checkUser(source.token)
 			.then(d => {
 				if (d.data.user.username) store.dispatch(userActions.changeUsername(d.data.user.username));
 				if (d.data.user.avatar) store.dispatch(userActions.changeAvatar(d.data.user.avatar));
 				if (d.data.user) navigate(`/party`);
 			})
 			.catch(() => {
-				setLoading(false);	
+				setLoading(false);
 			});
 
 		return () => source.cancel();
 	}, []);
 
-	if (loading) return(<Loader />);
+	if (loading) return <DefaultLoading />;
 
 	return (
 		<Container
@@ -71,7 +73,7 @@ export default function Login() {
 								Если аккаунта нет, то автоматически создаться новый
 							</Text>
 						</Grid.Col>
-					
+
 						<Grid.Col>
 							<Divider
 								label={

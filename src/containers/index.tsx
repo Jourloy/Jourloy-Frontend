@@ -33,6 +33,11 @@ export default function DefaultContainer(props: PropsWithChildren) {
 							},
 						},
 					},
+					Card: {
+						defaultProps: {
+							radius: `md`,
+						}
+					}
 				},
 			}}
 		>

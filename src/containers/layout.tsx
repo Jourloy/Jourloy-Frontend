@@ -16,6 +16,7 @@ import {store} from "../store/store";
 import {userActions} from "../store/features/user.slice";
 import LayoutAPI from "./api";
 import {toast} from "react-toastify";
+import { DOMAIN } from "../context";
 
 export default function LayoutContainer(props: PropsWithChildren) {
 	const backend = new LayoutAPI();
@@ -29,7 +30,7 @@ export default function LayoutContainer(props: PropsWithChildren) {
 	const [userSettings, setUserSettings] = useState(false);
 
 	const toMain = () => {
-		window.location.href = `https://jourloy.com`;
+		window.location.href = `https://${DOMAIN}`;
 	};
 
 	const logout = () => {
@@ -37,7 +38,7 @@ export default function LayoutContainer(props: PropsWithChildren) {
 		backend
 			.logout()
 			.then(() => {
-				window.location.href = `https://jourloy.com`;
+				window.location.href = `https://${DOMAIN}`;
 			})
 			.catch(() => {
 				toast.error(`Что-то пошло не так`);

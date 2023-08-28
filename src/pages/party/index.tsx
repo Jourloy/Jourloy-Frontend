@@ -6,10 +6,11 @@ import PartyAPI from "./api";
 import PartyApp from "./@app";
 import {CancelToken} from "axios";
 import {partyActions} from "../../store/features/party.slice";
+import DefaultLoading from "../@loading";
 
 export default function PartyIndex() {
 	document.title = `Party-Калькулятор`;
-	
+
 	const navigate = useNavigate();
 	const backend = new PartyAPI();
 
@@ -52,6 +53,7 @@ export default function PartyIndex() {
 		return () => source.cancel();
 	}, [checked]);
 
+	if (loading) return <DefaultLoading />;
 	if (!checked) return <PartyCreate />;
 
 	return <PartyApp updateCalculator={getCalculator}/>;

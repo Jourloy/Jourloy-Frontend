@@ -5,7 +5,7 @@ import PartyMembers from "./@members";
 import PartyPositions from "./@positions";
 import PartyAddMemberModal from "./@members/addModal";
 import {CancelToken} from "axios";
-import PartyAddPositionModal from "./@positions/addModal";
+import PartyAddPositionModal from "./@positions/modals/add.modal";
 import PartyAPI from "../api";
 import {toast} from "react-toastify";
 import {partyActions} from "../../../store/features/party.slice";
