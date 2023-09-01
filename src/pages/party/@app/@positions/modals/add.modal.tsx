@@ -4,7 +4,7 @@ import {useState} from "react";
 import {store} from "../../../../../store/store";
 import PartyAPI from "../../../api";
 import {toast} from "react-toastify";
-import PartyPositionLogic from "../logic";
+import PartyPositionLogic from "../../logic";
 
 type TProps = {
 	opened: boolean;
@@ -89,7 +89,14 @@ export default function PartyAddPositionModal(props: TProps) {
 
 	return (
 		<>
-			<Modal opened={props.opened} onClose={closeModal} centered>
+			<Modal 
+				opened={props.opened} 
+				onClose={closeModal} 
+				centered
+				style={{
+					overflow: `visible`
+				}}
+			>
 				<Grid>
 					<Grid.Col>
 						<Title tt={`uppercase`} order={3} align={`center`}>
@@ -120,6 +127,8 @@ export default function PartyAddPositionModal(props: TProps) {
 							searchable
 							nothingFound={`Никого не нашли`}
 							onChange={v => setPositionMembers(v)}
+							dropdownPosition={`top`}
+							maxDropdownHeight={`120px`}
 						/>
 					</Grid.Col>
 

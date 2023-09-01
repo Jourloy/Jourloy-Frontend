@@ -1,4 +1,4 @@
-import { TCalculator } from "../../../../types";
+import { TCalculator } from "../../../types";
 
 export default class PartyPositionLogic {
 	private calculator: TCalculator;

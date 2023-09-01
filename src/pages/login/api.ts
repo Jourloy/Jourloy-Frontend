@@ -1,6 +1,6 @@
-import axios, { CancelToken } from "axios";
+import axios, {CancelToken} from "axios";
 import BackendContext from "../../context/backend.context";
-import { TUser } from "../../types";
+import {TUser} from "../../types";
 
 export default class LoginAPI {
 	public context = BackendContext.getContext(`/auth`);

@@ -19,7 +19,7 @@ export default function Main() {
 
 	return (
 		<Flex justify={`center`} py={20} px={20}>
-			<Grid maw={`700px`} w={`100%`} p={0} align={`center`} ml={`0px`}>
+			<Grid maw={`850px`} w={`100%`} m={0} p={0} align={`center`} ml={`0px`}>
 				<Grid.Col sm={12} md={4}>
 					<Image src={`https://s.jourloy.com/web-images/me.png`} withPlaceholder radius={`md`} />
 				</Grid.Col>
@@ -81,13 +81,13 @@ export default function Main() {
 								<Divider />
 							</Grid.Col>
 
-							<Grid.Col span={6}>
+							<Grid.Col xs={12} sm={6}>
 								<Button fullWidth onClick={() => navigate(`/party`)}>
 									Party калькулятор
 								</Button>
 							</Grid.Col>
 
-							<Grid.Col span={6}>
+							<Grid.Col xs={12} sm={6}>
 								<Button disabled fullWidth onClick={() => navigate(`/films`)}>
 									Фильмы
 								</Button>

@@ -1,8 +1,9 @@
-import {Card, Grid, UnstyledButton, Text, Group, Title, Avatar, Center, Pagination} from "@mantine/core";
+import {Card, Grid, UnstyledButton, Text, Group, Title, Avatar, Center, Pagination, TextInput} from "@mantine/core";
 import {store} from "../../../../store/store";
 import {useState} from "react";
 import {TMember, TPosition} from "../../../../types";
 import PositionModal from "./modals/position.modal";
+import {IconSearch} from "@tabler/icons-react";
 
 const formatter = new Intl.NumberFormat("ru", {
 	style: `currency`,
@@ -24,6 +25,8 @@ export default function PartyPositions() {
 
 	const [currentPosition, setCurrentPosition] = useState<TPosition | null>(null);
 	const [positionModal, setPositionModal] = useState(false);
+
+	const [positionSearch, setPositionSearch] = useState(``);
 
 	const openPosition = (pos: TPosition) => {
 		setCurrentPosition(pos);
@@ -54,7 +57,7 @@ export default function PartyPositions() {
 	const getMembersAvatars = (memberIds: number[]) => {
 		const filtered = calculator.members.filter(m => memberIds.includes(m.id));
 		const members: TMember[] = [];
-		for (let i = 0; i !== 4; i++) {
+		for (let i = 0; i !== 2; i++) {
 			if (filtered[i]) members.push(filtered[i]);
 		}
 
@@ -64,7 +67,7 @@ export default function PartyPositions() {
 	const getMemberOver = (memberIds: number[]) => {
 		const filtered = calculator.members.filter(m => memberIds.includes(m.id));
 		const members: TMember[] = [];
-		for (let i = 0; i !== 4; i++) {
+		for (let i = 0; i !== 2; i++) {
 			if (filtered[i]) members.push(filtered[i]);
 		}
 
@@ -75,8 +78,15 @@ export default function PartyPositions() {
 
 	const positions: TPosition[] = [];
 
-	for (let i = (positionPage - 1) * 10; i < positionPage * 10; i++) {
-		if (calculator.positions[i]) positions.push(calculator.positions[i]);
+	if (positionSearch === ``) {
+		for (let i = (positionPage - 1) * 5; i < positionPage * 5; i++) {
+			if (calculator.positions[i]) positions.push(calculator.positions[i]);
+		}
+	} else {
+		const filtered = calculator.positions.filter(m => m.name.includes(positionSearch));
+		for (let i = (positionPage - 1) * 5; i < positionPage * 5; i++) {
+			if (filtered[i]) positions.push(filtered[i]);
+		}
 	}
 
 	const getMap = () =>
@@ -86,11 +96,13 @@ export default function PartyPositions() {
 					<Card withBorder px={10} py={5} h={`50px`}>
 						<Grid>
 							<Grid.Col span={4}>
-								<Text mt={8}>{position.name}</Text>
+								<Text truncate mt={8}>
+									{position.name}
+								</Text>
 							</Grid.Col>
 
 							<Grid.Col span={4}>
-								<Text align={`center`} mt={8}>
+								<Text align={`center`} mt={8} truncate>
 									{formatter.format(position.cost)}
 								</Text>
 							</Grid.Col>
@@ -114,8 +126,16 @@ export default function PartyPositions() {
 			{currentPosition && (
 				<PositionModal opened={positionModal} onClose={closePosition} position={currentPosition} />
 			)}
-			{getMap()}
 			<Grid.Col>
+				<TextInput
+					icon={<IconSearch stroke={1.3} />}
+					placeholder={`Наименование`}
+					value={positionSearch}
+					onChange={e => setPositionSearch(e.target.value)}
+				/>
+			</Grid.Col>
+			{getMap()}
+			<Grid.Col hidden={positionSearch !== ``}>
 				<Center>
 					<Pagination total={positionPages} value={positionPage} onChange={setPositionPage} color={`dark`} />
 				</Center>

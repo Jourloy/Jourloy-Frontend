@@ -5,7 +5,7 @@ import {partyActions} from "../../../../../store/features/party.slice";
 import {toast} from "react-toastify";
 import PartyAPI from "../../../api";
 import {useState} from "react";
-import PartyPositionLogic from "../logic";
+import PartyPositionLogic from "../../logic";
 
 type TProps = {
 	opened: boolean;
@@ -162,7 +162,7 @@ export default function PositionModal(props: TProps) {
 							onClick={submitChange}
 							loading={changePositionLoading}
 						>
-							Изменить
+							Сохранить
 						</Button>
 					</Grid.Col>
 

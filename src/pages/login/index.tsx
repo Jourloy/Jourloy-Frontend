@@ -70,7 +70,7 @@ export default function Login() {
 
 						<Grid.Col>
 							<Text c={`dimmed`} align={`center`} mt={`-10px`}>
-								Если аккаунта нет, то автоматически создаться новый
+								Если аккаунта нет, то он будет создан автоматически
 							</Text>
 						</Grid.Col>
 

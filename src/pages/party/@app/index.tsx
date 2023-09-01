@@ -68,13 +68,13 @@ export default function PartyApp(props: TProps) {
 	};
 
 	useEffect(() => {
-		if (calculator.members.length <= 1) setClearMembersDisable(true);
+		if (calculator.members.length <= 0) setClearMembersDisable(true);
 		else setClearMembersDisable(false);
 		setClearMembersLoading(false);
 	}, [calculator.members]);
 
 	useEffect(() => {
-		if (calculator.positions.length <= 1) setRemoveAllPositionsDisable(true);
+		if (calculator.positions.length <= 0) setRemoveAllPositionsDisable(true);
 		else setRemoveAllPositionsDisable(false);
 		setRemoveAllPositionsLoading(false);
 	}, [calculator.positions]);
@@ -151,9 +151,7 @@ export default function PartyApp(props: TProps) {
 												</Title>
 											</Grid.Col>
 
-											<PartyMembers />
-
-											<Grid.Col span={8}>
+											<Grid.Col sm={8} xs={12}>
 												<Button
 													fullWidth
 													variant={`outline`}
@@ -163,7 +161,7 @@ export default function PartyApp(props: TProps) {
 												</Button>
 											</Grid.Col>
 
-											<Grid.Col span={4}>
+											<Grid.Col sm={4} xs={12}>
 												<Button
 													fullWidth
 													color={`red`}
@@ -175,6 +173,12 @@ export default function PartyApp(props: TProps) {
 													Очистить список
 												</Button>
 											</Grid.Col>
+
+											<Grid.Col>
+												<Divider />
+											</Grid.Col>
+
+											<PartyMembers />
 										</Grid>
 									</Card>
 								</Grid.Col>
@@ -183,24 +187,20 @@ export default function PartyApp(props: TProps) {
 
 						<Grid.Col>
 							<Card withBorder>
-								<Grid gutter={10}>
+								<Grid>
 									<Grid.Col>
-										<Title order={2} align={`center`}>
+										<Title order={3} align={`center`}>
 											Позиции
 										</Title>
 									</Grid.Col>
 
-									<Grid.Col>
-										<Divider />
-									</Grid.Col>
-
-									<Grid.Col span={8}>
+									<Grid.Col sm={8} xs={12}>
 										<Button fullWidth variant={`outline`} onClick={() => setAddPosition(true)}>
 											Добавить
 										</Button>
 									</Grid.Col>
 
-									<Grid.Col span={4}>
+									<Grid.Col sm={4} xs={12}>
 										<Button
 											fullWidth
 											variant={`outline`}
@@ -211,6 +211,10 @@ export default function PartyApp(props: TProps) {
 										>
 											Очистить список
 										</Button>
+									</Grid.Col>
+
+									<Grid.Col>
+										<Divider />
 									</Grid.Col>
 
 									<PartyPositions />

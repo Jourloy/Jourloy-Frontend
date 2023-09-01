@@ -37,7 +37,7 @@ export default function DefaultContainer(props: PropsWithChildren) {
 						defaultProps: {
 							radius: `md`,
 						}
-					}
+					},
 				},
 			}}
 		>

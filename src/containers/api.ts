@@ -9,6 +9,8 @@ export default class LayoutAPI {
 		return axios.CancelToken.source();
 	}
 
+	public 
+
 	public logout() {
 		return this.context.get(`/logout`);
 	}
