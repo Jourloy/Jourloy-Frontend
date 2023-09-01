@@ -1,4 +1,4 @@
-import {Button, Card, Grid, Title, Divider, Container, Center} from "@mantine/core";
+import {Button, Card, Grid, Title, Divider, Container, Center, Modal, Text} from "@mantine/core";
 import {useEffect, useState} from "react";
 import {store} from "../../../store/store";
 import PartyMembers from "./@members";
@@ -39,8 +39,12 @@ export default function PartyApp() {
 	const [removeAllPositionsLoading, setRemoveAllPositionsLoading] = useState(false);
 	const [removeAllPositionsDisable, setRemoveAllPositionsDisable] = useState(true);
 
+	const [clearMembersModal, setClearMembersModal] = useState(false);
+	const [clearPositionsModal, setClearPositionsModal] = useState(false);
+
 	const removeAllMembers = () => {
 		setClearMembersLoading(true);
+		setClearMembersModal(false)
 		backend
 			.removeMembers(calculator.id)
 			.then(() => {
@@ -56,6 +60,7 @@ export default function PartyApp() {
 
 	const removeAllPositions = () => {
 		setRemoveAllPositionsLoading(true);
+		setClearPositionsModal(false);
 		backend
 			.removePositions(calculator.id)
 			.then(() => {
@@ -130,6 +135,64 @@ export default function PartyApp() {
 			<PartyAddMemberModal opened={addMember} onClose={closeAddMember} />
 
 			<PartyAddPositionModal opened={addPosition} onClose={closeAddPosition} />
+
+			<Modal
+				opened={clearMembersModal}
+				onClose={() => setClearMembersModal(false)}
+				centered
+			>
+				<Grid>
+					<Grid.Col>
+						<Title order={2} align={`center`}>
+							Точно очистить?
+						</Title>
+					</Grid.Col>
+					<Grid.Col mt={`-15px`}>
+						<Text align={`center`} color={`dimmed`}>
+							Участников нельзя будет восстановить
+						</Text>
+					</Grid.Col>
+					<Grid.Col span={6}>
+						<Button fullWidth variant={`outline`} color={`red`} onClick={removeAllMembers}>
+							Да
+						</Button>
+					</Grid.Col>
+					<Grid.Col span={6}>
+						<Button fullWidth color={`green`}>
+							Нет
+						</Button>
+					</Grid.Col>
+				</Grid>
+			</Modal>
+
+			<Modal
+				opened={clearPositionsModal}
+				onClose={() => setClearPositionsModal(false)}
+				centered
+			>
+				<Grid>
+					<Grid.Col>
+						<Title order={2} align={`center`}>
+							Точно очистить?
+						</Title>
+					</Grid.Col>
+					<Grid.Col mt={`-15px`}>
+						<Text align={`center`} color={`dimmed`}>
+							Позиции нельзя будет восстановить
+						</Text>
+					</Grid.Col>
+					<Grid.Col span={6}>
+						<Button fullWidth variant={`outline`} color={`red`} onClick={removeAllPositions}>
+							Да
+						</Button>
+					</Grid.Col>
+					<Grid.Col span={6}>
+						<Button fullWidth color={`green`}>
+							Нет
+						</Button>
+					</Grid.Col>
+				</Grid>
+			</Modal>
 
 			<Container py={20} px={20}>
 				<Center w={`100%`}>
@@ -206,7 +269,7 @@ export default function PartyApp() {
 													variant={`outline`}
 													disabled={clearMembersDisable}
 													loading={clearMembersLoading}
-													onClick={removeAllMembers}
+													onClick={() => setClearMembersModal(true)}
 												>
 													Очистить список
 												</Button>
@@ -245,7 +308,7 @@ export default function PartyApp() {
 											color={`red`}
 											disabled={removeAllPositionsDisable}
 											loading={removeAllPositionsLoading}
-											onClick={removeAllPositions}
+											onClick={() => setClearPositionsModal(true)}
 										>
 											Очистить список
 										</Button>
