@@ -29,7 +29,9 @@ export default function Login() {
 			.then(d => {
 				if (d.data.user.username) store.dispatch(userActions.changeUsername(d.data.user.username));
 				if (d.data.user.avatar) store.dispatch(userActions.changeAvatar(d.data.user.avatar));
-				if (d.data.user) navigate(`/party`);
+				console.log(d.data);
+				if (d.data.user) store.dispatch(userActions.login());
+				if (d.data.user) navigate(`/`);
 			})
 			.catch(() => {
 				setLoading(false);

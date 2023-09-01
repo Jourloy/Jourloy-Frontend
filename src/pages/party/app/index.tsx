@@ -1,27 +1,30 @@
-import {Button, Card, Grid, Title, Divider, Text, Container, Center} from "@mantine/core";
+import {Button, Card, Grid, Title, Divider, Container, Center} from "@mantine/core";
 import {useEffect, useState} from "react";
 import {store} from "../../../store/store";
 import PartyMembers from "./@members";
 import PartyPositions from "./@positions";
 import PartyAddMemberModal from "./@members/addModal";
-import {CancelToken} from "axios";
 import PartyAddPositionModal from "./@positions/modals/add.modal";
 import PartyAPI from "../api";
 import {toast} from "react-toastify";
 import {partyActions} from "../../../store/features/party.slice";
+import {useNavigate} from "react-router-dom";
+import LoginAPI from "../../login/api";
+import {userActions} from "../../../store/features/user.slice";
 
-type TProps = {
-	updateCalculator: (token?: CancelToken) => Promise<boolean>;
-};
-
-export default function PartyApp(props: TProps) {
+export default function PartyApp() {
 	const backend = new PartyAPI();
+	const loginBackend = new LoginAPI();
+	const navigate = useNavigate();
 
 	const [calculator, setCalculator] = useState(store.getState().partyReducer.calculator);
+	const [logined, setLogined] = useState(store.getState().userReducer.logined);
 
 	store.subscribe(() => {
 		const calc = store.getState().partyReducer.calculator;
-		setCalculator(calc);
+		const login = store.getState().userReducer.logined;
+		if (calc !== calculator) setCalculator(calc);
+		if (login !== logined) setLogined(login);
 	});
 
 	const [addMember, setAddMember] = useState(false);
@@ -68,30 +71,65 @@ export default function PartyApp(props: TProps) {
 	};
 
 	useEffect(() => {
+		if (!calculator) return;
+
 		if (calculator.members.length <= 0) setClearMembersDisable(true);
 		else setClearMembersDisable(false);
 		setClearMembersLoading(false);
-	}, [calculator.members]);
+	}, [calculator]);
 
 	useEffect(() => {
+		if (!calculator) return;
+
 		if (calculator.positions.length <= 0) setRemoveAllPositionsDisable(true);
 		else setRemoveAllPositionsDisable(false);
 		setRemoveAllPositionsLoading(false);
-	}, [calculator.positions]);
+	}, [calculator]);
+
+	useEffect(() => {
+		const source = loginBackend.getToken();
+
+		if (!logined) {
+			loginBackend
+				.checkUser(source.token)
+				.then(d => {
+					if (d.data.user.username) store.dispatch(userActions.changeUsername(d.data.user.username));
+					if (d.data.user.avatar) store.dispatch(userActions.changeAvatar(d.data.user.avatar));
+					if (d.data.user) store.dispatch(userActions.login());
+				})
+				.catch(() => {
+					navigate(`/login`);
+				});
+		}
+		if (!calculator) {
+			backend
+				.getCalculator(source.token)
+				.then(d => {
+					if (d && d.data && d.data.id) {
+						store.dispatch(partyActions.forceUpdateCalculator(d.data));
+
+						const memberPages = Math.ceil(d.data.members.length / 5);
+						store.dispatch(partyActions.updateMemberPages(memberPages));
+
+						const positionPages = Math.ceil(d.data.positions.length / 10);
+						store.dispatch(partyActions.updatePositionPages(positionPages));
+					}
+				})
+				.catch(() => {
+					toast.error(`Не нашли калькулятор`);
+					navigate(`/party`);
+				});
+		}
+		return () => source.cancel();
+	}, []);
+
+	if (!logined || !calculator) return <></>;
 
 	return (
 		<>
-			<PartyAddMemberModal
-				opened={addMember}
-				onClose={closeAddMember}
-				updateCalculator={props.updateCalculator}
-			/>
+			<PartyAddMemberModal opened={addMember} onClose={closeAddMember} />
 
-			<PartyAddPositionModal
-				opened={addPosition}
-				onClose={closeAddPosition}
-				updateCalculator={props.updateCalculator}
-			/>
+			<PartyAddPositionModal opened={addPosition} onClose={closeAddPosition} />
 
 			<Container py={20} px={20}>
 				<Center w={`100%`}>
@@ -218,35 +256,6 @@ export default function PartyApp(props: TProps) {
 									</Grid.Col>
 
 									<PartyPositions />
-								</Grid>
-							</Card>
-						</Grid.Col>
-
-						<Grid.Col hidden>
-							<Divider />
-						</Grid.Col>
-
-						<Grid.Col hidden>
-							<Card withBorder>
-								<Grid>
-									<Grid.Col>
-										<Title align={`center`} tt={`uppercase`}>
-											Заметка
-										</Title>
-									</Grid.Col>
-
-									<Grid.Col>
-										<Text align={`center`}>
-											Party Калькулятор находится еще в процессе реализации. Текущее состояние
-											можно назвать бета версией. Поэтому если что-то идет не поплану, не
-											отображается или не нажимается, то будет круто, если ты нажмешь на кнопку
-											ниже и вкратце опишешь ситуацию
-										</Text>
-									</Grid.Col>
-
-									<Grid.Col>
-										<Button fullWidth>У меня не работает!</Button>
-									</Grid.Col>
 								</Grid>
 							</Card>
 						</Grid.Col>

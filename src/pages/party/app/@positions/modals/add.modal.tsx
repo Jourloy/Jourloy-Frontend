@@ -1,15 +1,14 @@
 import {Button, Divider, Grid, Modal, MultiSelect, NumberInput, TextInput, Title} from "@mantine/core";
-import {CancelToken} from "axios";
 import {useState} from "react";
 import {store} from "../../../../../store/store";
 import PartyAPI from "../../../api";
 import {toast} from "react-toastify";
 import PartyPositionLogic from "../../logic";
+import { partyActions } from "../../../../../store/features/party.slice";
 
 type TProps = {
 	opened: boolean;
 	onClose: () => void;
-	updateCalculator: (token?: CancelToken) => Promise<boolean>;
 };
 
 export default function PartyAddPositionModal(props: TProps) {
@@ -70,7 +69,7 @@ export default function PartyAddPositionModal(props: TProps) {
 			})
 			.then(() => {
 				toast.success(`Позиция добавлена ✅`);
-				props.updateCalculator();
+				store.dispatch(partyActions.updateCalculator())
 				closeModal();
 			})
 			.catch(() => {

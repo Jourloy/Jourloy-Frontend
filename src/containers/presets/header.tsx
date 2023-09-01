@@ -15,7 +15,7 @@ export default function HeaderPreset() {
 	const [avatar, setAvatar] = useState(store.getState().userReducer.avatar);
 	store.subscribe(() => {
 		const _avatar = store.getState().userReducer.avatar;
-		if (avatar !== _avatar) setAvatar(avatar);
+		if (avatar !== _avatar) setAvatar(_avatar);
 	});
 
 	const [userSettings, setUserSettings] = useState(false);

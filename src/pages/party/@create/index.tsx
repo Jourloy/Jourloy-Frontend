@@ -21,9 +21,11 @@ import {store} from "../../../store/store";
 import {useState} from "react";
 import {formatter} from "../../../context";
 import {IconArrowBigDownFilled, IconTrashXFilled} from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
 
 export default function PartyCreate() {
 	const backend = new PartyAPI();
+	const navigate = useNavigate();
 
 	const [exMemberNameF, setExMemberNameF] = useState(`Игорян`);
 	const [exMemberNameS, setExMemberNameS] = useState(`Санек`);
@@ -35,12 +37,15 @@ export default function PartyCreate() {
 			.createCalculator()
 			.then(() => {
 				toast.success(`Калькулятор создан`);
-			})
-			.catch(() => {
-				toast.error(`Что-то пошло не так, попробуй позже`);
-			})
-			.finally(() => {
 				store.dispatch(partyActions.updateCalculator());
+				navigate(`/party/app`)
+			})
+			.catch(e => {
+				if (e && e.response) {
+					if (e.response.status === 400) {
+						navigate(`/party/app`)
+					} else toast.error(`Что-то пошло не так, попробуй позже`);
+				} else toast.error(`Что-то пошло не так, попробуй позже`);
 			});
 	};
 

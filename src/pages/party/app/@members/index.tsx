@@ -19,6 +19,8 @@ export default function PartyMembers() {
 
 	const [memberSearch, setMemberSearch] = useState(``);
 
+	if (!calculator || calculator.members.length === 0) return(<></>)
+
 	if (calculator.members.length === 0) {
 		return (
 			<Grid.Col>

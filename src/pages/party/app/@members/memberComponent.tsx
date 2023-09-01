@@ -1,4 +1,4 @@
-import {Card, Grid, UnstyledButton, Text, Group, ActionIcon} from "@mantine/core";
+import {Card, Grid, Text, Group, ActionIcon} from "@mantine/core";
 import {TMember} from "../../../../types";
 import {IconTrashXFilled} from "@tabler/icons-react";
 import {formatter} from "../../../../context";
@@ -55,31 +55,29 @@ export default function PartyMemberComponent(props: TProps) {
 
 	return (
 		<Grid.Col key={member.id}>
-			<UnstyledButton w={`100%`}>
-				<Card withBorder w={`100%`} py={5} px={10}>
-					<Grid w={`100%`} m={0}>
-						<Grid.Col span={2}>
-							<Text align={`left`} mt={`3px`}>
-								{formatter.format(getCredit(member.id))}
-							</Text>
-						</Grid.Col>
+			<Card withBorder w={`100%`} py={5} px={10}>
+				<Grid w={`100%`} m={0}>
+					<Grid.Col span={2}>
+						<Text align={`left`} mt={`3px`}>
+							{formatter.format(getCredit(member.id))}
+						</Text>
+					</Grid.Col>
 
-						<Grid.Col span={8}>
-							<Text align={`center`} mt={`3px`} truncate>
-								{member.name}
-							</Text>
-						</Grid.Col>
+					<Grid.Col span={8}>
+						<Text align={`center`} mt={`3px`} truncate>
+							{member.name}
+						</Text>
+					</Grid.Col>
 
-						<Grid.Col span={2}>
-							<Group position={`right`} w={`100%`}>
-								<ActionIcon color={`red`} onClick={onRemove} loading={deleteLoading}>
-									<IconTrashXFilled stroke={1} />
-								</ActionIcon>
-							</Group>
-						</Grid.Col>
-					</Grid>
-				</Card>
-			</UnstyledButton>
+					<Grid.Col span={2}>
+						<Group position={`right`} w={`100%`}>
+							<ActionIcon color={`red`} onClick={onRemove} loading={deleteLoading}>
+								<IconTrashXFilled stroke={1} />
+							</ActionIcon>
+						</Group>
+					</Grid.Col>
+				</Grid>
+			</Card>
 		</Grid.Col>
 	);
 }

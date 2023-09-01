@@ -2,14 +2,12 @@ import {Button, Divider, Grid, Modal, TextInput, Title} from "@mantine/core";
 import {useState} from "react";
 import PartyAPI from "../../api";
 import {toast} from "react-toastify";
-import {CancelToken} from "axios";
 import {store} from "../../../../store/store";
 import {partyActions} from "../../../../store/features/party.slice";
 
 type TProps = {
 	opened: boolean;
 	onClose: () => void;
-	updateCalculator: (token?: CancelToken) => Promise<boolean>;
 };
 
 export default function PartyAddMemberModal(props: TProps) {

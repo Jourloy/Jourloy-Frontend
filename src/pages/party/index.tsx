@@ -3,7 +3,6 @@ import PartyCreate from "./@create";
 import {store} from "../../store/store";
 import {useNavigate} from "react-router-dom";
 import PartyAPI from "./api";
-import PartyApp from "./@app";
 import {CancelToken} from "axios";
 import {partyActions} from "../../store/features/party.slice";
 import DefaultLoading from "../@loading";
@@ -54,7 +53,5 @@ export default function PartyIndex() {
 	}, [checked]);
 	
 	if (loading) return <DefaultLoading />;
-	if (!checked) return <PartyCreate />;
-
-	return <PartyApp updateCalculator={getCalculator}/>;
+	return <PartyCreate />;
 }
