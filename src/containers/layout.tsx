@@ -22,7 +22,7 @@ export default function LayoutContainer(props: PropsWithChildren) {
 					<Footer height={45}>
 						<Center h={`100%`} w={`100%`}>
 							<Text align={`center`} size={`sm`}>
-								Developed with ❤️ by Jourloy
+								Developed with ❤️ by Jourloy 🇷🇺
 							</Text>
 						</Center>
 					</Footer>
