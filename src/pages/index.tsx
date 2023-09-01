@@ -1,4 +1,4 @@
-import {Button, Card, Divider, Grid, Title, Image, Text, Group, ActionIcon, Flex} from "@mantine/core";
+import {Button, Card, Divider, Grid, Title, Image, Text, Group, ActionIcon, Flex, Space} from "@mantine/core";
 import {IconBrandDiscord, IconBrandGithub, IconBrandTwitch} from "@tabler/icons-react";
 import {useNavigate} from "react-router-dom";
 
@@ -44,7 +44,7 @@ export default function Main() {
 							</Grid.Col>
 
 							<Grid.Col>
-								<Text align={`center`}>Заходи ко мне - поболтаем</Text>
+								<Space h={`xl`} />
 							</Grid.Col>
 
 							<Grid.Col mt={`5px`}>
@@ -88,7 +88,7 @@ export default function Main() {
 							</Grid.Col>
 
 							<Grid.Col span={6}>
-								<Button fullWidth disabled>
+								<Button disabled fullWidth onClick={() => navigate(`/films`)}>
 									Фильмы
 								</Button>
 							</Grid.Col>

@@ -4,6 +4,7 @@ import Main from "./pages";
 import Login from "./pages/login";
 import PartyIndex from "./pages/party";
 import Check from "./pages/login/check";
+import FilmsIndex from "./pages/films";
 
 export default function App() {
 
@@ -16,6 +17,7 @@ export default function App() {
 				<Route element={<Check />} path="/login/check" />
 
 				<Route element={<PartyIndex />} path="/party" />
+				<Route element={<FilmsIndex />} path="/films" />
 			</Routes>
 		</BrowserRouter>
 	);

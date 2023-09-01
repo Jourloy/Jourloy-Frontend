@@ -1,8 +1,9 @@
-import {Grid, Title, Pagination, Center} from "@mantine/core";
+import {Grid, Title, Pagination, Center, TextInput} from "@mantine/core";
 import {useState} from "react";
 import {store} from "../../../../store/store";
 import {TMember} from "../../../../types";
 import PartyMemberComponent from "./memberComponent";
+import {IconSearch} from "@tabler/icons-react";
 
 export default function PartyMembers() {
 	const [calculator, setCalculator] = useState(store.getState().partyReducer.calculator);
@@ -16,6 +17,8 @@ export default function PartyMembers() {
 		setMemberPages(pages);
 	});
 
+	const [memberSearch, setMemberSearch] = useState(``);
+
 	if (calculator.members.length === 0) {
 		return (
 			<Grid.Col>
@@ -28,18 +31,43 @@ export default function PartyMembers() {
 
 	const members: TMember[] = [];
 
-	for (let i = (memberPage - 1) * 5; i < memberPage * 5; i++) {
-		if (calculator.members[i]) members.push(calculator.members[i]);
+	if (memberSearch === ``) {
+		for (let i = (memberPage - 1) * 5; i < memberPage * 5; i++) {
+			if (calculator.members[i]) members.push(calculator.members[i]);
+		}
+	} else {
+		const filtered = calculator.members.filter(m => m.name.includes(memberSearch));
+		for (let i = (memberPage - 1) * 5; i < memberPage * 5; i++) {
+			if (filtered[i]) {
+				if (memberSearch === ``) members.push(filtered[i]);
+				else {
+					if (filtered[i].name.includes(memberSearch)) members.push(filtered[i]);
+				}
+			}
+		}
 	}
 
 	const membersMap = () => members.map(member => <PartyMemberComponent member={member} />);
 
 	return (
 		<>
-			{membersMap()}
 			<Grid.Col>
+				<TextInput
+					value={memberSearch}
+					onChange={e => setMemberSearch(e.target.value)}
+					icon={<IconSearch stroke={1.3} />}
+					placeholder={`Имя участника`}
+				/>
+			</Grid.Col>
+			{membersMap()}
+			<Grid.Col hidden={memberSearch !== ``}>
 				<Center>
-					<Pagination total={memberPages} value={memberPage} onChange={setMemberPage} color={`dark`} />
+					<Pagination 
+						total={memberPages} 
+						value={memberPage} 
+						onChange={setMemberPage} 
+						color={`dark`} 
+					/>
 				</Center>
 			</Grid.Col>
 		</>

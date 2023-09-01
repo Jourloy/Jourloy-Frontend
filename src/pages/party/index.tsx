@@ -52,7 +52,7 @@ export default function PartyIndex() {
 
 		return () => source.cancel();
 	}, [checked]);
-
+	
 	if (loading) return <DefaultLoading />;
 	if (!checked) return <PartyCreate />;
 

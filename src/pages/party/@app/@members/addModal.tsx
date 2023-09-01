@@ -23,16 +23,20 @@ export default function PartyAddMemberModal(props: TProps) {
 	});
 
 	const [memberName, setMemberName] = useState(``);
+	const [addMemberLoading, setAddMemberLoading] = useState(false);
 
 	const submit = () => {
+		setAddMemberLoading(true);
 		backend.createMember(calculator.id, memberName)
 			.then(() => {
 				store.dispatch(partyActions.updateCalculator());
 				setMemberName(``);
+				setAddMemberLoading(false);
 				toast.success(`Участник добавлен 🎉`);
 				props.onClose();
 			})
 			.catch(() => {
+				setAddMemberLoading(false);
 				toast.error(`Что-то пошло не так 😰`);
 			});
 	}
@@ -59,7 +63,12 @@ export default function PartyAddMemberModal(props: TProps) {
 					</Grid.Col>
 
 					<Grid.Col>
-						<Button fullWidth variant={`outline`} disabled={memberName === ``} onClick={submit}>
+						<Button 
+							fullWidth variant={`outline`} 
+							disabled={memberName === ``} 
+							onClick={submit}
+							loading={addMemberLoading}
+						>
 							Добавить
 						</Button>
 					</Grid.Col>

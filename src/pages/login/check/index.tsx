@@ -18,6 +18,7 @@ export default function Check() {
 
 		if (success) {
 			navigate(`/`);
+			store.dispatch(userActions.login());
 			toast.success(`Авторизация прошла успешно`);
 		} else {
 			navigate(`/login`);

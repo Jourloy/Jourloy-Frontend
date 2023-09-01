@@ -1,4 +1,4 @@
-import {Button, Card, Flex, Grid, Title, Divider, Text} from "@mantine/core";
+import {Button, Card, Grid, Title, Divider, Text, Container, Center} from "@mantine/core";
 import {useEffect, useState} from "react";
 import {store} from "../../../store/store";
 import PartyMembers from "./@members";
@@ -33,7 +33,6 @@ export default function PartyApp(props: TProps) {
 	const [clearMembersDisable, setClearMembersDisable] = useState(true);
 	const [clearMembersLoading, setClearMembersLoading] = useState(true);
 
-
 	const [removeAllPositionsLoading, setRemoveAllPositionsLoading] = useState(false);
 	const [removeAllPositionsDisable, setRemoveAllPositionsDisable] = useState(true);
 
@@ -54,7 +53,8 @@ export default function PartyApp(props: TProps) {
 
 	const removeAllPositions = () => {
 		setRemoveAllPositionsLoading(true);
-		backend.removePositions(calculator.id)
+		backend
+			.removePositions(calculator.id)
 			.then(() => {
 				toast.success(`Список позиций очищен`);
 			})
@@ -64,8 +64,8 @@ export default function PartyApp(props: TProps) {
 			.finally(() => {
 				store.dispatch(partyActions.updateCalculator());
 				setRemoveAllPositionsLoading(false);
-			})
-	}
+			});
+	};
 
 	useEffect(() => {
 		if (calculator.members.length <= 1) setClearMembersDisable(true);
@@ -93,154 +93,162 @@ export default function PartyApp(props: TProps) {
 				updateCalculator={props.updateCalculator}
 			/>
 
-			<Flex justify={`center`} py={20} px={20}>
-				<Grid maw={`850px`} w={`100%`}>
-					<Grid.Col>
-						<Button disabled fullWidth>
-							Калькулятор 1
-						</Button>
-					</Grid.Col>
+			<Container py={20} px={20}>
+				<Center w={`100%`}>
+					<Grid maw={`850px`} w={`100%`}>
+						<Grid.Col>
+							<Button disabled fullWidth>
+								Калькулятор 1
+							</Button>
+						</Grid.Col>
 
-					<Grid.Col span={6}>
-						<Card withBorder>
-							<Grid gutter={1}>
-								<Grid.Col>
-									<Title order={3} align={`center`}>
-										Участников
-									</Title>
-								</Grid.Col>
+						<Grid.Col span={6}>
+							<Card withBorder>
+								<Grid gutter={1}>
+									<Grid.Col>
+										<Title order={3} align={`center`}>
+											Участников
+										</Title>
+									</Grid.Col>
 
-								<Grid.Col>
-									<Title align={`center`}>{calculator.members.length}</Title>
-								</Grid.Col>
-							</Grid>
-						</Card>
-					</Grid.Col>
+									<Grid.Col>
+										<Title align={`center`}>{calculator.members.length}</Title>
+									</Grid.Col>
+								</Grid>
+							</Card>
+						</Grid.Col>
 
-					<Grid.Col span={6}>
-						<Card withBorder>
-							<Grid gutter={1}>
-								<Grid.Col>
-									<Title order={3} align={`center`}>
-										Позиций
-									</Title>
-								</Grid.Col>
+						<Grid.Col span={6}>
+							<Card withBorder>
+								<Grid gutter={1}>
+									<Grid.Col>
+										<Title order={3} align={`center`}>
+											Позиций
+										</Title>
+									</Grid.Col>
 
-								<Grid.Col>
-									<Title align={`center`}>{calculator.positions.length}</Title>
-								</Grid.Col>
-							</Grid>
-						</Card>
-					</Grid.Col>
+									<Grid.Col>
+										<Title align={`center`}>{calculator.positions.length}</Title>
+									</Grid.Col>
+								</Grid>
+							</Card>
+						</Grid.Col>
 
-					<Grid.Col>
-						<Button variant={`outline`} fullWidth disabled>
-							Настроить
-						</Button>
-					</Grid.Col>
+						<Grid.Col>
+							<Button variant={`outline`} fullWidth disabled>
+								Настроить
+							</Button>
+						</Grid.Col>
 
-					<Grid.Col>
-						<Grid>
-							<Grid.Col>
-								<Card withBorder>
-									<Grid>
-										<Grid.Col>
-											<Title order={3} align={`center`}>
-												Участники
-											</Title>
-										</Grid.Col>
-										
-										<PartyMembers />
-
-										<Grid.Col span={8}>
-											<Button fullWidth variant={`outline`} onClick={() => setAddMember(true)}>
-												Добавить
-											</Button>
-										</Grid.Col>
-
-										<Grid.Col span={4}>
-											<Button
-												fullWidth
-												color={`red`}
-												variant={`outline`}
-												disabled={clearMembersDisable}
-												loading={clearMembersLoading}
-												onClick={removeAllMembers}
-											>
-												Очистить список
-											</Button>
-										</Grid.Col>
-									</Grid>
-								</Card>
-							</Grid.Col>
-						</Grid>
-					</Grid.Col>
-
-					<Grid.Col>
-						<Card withBorder>
-							<Grid gutter={10}>
-								<Grid.Col>
-									<Title order={2} align={`center`}>
-										Позиции
-									</Title>
-								</Grid.Col>
-
-								<Grid.Col>
-									<Divider />
-								</Grid.Col>
-
-								<Grid.Col span={8}>
-									<Button fullWidth variant={`outline`} onClick={() => setAddPosition(true)}>
-										Добавить
-									</Button>
-								</Grid.Col>
-
-								<Grid.Col span={4}>
-									<Button 
-										fullWidth 
-										variant={`outline`} 
-										color={`red`} 
-										disabled={removeAllPositionsDisable}
-										loading={removeAllPositionsLoading}
-										onClick={removeAllPositions}
-									>
-										Очистить список
-									</Button>
-								</Grid.Col>
-
-								<PartyPositions />
-							</Grid>
-						</Card>
-					</Grid.Col>
-
-					<Grid.Col hidden>
-						<Divider />
-					</Grid.Col>
-
-					<Grid.Col hidden>
-						<Card withBorder>
+						<Grid.Col>
 							<Grid>
 								<Grid.Col>
-									<Title align={`center`} tt={`uppercase`}>Заметка</Title>
-								</Grid.Col>
+									<Card withBorder>
+										<Grid>
+											<Grid.Col>
+												<Title order={3} align={`center`}>
+													Участники
+												</Title>
+											</Grid.Col>
 
-								<Grid.Col>
-									<Text align={`center`}>
-										Party Калькулятор находится еще в процессе реализации. Текущее состояние можно
-										назвать бета версией. Поэтому если что-то идет не поплану, не отображается или
-										не нажимается, то будет круто, если ты нажмешь на кнопку ниже и вкратце опишешь
-										ситуацию
-									</Text>
-								</Grid.Col>
+											<PartyMembers />
 
-								<Grid.Col>
-									<Button fullWidth>У меня не работает!</Button>
+											<Grid.Col span={8}>
+												<Button
+													fullWidth
+													variant={`outline`}
+													onClick={() => setAddMember(true)}
+												>
+													Добавить
+												</Button>
+											</Grid.Col>
+
+											<Grid.Col span={4}>
+												<Button
+													fullWidth
+													color={`red`}
+													variant={`outline`}
+													disabled={clearMembersDisable}
+													loading={clearMembersLoading}
+													onClick={removeAllMembers}
+												>
+													Очистить список
+												</Button>
+											</Grid.Col>
+										</Grid>
+									</Card>
 								</Grid.Col>
 							</Grid>
-						</Card>
-					</Grid.Col>
-				</Grid>
-			</Flex>
+						</Grid.Col>
+
+						<Grid.Col>
+							<Card withBorder>
+								<Grid gutter={10}>
+									<Grid.Col>
+										<Title order={2} align={`center`}>
+											Позиции
+										</Title>
+									</Grid.Col>
+
+									<Grid.Col>
+										<Divider />
+									</Grid.Col>
+
+									<Grid.Col span={8}>
+										<Button fullWidth variant={`outline`} onClick={() => setAddPosition(true)}>
+											Добавить
+										</Button>
+									</Grid.Col>
+
+									<Grid.Col span={4}>
+										<Button
+											fullWidth
+											variant={`outline`}
+											color={`red`}
+											disabled={removeAllPositionsDisable}
+											loading={removeAllPositionsLoading}
+											onClick={removeAllPositions}
+										>
+											Очистить список
+										</Button>
+									</Grid.Col>
+
+									<PartyPositions />
+								</Grid>
+							</Card>
+						</Grid.Col>
+
+						<Grid.Col hidden>
+							<Divider />
+						</Grid.Col>
+
+						<Grid.Col hidden>
+							<Card withBorder>
+								<Grid>
+									<Grid.Col>
+										<Title align={`center`} tt={`uppercase`}>
+											Заметка
+										</Title>
+									</Grid.Col>
+
+									<Grid.Col>
+										<Text align={`center`}>
+											Party Калькулятор находится еще в процессе реализации. Текущее состояние
+											можно назвать бета версией. Поэтому если что-то идет не поплану, не
+											отображается или не нажимается, то будет круто, если ты нажмешь на кнопку
+											ниже и вкратце опишешь ситуацию
+										</Text>
+									</Grid.Col>
+
+									<Grid.Col>
+										<Button fullWidth>У меня не работает!</Button>
+									</Grid.Col>
+								</Grid>
+							</Card>
+						</Grid.Col>
+					</Grid>
+				</Center>
+			</Container>
 		</>
 	);
 }

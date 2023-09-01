@@ -4,19 +4,24 @@ import {
 	Container,
 	Divider,
 	Flex,
+	Footer,
 	Grid,
 	Group,
 	Header,
 	Modal,
 	Title,
 	UnstyledButton,
+	Text,
+	Center,
+	AppShell,
+	Space,
 } from "@mantine/core";
 import {PropsWithChildren, useState} from "react";
 import {store} from "../store/store";
 import {userActions} from "../store/features/user.slice";
 import LayoutAPI from "./api";
 import {toast} from "react-toastify";
-import { DOMAIN } from "../context";
+import {DOMAIN} from "../context";
 
 export default function LayoutContainer(props: PropsWithChildren) {
 	const backend = new LayoutAPI();
@@ -38,6 +43,7 @@ export default function LayoutContainer(props: PropsWithChildren) {
 		backend
 			.logout()
 			.then(() => {
+				store.dispatch(userActions.logout());
 				window.location.href = `https://${DOMAIN}`;
 			})
 			.catch(() => {
@@ -64,29 +70,43 @@ export default function LayoutContainer(props: PropsWithChildren) {
 					</Grid.Col>
 				</Grid>
 			</Modal>
-			<Header height={45} w={`100%`} bg={`dark`}>
-				<Flex h={40} w={`100%`} justify={`center`} align={`center`}>
-					<Container maw={`850px`} w={`100%`} p={0}>
-						<Group position={`apart`} w={`100%`} px={8} mt={`5px`}>
-							<UnstyledButton onClick={toMain}>
-								<Flex>
-									<Title color={`white`}>JOU</Title>
-									<Title color={`blue`} style={{rotate: `180deg`}}>
-										R
-									</Title>
-									<Title color={`red`}>LOY</Title>
-								</Flex>
-							</UnstyledButton>
-							<UnstyledButton onClick={() => setUserSettings(true)}>
-								<Flex>
-									<Avatar src={avatar} />
-								</Flex>
-							</UnstyledButton>
-						</Group>
-					</Container>
-				</Flex>
-			</Header>
-			{props.children}
+			<AppShell
+				header={
+					<Header height={45} w={`100%`} bg={`dark`}>
+						<Flex h={40} w={`100%`} justify={`center`} align={`center`}>
+							<Container maw={`850px`} w={`100%`} p={0}>
+								<Group position={`apart`} w={`100%`} px={8} mt={`5px`}>
+									<UnstyledButton onClick={toMain}>
+										<Flex>
+											<Title color={`white`}>JOU</Title>
+											<Title color={`blue`} style={{rotate: `180deg`}}>
+												R
+											</Title>
+											<Title color={`red`}>LOY</Title>
+										</Flex>
+									</UnstyledButton>
+									<UnstyledButton onClick={() => setUserSettings(true)}>
+										<Flex>
+											<Avatar src={avatar} />
+										</Flex>
+									</UnstyledButton>
+								</Group>
+							</Container>
+						</Flex>
+					</Header>
+				}
+				footer={
+					<Footer height={45}>
+						<Center h={`100%`} w={`100%`}>
+							<Text align={`center`} size={`sm`}>
+								Developed with ❤️ by Jourloy
+							</Text>
+						</Center>
+					</Footer>
+				}
+			>
+				{props.children}
+			</AppShell>
 		</>
 	);
 }

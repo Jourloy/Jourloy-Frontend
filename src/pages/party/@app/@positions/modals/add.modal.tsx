@@ -28,6 +28,8 @@ export default function PartyAddPositionModal(props: TProps) {
 	const [positionCostError, setPositionCostError] = useState<undefined | string>(undefined);
 	const [positionMembers, setPositionMembers] = useState<string[]>([]);
 
+	const [addPositionLoading, setAddPositionLoading] = useState(false);
+
 	const getData = () => {
 		const data = [];
 		for (const member of calculator.members) {
@@ -54,6 +56,7 @@ export default function PartyAddPositionModal(props: TProps) {
 
 	const submit = () => {
 		if (positionName === `` || positonCost == undefined) return;
+		setAddPositionLoading(true);
 
 		const members: number[] = [];
 		positionMembers.forEach(v => members.push(+v));
@@ -80,6 +83,7 @@ export default function PartyAddPositionModal(props: TProps) {
 		setPositionCost(undefined);
 		setPositionCostError(undefined);
 		setPositionMembers([]);
+		setAddPositionLoading(false);
 		props.onClose();
 	};
 
@@ -120,7 +124,7 @@ export default function PartyAddPositionModal(props: TProps) {
 					</Grid.Col>
 
 					<Grid.Col>
-						<Button fullWidth variant={`outline`} onClick={submit}>
+						<Button fullWidth variant={`outline`} onClick={submit} loading={addPositionLoading}>
 							Добавить
 						</Button>
 					</Grid.Col>
