@@ -1,4 +1,4 @@
-import {Button, Divider, Grid, Modal, MultiSelect, NumberInput, TextInput, Title} from "@mantine/core";
+import {Button, Divider, Grid, Modal, MultiSelect, NumberInput, Select, TextInput, Title} from "@mantine/core";
 import {useState} from "react";
 import {store} from "../../../../../store/store";
 import PartyAPI from "../../../api";
@@ -26,6 +26,7 @@ export default function PartyAddPositionModal(props: TProps) {
 	const [positonCost, setPositionCost] = useState<number>();
 	const [positionCostError, setPositionCostError] = useState<undefined | string>(undefined);
 	const [positionMembers, setPositionMembers] = useState<string[]>([]);
+	const [positionPayer, setPositionPayer] = useState<string | null>(``);
 
 	const [addPositionLoading, setAddPositionLoading] = useState(false);
 
@@ -33,6 +34,14 @@ export default function PartyAddPositionModal(props: TProps) {
 		const data = [];
 		for (const member of calculator.members) {
 			data.push({value: member.id.toString(), label: member.name, image: member.avatar});
+		}
+		return data;
+	};
+
+	const getDataOrgs = () => {
+		const data = [];
+		for (const member of calculator.members) {
+			if (member.payer) data.push({value: member.id.toString(), label: member.name, image: member.avatar});
 		}
 		return data;
 	};
@@ -66,6 +75,7 @@ export default function PartyAddPositionModal(props: TProps) {
 				cost: positonCost,
 				memberIds: members,
 				calculatorId: calculator.id,
+				payerId: positionPayer ? +positionPayer : undefined,
 			})
 			.then(() => {
 				toast.success(`Позиция добавлена ✅`);
@@ -122,12 +132,24 @@ export default function PartyAddPositionModal(props: TProps) {
 					<Grid.Col>
 						<MultiSelect
 							data={getData()}
-							placeholder={`Прикрепи участников`}
+							placeholder={`Кто участвует`}
 							searchable
 							nothingFound={`Никого не нашли`}
 							onChange={v => setPositionMembers(v)}
 							dropdownPosition={`top`}
 							maxDropdownHeight={`120px`}
+						/>
+					</Grid.Col>
+
+					<Grid.Col>
+						<Select
+							data={getDataOrgs()}
+							placeholder={`Кто платит`}
+							searchable
+							nothingFound={`Никого не нашли`}
+							onChange={v => setPositionPayer(v)}
+							dropdownPosition={`top`}
+							maxDropdownHeight={120}
 						/>
 					</Grid.Col>
 

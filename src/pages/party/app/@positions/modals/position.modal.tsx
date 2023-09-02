@@ -1,4 +1,4 @@
-import {Button, Divider, Grid, Modal, MultiSelect, NumberInput, TextInput, Title} from "@mantine/core";
+import {Button, Divider, Grid, Modal, MultiSelect, NumberInput, Select, TextInput, Title} from "@mantine/core";
 import {TPosition} from "../../../../../types";
 import {store} from "../../../../../store/store";
 import {partyActions} from "../../../../../store/features/party.slice";
@@ -29,6 +29,7 @@ export default function PositionModal(props: TProps) {
 	const [positonCost, setPositionCost] = useState<number | undefined>(props.position.cost);
 	const [positionCostError, setPositionCostError] = useState<undefined | string>(undefined);
 	const [positionMembers, setPositionMembers] = useState<string[]>(logic.getMembersAsString(props.position.id));
+	const [positionPayer, setPositionPayer] = useState<number | undefined>(props.position.payerId);
 
 	const [removePositionLoading, setRemovePositionLoading] = useState(false);
 	const [changePositionLoading, setChangePositionLoading] = useState(false);
@@ -37,6 +38,14 @@ export default function PositionModal(props: TProps) {
 		const data = [];
 		for (const member of calculator.members) {
 			data.push({value: member.id.toString(), label: member.name, image: member.avatar});
+		}
+		return data;
+	};
+
+	const getDataOrgs = () => {
+		const data = [];
+		for (const member of calculator.members) {
+			if (member.payer) data.push({value: member.id.toString(), label: member.name, image: member.avatar});
 		}
 		return data;
 	};
@@ -74,6 +83,7 @@ export default function PositionModal(props: TProps) {
 			cost: positonCost,
 			memberIds: members,
 			positionId: props.position.id,
+			payerId: positionPayer,
 		})
 			.then(() => {
 				toast.success(`Позиция обновлена`)
@@ -149,10 +159,19 @@ export default function PositionModal(props: TProps) {
 
 					<Grid.Col>
 						<MultiSelect
-							label={`Прикреплены`}
+							label={`Используют`}
 							data={getData()}
 							value={positionMembers}
 							onChange={setPositionMembers}
+						/>
+					</Grid.Col>
+
+					<Grid.Col>
+						<Select
+							label={`Купил`}
+							data={getDataOrgs()}
+							value={positionPayer?.toString()}
+							onChange={e => setPositionPayer(e ? +e : undefined)}
 						/>
 					</Grid.Col>
 

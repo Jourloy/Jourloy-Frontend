@@ -21,8 +21,8 @@ export default class PartyAPI {
 
 	/* MEMBERS */
 
-	public createMember(calculatorId: number, name: string) {
-		return this.context.post(`/member`, {calculatorId: calculatorId, name: name});
+	public createMember(calculatorId: number, name: string, payer: boolean) {
+		return this.context.post(`/member`, {calculatorId: calculatorId, name: name, payer: payer});
 	}
 
 	public getMembers(calculatorId: number) {
@@ -43,11 +43,11 @@ export default class PartyAPI {
 
 	/* POSITIONS */
 
-	public createPosition(data: {calculatorId: number; name: string; cost: number; memberIds?: number[]}) {
+	public createPosition(data: {calculatorId: number; name: string; cost: number; memberIds?: number[], payerId?: number}) {
 		return this.context.post(`/position`, data, {withCredentials: true});
 	}
 
-	public updatePosition(data: {positionId: number; name?: string; cost?: number; memberIds?: number[]}) {
+	public updatePosition(data: {positionId: number; name?: string; cost?: number; memberIds?: number[], payerId?: number}) {
 		return this.context.patch(`/position`, data, {withCredentials: true});
 	}
 

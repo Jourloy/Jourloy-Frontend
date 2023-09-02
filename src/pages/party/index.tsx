@@ -28,7 +28,7 @@ export default function PartyIndex() {
 				if (d && d.data && d.data.id) {
 					store.dispatch(partyActions.forceUpdateCalculator(d.data));
 
-					const memberPages = Math.ceil(d.data.members.length / 5);
+					const memberPages = Math.ceil(d.data.members.length / 6);
 					store.dispatch(partyActions.updateMemberPages(memberPages));
 
 					const positionPages = Math.ceil(d.data.positions.length / 10);

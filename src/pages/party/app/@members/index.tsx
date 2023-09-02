@@ -1,8 +1,8 @@
-import {Grid, Title, Pagination, Center, TextInput} from "@mantine/core";
+import {Grid, Title, Pagination, Center, TextInput, Menu, Button} from "@mantine/core";
 import {useState} from "react";
 import {store} from "../../../../store/store";
 import {TMember} from "../../../../types";
-import PartyMemberComponent from "./memberComponent";
+import PartyMemberComponent from "./components/member.component";
 import {IconSearch} from "@tabler/icons-react";
 
 export default function PartyMembers() {
@@ -18,6 +18,7 @@ export default function PartyMembers() {
 	});
 
 	const [memberSearch, setMemberSearch] = useState(``);
+	const [memberFilter, setMemberFilter] = useState(`all`);
 
 	if (!calculator) return(<></>)
 
@@ -31,15 +32,20 @@ export default function PartyMembers() {
 		);
 	}
 
+	const memberArr = calculator.members.filter(m => {
+		if (memberFilter === `all`) return true;
+		if (memberFilter === `noOrg`) return !m.payer;
+		if (memberFilter === `org`) return m.payer;
+	});
 	const members: TMember[] = [];
 
 	if (memberSearch === ``) {
-		for (let i = (memberPage - 1) * 5; i < memberPage * 5; i++) {
-			if (calculator.members[i]) members.push(calculator.members[i]);
+		for (let i = (memberPage - 1) * 6; i < memberPage * 6; i++) {
+			if (memberArr[i]) members.push(memberArr[i]);
 		}
 	} else {
-		const filtered = calculator.members.filter(m => m.name.includes(memberSearch));
-		for (let i = (memberPage - 1) * 5; i < memberPage * 5; i++) {
+		const filtered = memberArr.filter(m => m.name.includes(memberSearch));
+		for (let i = (memberPage - 1) * 6; i < memberPage * 6; i++) {
 			if (filtered[i]) {
 				if (memberSearch === ``) members.push(filtered[i]);
 				else {
@@ -53,7 +59,7 @@ export default function PartyMembers() {
 
 	return (
 		<>
-			<Grid.Col>
+			<Grid.Col md={8} sm={12}>
 				<TextInput
 					value={memberSearch}
 					onChange={e => setMemberSearch(e.target.value)}
@@ -61,7 +67,40 @@ export default function PartyMembers() {
 					placeholder={`Имя участника`}
 				/>
 			</Grid.Col>
+
+			<Grid.Col md={4} sm={12}>
+				<Menu>
+					<Menu.Target>
+						<Button fullWidth>
+							Фильтр
+						</Button>
+					</Menu.Target>
+
+					<Menu.Dropdown>
+						<Menu.Item 
+							disabled={memberFilter === `all`}
+							onClick={() => setMemberFilter(`all`)}
+						>
+							Все
+						</Menu.Item>
+						<Menu.Item 
+							disabled={memberFilter === `noOrg`}
+							onClick={() => setMemberFilter(`noOrg`)}
+						>
+							Не организаторы
+						</Menu.Item>
+						<Menu.Item 
+							disabled={memberFilter === `org`}
+							onClick={() => setMemberFilter(`org`)}
+						>
+							Организаторы
+						</Menu.Item>
+					</Menu.Dropdown>
+				</Menu>
+			</Grid.Col>
+
 			{membersMap()}
+
 			<Grid.Col hidden={memberSearch !== ``}>
 				<Center>
 					<Pagination 

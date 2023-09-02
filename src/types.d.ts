@@ -23,6 +23,7 @@ export type TMember = {
 	avatar: string;
 	calculator: TCalculator;
 	calculatorId: number;
+	payer?: boolean;
 	createdAt: Date;
 	updatedAt: Date;
 };
@@ -32,6 +33,7 @@ export type TPosition = {
 	name: string;
 	cost: number;
 	memberIds: number[];
+	payerId?: number;
 	calculator: TCalculator;
 	calculatorId: number;
 };

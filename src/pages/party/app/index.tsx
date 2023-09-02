@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {store} from "../../../store/store";
 import PartyMembers from "./@members";
 import PartyPositions from "./@positions";
-import PartyAddMemberModal from "./@members/addModal";
+import PartyAddMemberModal from "./@members/modals/add.modal";
 import PartyAddPositionModal from "./@positions/modals/add.modal";
 import PartyAPI from "../api";
 import {toast} from "react-toastify";
@@ -11,6 +11,7 @@ import {partyActions} from "../../../store/features/party.slice";
 import {useNavigate} from "react-router-dom";
 import LoginAPI from "../../login/api";
 import {userActions} from "../../../store/features/user.slice";
+import { formatter } from "../../../context";
 
 export default function PartyApp() {
 	const backend = new PartyAPI();
@@ -74,6 +75,14 @@ export default function PartyApp() {
 				setRemoveAllPositionsLoading(false);
 			});
 	};
+
+	const getAllCost = () => {
+		let cost = 0;
+		for (const pos of calculator.positions) {
+			cost += pos.cost;
+		}
+		return cost;
+	}
 
 	useEffect(() => {
 		if (!calculator) return;
@@ -236,6 +245,22 @@ export default function PartyApp() {
 						</Grid.Col>
 
 						<Grid.Col>
+							<Card withBorder>
+								<Grid gutter={1}>
+									<Grid.Col>
+										<Title order={3} align={`center`}>
+											Потратили в сумме
+										</Title>
+									</Grid.Col>
+
+									<Grid.Col>
+										<Title align={`center`}>{formatter.format(getAllCost())}</Title>
+									</Grid.Col>
+								</Grid>
+							</Card>
+						</Grid.Col>
+
+						<Grid.Col>
 							<Button variant={`outline`} fullWidth disabled>
 								Настроить
 							</Button>
@@ -244,7 +269,7 @@ export default function PartyApp() {
 						<Grid.Col>
 							<Grid>
 								<Grid.Col>
-									<Card withBorder>
+									<Card withBorder style={{overflow: `visible`}}>
 										<Grid>
 											<Grid.Col>
 												<Title order={3} align={`center`}>
