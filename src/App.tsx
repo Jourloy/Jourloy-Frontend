@@ -7,6 +7,7 @@ import Check from "./pages/login/check";
 import FilmsIndex from "./pages/films";
 import PartyApp from "./pages/party/app";
 import LayoutContainer from "./containers/layout";
+import KeyboardIndex from "./pages/keyboard";
 
 export default function App() {
 	return (
@@ -62,6 +63,15 @@ export default function App() {
 						</LayoutContainer>
 					}
 					path="/films"
+				/>
+
+				<Route
+					element={
+						<LayoutContainer>
+							<KeyboardIndex />
+						</LayoutContainer>
+					}
+					path="/keyboard"
 				/>
 			</Routes>
 		</BrowserRouter>

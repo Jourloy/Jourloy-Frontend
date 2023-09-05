@@ -10,6 +10,7 @@ import {
 	ActionIcon,
 	Flex,
 	Center,
+	Space,
 } from "@mantine/core";
 import {IconBrandDiscord, IconBrandGithub, IconBrandTwitch} from "@tabler/icons-react";
 import {useNavigate} from "react-router-dom";
@@ -122,8 +123,22 @@ export default function Main() {
 									Денежный трекер
 								</Button>
 							</Grid.Col>
+
+							<Grid.Col>
+								<Button 
+									fullWidth 
+									color={`indigo.5`} 
+									onClick={() => navigate(`/keyboard`)}
+								>
+									Клавиатура
+								</Button>
+							</Grid.Col>
 						</Grid>
 					</Card>
+				</Grid.Col>
+
+				<Grid.Col>
+					<Space h={`45px`}/>
 				</Grid.Col>
 			</Grid>
 		</Flex>
