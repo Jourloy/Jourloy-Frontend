@@ -1,4 +1,15 @@
-import {Card, Grid, Text, Modal, Title, Divider, TextInput, UnstyledButton, Checkbox, Button} from "@mantine/core";
+import {
+	Card,
+	Grid,
+	Text,
+	Modal,
+	Title,
+	Divider,
+	TextInput,
+	UnstyledButton,
+	Checkbox,
+	Button,
+} from "@mantine/core";
 import {TMember} from "../../../../../types";
 import {formatter} from "../../../../../context";
 import {store} from "../../../../../store/store";
@@ -48,7 +59,7 @@ export default function PartyMemberComponent(props: TProps) {
 			}
 		}
 		return cost;
-	}
+	};
 
 	const [deleteLoading, setDeleteLoading] = useState(false);
 	const [changeLoading, setChangeLoading] = useState(false);

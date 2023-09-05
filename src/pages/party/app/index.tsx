@@ -1,4 +1,16 @@
-import {Button, Card, Grid, Title, Divider, Container, Center, Modal, Text} from "@mantine/core";
+import {
+	Button,
+	Card,
+	Grid,
+	Title,
+	Divider,
+	Container,
+	Center,
+	Modal,
+	Text,
+	Accordion,
+	Space,
+} from "@mantine/core";
 import {useEffect, useState} from "react";
 import {store} from "../../../store/store";
 import PartyMembers from "./@members";
@@ -11,7 +23,8 @@ import {partyActions} from "../../../store/features/party.slice";
 import {useNavigate} from "react-router-dom";
 import LoginAPI from "../../login/api";
 import {userActions} from "../../../store/features/user.slice";
-import { formatter } from "../../../context";
+import {formatter} from "../../../context";
+import {IconCup} from "@tabler/icons-react";
 
 export default function PartyApp() {
 	const backend = new PartyAPI();
@@ -45,7 +58,7 @@ export default function PartyApp() {
 
 	const removeAllMembers = () => {
 		setClearMembersLoading(true);
-		setClearMembersModal(false)
+		setClearMembersModal(false);
 		backend
 			.removeMembers(calculator.id)
 			.then(() => {
@@ -82,7 +95,7 @@ export default function PartyApp() {
 			cost += pos.cost;
 		}
 		return cost;
-	}
+	};
 
 	useEffect(() => {
 		if (!calculator) return;
@@ -107,7 +120,8 @@ export default function PartyApp() {
 			loginBackend
 				.checkUser(source.token)
 				.then(d => {
-					if (d.data.user.username) store.dispatch(userActions.changeUsername(d.data.user.username));
+					if (d.data.user.username)
+						store.dispatch(userActions.changeUsername(d.data.user.username));
 					if (d.data.user.avatar) store.dispatch(userActions.changeAvatar(d.data.user.avatar));
 					if (d.data.user) store.dispatch(userActions.login());
 				})
@@ -145,11 +159,7 @@ export default function PartyApp() {
 
 			<PartyAddPositionModal opened={addPosition} onClose={closeAddPosition} />
 
-			<Modal
-				opened={clearMembersModal}
-				onClose={() => setClearMembersModal(false)}
-				centered
-			>
+			<Modal opened={clearMembersModal} onClose={() => setClearMembersModal(false)} centered>
 				<Grid>
 					<Grid.Col>
 						<Title order={2} align={`center`}>
@@ -174,11 +184,7 @@ export default function PartyApp() {
 				</Grid>
 			</Modal>
 
-			<Modal
-				opened={clearPositionsModal}
-				onClose={() => setClearPositionsModal(false)}
-				centered
-			>
+			<Modal opened={clearPositionsModal} onClose={() => setClearPositionsModal(false)} centered>
 				<Grid>
 					<Grid.Col>
 						<Title order={2} align={`center`}>
@@ -321,7 +327,11 @@ export default function PartyApp() {
 									</Grid.Col>
 
 									<Grid.Col sm={8} xs={12}>
-										<Button fullWidth variant={`outline`} onClick={() => setAddPosition(true)}>
+										<Button
+											fullWidth
+											variant={`outline`}
+											onClick={() => setAddPosition(true)}
+										>
 											Добавить
 										</Button>
 									</Grid.Col>
@@ -346,6 +356,93 @@ export default function PartyApp() {
 									<PartyPositions />
 								</Grid>
 							</Card>
+						</Grid.Col>
+
+						<Grid.Col>
+							<Divider />
+						</Grid.Col>
+
+						<Grid.Col>
+							<Accordion variant={`separated`} radius={`md`}>
+								<Accordion.Item value={`org`}>
+									<Accordion.Control>Кто такой организатор?</Accordion.Control>
+									<Accordion.Panel>
+										<Text>
+											Организатор - человек, который закупается для вечеринки. Он
+											как и все, может кушать или использовать позиции, но если
+											нажать на его карточку, то можно посмотреть, сколько нужно
+											ему вернуть денег.
+										</Text>
+										<Space h={`xs`} />
+										<Text>
+											Среди участников организатор отмечен другой обводкой
+											карточки.
+										</Text>
+									</Accordion.Panel>
+								</Accordion.Item>
+
+								<Accordion.Item value={`howUse`}>
+									<Accordion.Control>
+										Я не помню как использовать калькулятор
+									</Accordion.Control>
+									<Accordion.Panel>
+										<Text>
+											Чтобы вспомнить как им пользоваться, ты можешь перейти на
+											страницу создания и пролистать чуть ниже
+										</Text>
+										<Space h={`xs`} />
+										<Button
+											fullWidth
+											variant={`outline`}
+											onClick={() => navigate(`/party`)}
+										>
+											Перейти
+										</Button>
+									</Accordion.Panel>
+								</Accordion.Item>
+
+								<Accordion.Item value={`disabled`}>
+									<Accordion.Control>
+										Почему некоторые кнопки не жмутся
+									</Accordion.Control>
+									<Accordion.Panel>
+										<Text>
+											Если кнопка серая (как ниже), то значит она заблокирована.
+										</Text>
+										<Space h={`xs`} />
+										<Button fullWidth disabled>
+											Я заблокированная кнопка
+										</Button>
+										<Space h={`xs`} />
+										<Text>
+											Обычно нужно что-то сделать, чтобы ее разблокировать.
+											Например, добавить участников и тогда кнопка очистки списка
+											участников станет рабочей.
+										</Text>
+										<Space h={`xs`} />
+										<Text>
+											Но есть некоторые кнопки, над которыми я еще работаю.
+										</Text>
+									</Accordion.Panel>
+								</Accordion.Item>
+							</Accordion>
+						</Grid.Col>
+
+						<Grid.Col>
+							<Divider />
+						</Grid.Col>
+
+						<Grid.Col>
+							<Button
+								fullWidth
+								variant={`outline`}
+								leftIcon={<IconCup stroke={1.3} />}
+								onClick={() =>
+									(window.location.href = `https://boosty.to/jourloy/donate`)
+								}
+							>
+								Купи мне кофе
+							</Button>
 						</Grid.Col>
 					</Grid>
 				</Center>

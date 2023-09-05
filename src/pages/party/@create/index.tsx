@@ -1,5 +1,4 @@
 import {
-	ActionIcon,
 	Button,
 	Card,
 	Center,
@@ -20,7 +19,7 @@ import {partyActions} from "../../../store/features/party.slice";
 import {store} from "../../../store/store";
 import {useState} from "react";
 import {formatter} from "../../../context";
-import {IconArrowBigDownFilled, IconTrashXFilled} from "@tabler/icons-react";
+import {IconArrowBigDownFilled} from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 
 export default function PartyCreate() {
@@ -256,53 +255,37 @@ export default function PartyCreate() {
 													</Title>
 												</Grid.Col>
 
-												<Grid.Col>
-													<Card withBorder w={`100%`} py={5} px={10}>
+												<Grid.Col span={6}>
+													<Card withBorder w={`100%`}>
 														<Grid>
-															<Grid.Col span={2}>
+															<Grid.Col span={4}>
 																<Text mt={`3px`}>
 																	{formatter.format(Math.ceil(+exPositionCost / 2))}
 																</Text>
 															</Grid.Col>
 
 															<Grid.Col span={8}>
-																<Text align={`center`} mt={`3px`} truncate>
+																<Text align={`right`} mt={`3px`} truncate>
 																	{exMemberNameF}
 																</Text>
-															</Grid.Col>
-
-															<Grid.Col span={2}>
-																<Group position={`right`} spacing={0}>
-																	<ActionIcon color={`red`} disabled>
-																		<IconTrashXFilled stroke={1} />
-																	</ActionIcon>
-																</Group>
 															</Grid.Col>
 														</Grid>
 													</Card>
 												</Grid.Col>
 
-												<Grid.Col>
-													<Card withBorder w={`100%`} py={5} px={10}>
+												<Grid.Col span={6}>
+													<Card withBorder w={`100%`}>
 														<Grid>
-															<Grid.Col span={2}>
+															<Grid.Col span={4}>
 																<Text mt={`3px`}>
 																	{formatter.format(Math.ceil(+exPositionCost / 2))}
 																</Text>
 															</Grid.Col>
 
 															<Grid.Col span={8}>
-																<Text align={`center`} mt={`3px`} truncate>
+																<Text align={`right`} mt={`3px`} truncate>
 																	{exMemberNameS}
 																</Text>
-															</Grid.Col>
-
-															<Grid.Col span={2}>
-																<Group position={`right`} spacing={0}>
-																	<ActionIcon color={`red`} disabled>
-																		<IconTrashXFilled stroke={1} />
-																	</ActionIcon>
-																</Group>
 															</Grid.Col>
 														</Grid>
 													</Card>
@@ -321,6 +304,82 @@ export default function PartyCreate() {
 												<Grid.Col>
 													<Text>
 														Около каждого участника будет сумма, которую он должен заплатить
+													</Text>
+												</Grid.Col>
+											</Grid>
+										</Card>
+									</Grid.Col>
+
+									<Grid.Col>
+										<Divider
+											labelPosition={`center`}
+											label={
+												<Title align={`center`} order={2}>
+													А если покупает не один?
+												</Title>
+											}
+										/>
+									</Grid.Col>
+
+									<Grid.Col md={8} sm={12}>
+										<Card withBorder>
+											<Grid>
+												<Grid.Col>
+													<Title order={3} align={`center`}>
+														Участники
+													</Title>
+												</Grid.Col>
+
+												<Grid.Col span={6}>
+													<Card withBorder w={`100%`} style={{borderColor: `#f2d9ae`}}>
+														<Grid>
+															<Grid.Col span={4}>
+																<Text mt={`3px`}>
+																	{formatter.format(Math.ceil(+exPositionCost / 2))}
+																</Text>
+															</Grid.Col>
+
+															<Grid.Col span={8}>
+																<Text align={`right`} mt={`3px`} truncate>
+																	{exMemberNameF}
+																</Text>
+															</Grid.Col>
+														</Grid>
+													</Card>
+												</Grid.Col>
+
+												<Grid.Col span={6}>
+													<Card withBorder w={`100%`} style={{borderColor: `#f2d9ae`}}>
+														<Grid>
+															<Grid.Col span={4}>
+																<Text mt={`3px`}>
+																	{formatter.format(Math.ceil(+exPositionCost / 2))}
+																</Text>
+															</Grid.Col>
+
+															<Grid.Col span={8}>
+																<Text align={`right`} mt={`3px`} truncate>
+																	{exMemberNameS}
+																</Text>
+															</Grid.Col>
+														</Grid>
+													</Card>
+												</Grid.Col>
+											</Grid>
+										</Card>
+									</Grid.Col>
+
+									<Grid.Col md={4} sm={12}>
+										<Card>
+											<Grid>
+												<Grid.Col>
+													<Text>Можно добавить организаторов</Text>
+												</Grid.Col>
+
+												<Grid.Col>
+													<Text>
+														При создании позиции выбираешь кто платит и после можно
+														посмотреть, сколько нужно вернуть какому человеку
 													</Text>
 												</Grid.Col>
 											</Grid>
