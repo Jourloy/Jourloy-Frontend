@@ -9,7 +9,6 @@ import {
 	Group,
 	ActionIcon,
 	Flex,
-	Space,
 	Center,
 } from "@mantine/core";
 import {IconBrandDiscord, IconBrandGithub, IconBrandTwitch} from "@tabler/icons-react";
@@ -125,18 +124,6 @@ export default function Main() {
 							</Grid.Col>
 						</Grid>
 					</Card>
-				</Grid.Col>
-
-				<Grid.Col span={6} hidden>
-					<Button fullWidth variant={`outline`}>
-						Связаться
-					</Button>
-				</Grid.Col>
-
-				<Grid.Col span={6} hidden>
-					<Button fullWidth variant={`outline`}>
-						Купить кофе
-					</Button>
 				</Grid.Col>
 			</Grid>
 		</Flex>
