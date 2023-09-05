@@ -19,8 +19,8 @@ import {partyActions} from "../../../store/features/party.slice";
 import {store} from "../../../store/store";
 import {useState} from "react";
 import {formatter} from "../../../context";
-import {IconArrowBigDownFilled} from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
+import ScrollHint from "../../../components/scrollHint";
 
 export default function PartyCreate() {
 	const backend = new PartyAPI();
@@ -59,11 +59,7 @@ export default function PartyCreate() {
 				ml={`-16px`}
 			>
 				<Group position={`center`} w={`100%`}>
-					<IconArrowBigDownFilled stroke={1.3} style={{color: `#868e96`}} />
-					<Text align={`center`} color={`dimmed`} tt={`lowercase`}>
-						Там больше информации
-					</Text>
-					<IconArrowBigDownFilled stroke={1.3} style={{color: `#868e96`}} />
+					<ScrollHint />
 				</Group>
 			</Paper>
 			<Paper>
