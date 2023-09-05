@@ -3,7 +3,6 @@ import {DatesProvider} from "@mantine/dates";
 import {PropsWithChildren} from "react";
 import {ToastContainer} from "react-toastify";
 import "dayjs/locale/ru";
-import LayoutContainer from "./layout";
 import {Providers} from "../store/provider";
 
 export default function DefaultContainer(props: PropsWithChildren) {
@@ -42,9 +41,7 @@ export default function DefaultContainer(props: PropsWithChildren) {
 			}}
 		>
 			<DatesProvider settings={{locale: `ru`}}>
-				<LayoutContainer>
 					<Providers>{props.children}</Providers>
-				</LayoutContainer>
 			</DatesProvider>
 			<ToastContainer />
 		</MantineProvider>

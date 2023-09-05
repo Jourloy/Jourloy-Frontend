@@ -1,23 +1,12 @@
-import {
-	Footer,
-	Text,
-	Center,
-	AppShell,
-} from "@mantine/core";
+import {Footer, Text, Center, AppShell} from "@mantine/core";
 import {PropsWithChildren} from "react";
-
-import HeaderPreset from "./presets/header";
+import HeaderComponent from "../components/header";
 
 export default function LayoutContainer(props: PropsWithChildren) {
-	
-
 	return (
 		<>
-			
 			<AppShell
-				header={
-					<HeaderPreset />
-				}
+				header={<HeaderComponent />}
 				footer={
 					<Footer height={45}>
 						<Center h={`100%`} w={`100%`}>
