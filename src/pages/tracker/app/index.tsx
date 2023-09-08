@@ -5,7 +5,6 @@ import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import DefaultLoading from "../../../components/loading";
 import {Flex, Grid, Button, Card, Title, Divider, Progress, Space, Text} from "@mantine/core";
-import {IconArrowsSort, IconAdjustments} from "@tabler/icons-react";
 import {formatter} from "../../../context";
 import TrackerLogic from "../logic";
 import IncomeModal from "./@modals/income";
@@ -43,7 +42,10 @@ export default function TrackerApp() {
 	const closeHistoryModal = () => setHistoryModal(false);
 	const closePlannedModal = () => setPlannedModal(false);
 
-	const spends = tracker.spends.filter(s => s.date == null);
+	console.log(tracker.spends)
+	const spends = tracker.spends
+		.filter(s => s.date == null)
+		.sort(() => -1);
 	const plannedSpends = tracker.spends.filter(s => s.date != null);
 
 	const getSpendsComponents = () => {
@@ -66,7 +68,7 @@ export default function TrackerApp() {
 				onOpen={() => setPlannedModal(true)}
 			/>
 		));
-	}
+	};
 
 	useEffect(() => {
 		if (!loading) return;
@@ -98,14 +100,14 @@ export default function TrackerApp() {
 			<SpendModal opened={spendModal} onClose={closeSpendModal} />
 
 			<Flex justify={`center`} py={20} px={20}>
-				<Grid columns={6} maw={`850px`} w={`100%`}>
-					<Grid.Col span={6}>
+				<Grid maw={`850px`} w={`100%`}>
+					<Grid.Col>
 						<Button disabled fullWidth>
 							Это твой трекер
 						</Button>
 					</Grid.Col>
 
-					<Grid.Col span={6}>
+					<Grid.Col>
 						<Card p={15} withBorder>
 							<Grid columns={1} gutter={3}>
 								<Grid.Col>
@@ -150,25 +152,25 @@ export default function TrackerApp() {
 						</Card>
 					</Grid.Col>
 
-					<Grid.Col span={2}>
+					<Grid.Col span={4}>
 						<Button fullWidth onClick={() => setIncomeModal(true)}>
 							Доход
 						</Button>
 					</Grid.Col>
 
-					<Grid.Col span={2}>
+					<Grid.Col span={4}>
 						<Button fullWidth onClick={() => setSpendModal(true)}>
 							Расход
 						</Button>
 					</Grid.Col>
 
-					<Grid.Col span={2}>
+					<Grid.Col span={4}>
 						<Button fullWidth disabled>
 							Долг
 						</Button>
 					</Grid.Col>
 
-					<Grid.Col md={4} sm={6}>
+					<Grid.Col md={8} sm={12}>
 						<Card withBorder>
 							<Grid columns={2}>
 								<Grid.Col span={2}>
@@ -180,7 +182,7 @@ export default function TrackerApp() {
 								<Grid.Col span={1}>
 									<Card withBorder>
 										<Title order={3} align={`center`} color={`green`}>
-											+{formatter.format(24914)}
+											+{formatter.format(logic.getTotalIncome())}
 										</Title>
 									</Card>
 								</Grid.Col>
@@ -188,7 +190,7 @@ export default function TrackerApp() {
 								<Grid.Col span={1}>
 									<Card withBorder>
 										<Title order={3} align={`center`} color={`red`}>
-											-{formatter.format(12323)}
+											{formatter.format(logic.getTotalSpend())}
 										</Title>
 									</Card>
 								</Grid.Col>
@@ -202,7 +204,7 @@ export default function TrackerApp() {
 						</Card>
 					</Grid.Col>
 
-					<Grid.Col md={2} sm={6} xs={6}>
+					<Grid.Col md={4} sm={12}>
 						<Card withBorder h={`100%`}>
 							<Flex align={`center`} justify={`center`} h={`100%`} w={`100%`}>
 								<Title
@@ -212,13 +214,13 @@ export default function TrackerApp() {
 									size={`30px`}
 									opacity={`20%`}
 								>
-									Мы работаем над этим
+									Еще не готово
 								</Title>
 							</Flex>
 						</Card>
 					</Grid.Col>
 
-					<Grid.Col span={6}>
+					<Grid.Col>
 						<Divider
 							label={
 								<Text size={`lg`} tt={`uppercase`}>
@@ -229,25 +231,11 @@ export default function TrackerApp() {
 							my={`10px`}
 						/>
 						<Card p={0}>
-							<Grid columns={4}>
-								<Grid.Col span={2} hidden>
-									<Button fullWidth variant={`outline`}>
-										<IconArrowsSort stroke={1.3} color={`black`} />
-									</Button>
-								</Grid.Col>
-
-								<Grid.Col span={2} hidden>
-									<Button fullWidth variant={`outline`}>
-										<IconAdjustments stroke={1.3} color={`black`} />
-									</Button>
-								</Grid.Col>
-
-								{getPlannedSpendsComponents()}
-							</Grid>
+							<Grid>{getPlannedSpendsComponents()}</Grid>
 						</Card>
 					</Grid.Col>
 
-					<Grid.Col span={6}>
+					<Grid.Col>
 						<Divider
 							label={
 								<Text size={`lg`} tt={`uppercase`}>
@@ -258,19 +246,7 @@ export default function TrackerApp() {
 							my={`10px`}
 						/>
 						<Card p={0}>
-							<Grid columns={4}>
-								<Grid.Col span={2} hidden>
-									<Button fullWidth variant={`outline`}>
-										<IconArrowsSort stroke={1.3} color={`black`} />
-									</Button>
-								</Grid.Col>
-
-								<Grid.Col span={2} hidden>
-									<Button fullWidth variant={`outline`}>
-										<IconAdjustments stroke={1.3} color={`black`} />
-									</Button>
-								</Grid.Col>
-
+							<Grid>
 								<Grid.Col hidden={tracker.spends !== null && tracker.spends.length > 0}>
 									<Title
 										align={`center`}

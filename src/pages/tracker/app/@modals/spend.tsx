@@ -71,6 +71,7 @@ export default function SpendModal(props: TSpendModalProps) {
 	const onClose = () => {
 		form.reset();
 		setAddLoading(false);
+		setPlanned(false);
 		props.onClose();
 		backend.autoUpdateTracker();
 	};
@@ -135,6 +136,7 @@ export default function SpendModal(props: TSpendModalProps) {
 							<DateInput
 								label={`Выбери дату`}
 								withAsterisk
+								minDate={new Date(Date.now() + 24 * 60 * 60 * 1000)}
 								{...form.getInputProps(`date`)}
 							/>
 						</Grid.Col>

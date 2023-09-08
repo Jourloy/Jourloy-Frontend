@@ -1,4 +1,4 @@
-import {Card, Grid, Modal, Text} from "@mantine/core";
+import {Card, Grid, Modal, Text, UnstyledButton} from "@mantine/core";
 import {TSpend} from "../../../../types";
 import dayjs from "dayjs";
 import TrackerLogic from "../../logic";
@@ -15,24 +15,28 @@ export default function HistorySpend(props: THistorySpendProps) {
 
 	return (
 		<>
-			<Modal opened={props.opened} onClose={props.onClose} centered>
+			<Modal opened={props.opened} onClose={props.onClose} centered></Modal>
 
-			</Modal>
+			<Grid.Col key={props.spend.id} md={6} sm={12}>
+				<UnstyledButton w={`100%`} onClick={props.onOpen}>
+					<Card withBorder>
+						<Grid>
+							<Grid.Col span={4}>{props.spend.cost}</Grid.Col>
 
-			<Grid.Col key={props.spend.id}>
-				<Card withBorder onClick={props.onOpen}>
-					<Grid>
-						<Grid.Col span={4}>{props.spend.cost}</Grid.Col>
+							<Grid.Col span={4}>
+								<Text align={`center`}>
+									{logic.formatCategory(props.spend.category)}
+								</Text>
+							</Grid.Col>
 
-						<Grid.Col span={4}>
-							<Text align={`center`}>{logic.formatCategory(props.spend.category)}</Text>
-						</Grid.Col>
-
-						<Grid.Col span={4}>
-							<Text align={`right`}>{dayjs(props.spend.createdAt).format(`DD.MM.YY`)}</Text>
-						</Grid.Col>
-					</Grid>
-				</Card>
+							<Grid.Col span={4}>
+								<Text align={`right`}>
+									{dayjs(props.spend.createdAt).format(`DD.MM.YY`)}
+								</Text>
+							</Grid.Col>
+						</Grid>
+					</Card>
+				</UnstyledButton>
 			</Grid.Col>
 		</>
 	);
