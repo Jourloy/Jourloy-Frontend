@@ -1,4 +1,15 @@
-import {Card, Grid, UnstyledButton, Text, Group, Title, Avatar, Center, Pagination, TextInput} from "@mantine/core";
+import {
+	Card,
+	Grid,
+	UnstyledButton,
+	Text,
+	Group,
+	Title,
+	Avatar,
+	Center,
+	Pagination,
+	TextInput,
+} from "@mantine/core";
 import {store} from "../../../../store/store";
 import {useState} from "react";
 import {TMember, TPosition} from "../../../../types";
@@ -89,10 +100,15 @@ export default function PartyPositions() {
 		}
 	}
 
-	const getMap = () =>
-		positions.map(position => (
+	const getMap = () => {
+		return positions.map(position => (
 			<Grid.Col key={position.id}>
-				<UnstyledButton w={`100%`} mah={`50px`} h={`100%`} onClick={() => openPosition(position)}>
+				<UnstyledButton
+					w={`100%`}
+					mah={`50px`}
+					h={`100%`}
+					onClick={() => openPosition(position)}
+				>
 					<Card withBorder px={10} py={5} h={`50px`}>
 						<Grid>
 							<Grid.Col span={4}>
@@ -120,11 +136,16 @@ export default function PartyPositions() {
 				</UnstyledButton>
 			</Grid.Col>
 		));
+	};
 
 	return (
 		<>
 			{currentPosition && (
-				<PositionModal opened={positionModal} onClose={closePosition} position={currentPosition} />
+				<PositionModal
+					opened={positionModal}
+					onClose={closePosition}
+					position={currentPosition}
+				/>
 			)}
 			<Grid.Col>
 				<TextInput
@@ -137,7 +158,12 @@ export default function PartyPositions() {
 			{getMap()}
 			<Grid.Col hidden={positionSearch !== ``}>
 				<Center>
-					<Pagination total={positionPages} value={positionPage} onChange={setPositionPage} color={`dark`} />
+					<Pagination
+						total={positionPages}
+						value={positionPage}
+						onChange={setPositionPage}
+						color={`dark`}
+					/>
 				</Center>
 			</Grid.Col>
 		</>

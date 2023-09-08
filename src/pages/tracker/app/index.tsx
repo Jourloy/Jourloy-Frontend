@@ -12,6 +12,7 @@ import IncomeModal from "./@modals/income";
 import SettingsModal from "./@modals/settings";
 import SpendModal from "./@modals/spend";
 import HistorySpend from "./@components/spend";
+import PlannedSpend from "./@components/plannedSpend";
 
 export default function TrackerApp() {
 	const backend = new TrackerAPI();
@@ -33,18 +34,20 @@ export default function TrackerApp() {
 	const [spendModal, setSpendModal] = useState(false);
 	// const [creditModal, setCreditModal] = useState(true);
 	const [historyModal, setHistoryModal] = useState(false);
+	const [plannedModal, setPlannedModal] = useState(false);
 
 	const closeSettingsModal = () => setSettingsModal(false);
 	const closeIncomeModal = () => setIncomeModal(false);
 	const closeSpendModal = () => setSpendModal(false);
 	// const closeCreditModal = () => setCreditModal(false);
 	const closeHistoryModal = () => setHistoryModal(false);
+	const closePlannedModal = () => setPlannedModal(false);
 
 	const spends = tracker.spends.filter(s => s.date == null);
 	const plannedSpends = tracker.spends.filter(s => s.date != null);
 
-	const getSpendsComponents = () =>
-		spends.map(s => (
+	const getSpendsComponents = () => {
+		return spends.map(s => (
 			<HistorySpend
 				spend={s}
 				opened={historyModal}
@@ -52,6 +55,18 @@ export default function TrackerApp() {
 				onOpen={() => setHistoryModal(true)}
 			/>
 		));
+	};
+
+	const getPlannedSpendsComponents = () => {
+		return plannedSpends.map(s => (
+			<PlannedSpend
+				spend={s}
+				opened={plannedModal}
+				onClose={closePlannedModal}
+				onOpen={() => setPlannedModal(true)}
+			/>
+		));
+	}
 
 	useEffect(() => {
 		if (!loading) return;
@@ -227,16 +242,7 @@ export default function TrackerApp() {
 									</Button>
 								</Grid.Col>
 
-								<Grid.Col mt={`10px`}>
-									<Title
-										align={`center`}
-										c={`dimmed`}
-										tt={`uppercase`}
-										opacity={`20%`}
-									>
-										Нет запланированных расходов
-									</Title>
-								</Grid.Col>
+								{getPlannedSpendsComponents()}
 							</Grid>
 						</Card>
 					</Grid.Col>

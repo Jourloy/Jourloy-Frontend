@@ -1,20 +1,26 @@
 import {Button, Divider, Grid, Modal, NumberInput, Select, Title} from "@mantine/core";
 import {useForm} from "@mantine/form";
+import TrackerAPI from "../../api";
+import { toast } from "react-toastify";
+import { useState } from "react";
+import TrackerLogic from "../../logic";
 
 type TIncomeModalProps = {
 	opened: boolean;
 	onClose: () => void;
 };
 
-const data = [
-	{value: `work`, label: `Зарплата`},
-	{value: `other`, label: `Другое`},
-];
-
 export default function IncomeModal(props: TIncomeModalProps) {
+	const backend = new TrackerAPI();
+	const logic = new TrackerLogic();
+
+	const data = logic.getIncomeCategory();
+
+	const [addLoading, setAddLoading] = useState(false);
+
 	const form = useForm({
 		initialValues: {
-			cost: 0,
+			cost: 1,
 			category: ``,
 		},
 
@@ -24,11 +30,27 @@ export default function IncomeModal(props: TIncomeModalProps) {
 		},
 	});
 
-	const sumbit = (values: React.FormEvent<HTMLFormElement>) => {};
+	const sumbit = (values: {cost: number, category: string}) => {
+		setAddLoading(true);
+
+		backend.addSpend({cost: values.cost, category: values.category}).then(() => {
+			toast.success(`Доход успешно добавлен`);
+			onClose();
+		}).catch(() => {
+			toast.error(`Произошла ошибка, попробуй еще раз позже`);
+		});
+	};	
+
+	const onClose = () => {
+		form.reset();
+		setAddLoading(false);
+		backend.autoUpdateTracker();
+		props.onClose();
+	}
 
 	return (
 		<>
-			<Modal opened={props.opened} onClose={props.onClose} centered>
+			<Modal opened={props.opened} onClose={onClose} centered>
 				<Grid>
 					<Grid.Col>
 						<Title order={2} align={`center`}>
@@ -40,7 +62,7 @@ export default function IncomeModal(props: TIncomeModalProps) {
 						<Divider />
 					</Grid.Col>
 
-					<form onSubmit={values => sumbit(values)} style={{width: `100%`}}>
+					<form onSubmit={form.onSubmit(values => sumbit(values))} style={{width: `100%`}}>
 						<Grid.Col>
 							<NumberInput
 								label={`Сколько пришло`}
@@ -55,6 +77,7 @@ export default function IncomeModal(props: TIncomeModalProps) {
 							<Select
 								data={data}
 								label={`Какая категория`}
+								withAsterisk
 								{...form.getInputProps(`category`)}
 							/>
 						</Grid.Col>
@@ -64,7 +87,7 @@ export default function IncomeModal(props: TIncomeModalProps) {
 						</Grid.Col>
 
 						<Grid.Col>
-							<Button type={`submit`} fullWidth>
+							<Button type={`submit`} fullWidth loading={addLoading}>
 								Добавить
 							</Button>
 						</Grid.Col>

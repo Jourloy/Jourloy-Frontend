@@ -3,14 +3,14 @@ import {TSpend} from "../../../../types";
 import dayjs from "dayjs";
 import TrackerLogic from "../../logic";
 
-type THistorySpendProps = {
+type TPlannedSpendProps = {
 	spend: TSpend;
 	opened: boolean;
 	onClose: () => void;
 	onOpen: () => void;
 };
 
-export default function HistorySpend(props: THistorySpendProps) {
+export default function PlannedSpend(props: TPlannedSpendProps) {
 	const logic = new TrackerLogic();
 
 	return (

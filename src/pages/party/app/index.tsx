@@ -112,9 +112,9 @@ export default function PartyApp() {
 		else setRemoveAllPositionsDisable(false);
 		setRemoveAllPositionsLoading(false);
 	}, [calculator]);
-
+	
 	useEffect(() => {
-		const source = loginBackend.getToken();
+		const source = loginBackend.getSource();
 
 		if (!logined) {
 			loginBackend

@@ -58,6 +58,32 @@ export default class TrackerLogic {
 
 		return `0`;
 	}
+
+	public getIncomeCategory() {
+		return [
+			{value: `work`, label: `Зарплата`},
+			{value: `other`, label: `Другое`},
+		];
+	}
+
+	public getSpendCategory() {
+		return [
+			{value: `food`, label: `Еда`},
+			{value: `entertainment`, label: `Развлечения`},
+			{value: `health`, label: `Здоровье`},
+			{value: `other`, label: `Другое`},
+		];
+	}
+
+	public formatCategory(value: string) {
+		for (const cat of this.getIncomeCategory()) {
+			if (cat.value === value) return cat.label;
+		}
+		for (const cat of this.getSpendCategory()) {
+			if (cat.value === value) return cat.label;
+		}
+		return null;
+	}
 }
 
 type TCheckNumberOpts = {
