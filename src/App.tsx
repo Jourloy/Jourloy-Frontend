@@ -11,6 +11,7 @@ import KeyboardIndex from "./pages/keyboard";
 import TrackerIndex from "./pages/tracker";
 import TrackerApp from "./pages/tracker/app";
 import TrackerCreate from "./pages/tracker/create";
+import Blocked from "./pages/blocked";
 
 export default function App() {
 	return (
@@ -24,10 +25,9 @@ export default function App() {
 					}
 					path="/"
 				/>
-
 				<Route
 					element={
-						<LayoutContainer>
+						<LayoutContainer ignoreDomainCheck>
 							<Login />
 						</LayoutContainer>
 					}
@@ -35,7 +35,7 @@ export default function App() {
 				/>
 				<Route
 					element={
-						<LayoutContainer>
+						<LayoutContainer ignoreDomainCheck>
 							<Check />
 						</LayoutContainer>
 					}
@@ -102,6 +102,15 @@ export default function App() {
 						</LayoutContainer>
 					}
 					path="/tracker/app"
+				/>
+
+				<Route
+					element={
+						<LayoutContainer>
+							<Blocked />
+						</LayoutContainer>
+					}
+					path="/blocked"
 				/>
 			</Routes>
 		</BrowserRouter>
