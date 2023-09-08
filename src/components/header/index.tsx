@@ -30,7 +30,7 @@ export default function HeaderComponent() {
 	};
 
 	useEffect(() => {
-		const source = loginBackend.getToken();
+		const source = loginBackend.getSource();
 		loginBackend.autoLogin(source.token);
 		return () => source.cancel();
 	}, []);

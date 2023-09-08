@@ -8,6 +8,9 @@ import FilmsIndex from "./pages/films";
 import PartyApp from "./pages/party/app";
 import LayoutContainer from "./containers/layout";
 import KeyboardIndex from "./pages/keyboard";
+import TrackerIndex from "./pages/tracker";
+import TrackerApp from "./pages/tracker/app";
+import TrackerCreate from "./pages/tracker/create";
 
 export default function App() {
 	return (
@@ -72,6 +75,33 @@ export default function App() {
 						</LayoutContainer>
 					}
 					path="/keyboard"
+				/>
+
+				<Route
+					element={
+						<LayoutContainer>
+							<TrackerIndex />
+						</LayoutContainer>
+					}
+					path="/tracker"
+				/>
+
+				<Route
+					element={
+						<LayoutContainer>
+							<TrackerCreate />
+						</LayoutContainer>
+					}
+					path="/tracker/create"
+				/>
+
+				<Route
+					element={
+						<LayoutContainer>
+							<TrackerApp />
+						</LayoutContainer>
+					}
+					path="/tracker/app"
 				/>
 			</Routes>
 		</BrowserRouter>

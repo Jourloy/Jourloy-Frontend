@@ -1,16 +1,22 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
 
 const backendLink = process.env.NODE_ENV !== "production" 
 	? "https://api.jourloy.online" 
 	: "https://api.jourloy.com";
 
 export default class BackendContext {
-	public static link = backendLink;
+	public context: AxiosInstance;
 
-	public static getContext(postLink?: string) {
-		return axios.create({
-			baseURL: this.link + `/${postLink}`,
+	constructor(path?: string) {
+		let link = backendLink;
+		if (path) link += `/${path}`;
+		this.context = axios.create({
+			baseURL: link,
 			withCredentials: true,
-		});
+		})
+	}
+
+	public getSource() {
+		return axios.CancelToken.source();
 	}
 }

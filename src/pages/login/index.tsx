@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import {store} from "../../store/store";
 import {userActions} from "../../store/features/user.slice";
 import {useNavigate} from "react-router-dom";
-import DefaultLoading from "../@loading";
+import DefaultLoading from "../../components/loading";
 
 export default function Login() {
 	const backend = new LoginAPI();
@@ -22,7 +22,7 @@ export default function Login() {
 	};
 
 	useEffect(() => {
-		const source = backend.getToken();
+		const source = backend.getSource();
 
 		backend
 			.checkUser(source.token)

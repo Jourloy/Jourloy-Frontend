@@ -1,12 +1,10 @@
-import axios, {CancelToken} from "axios";
+import {CancelToken} from "axios";
 import BackendContext from "../../context/backend.context";
 import {TCalculator, TMember} from "../../types";
 
-export default class PartyAPI {
-	private context = BackendContext.getContext(`/party`);
-
-	public getToken() {
-		return axios.CancelToken.source();
+export default class PartyAPI extends BackendContext {
+	constructor() {
+		super(`/party`);
 	}
 
 	/* CALCULATOR */
@@ -43,11 +41,23 @@ export default class PartyAPI {
 
 	/* POSITIONS */
 
-	public createPosition(data: {calculatorId: number; name: string; cost: number; memberIds?: number[], payerId?: number}) {
+	public createPosition(data: {
+		calculatorId: number;
+		name: string;
+		cost: number;
+		memberIds?: number[];
+		payerId?: number;
+	}) {
 		return this.context.post(`/position`, data, {withCredentials: true});
 	}
 
-	public updatePosition(data: {positionId: number; name?: string; cost?: number; memberIds?: number[], payerId?: number}) {
+	public updatePosition(data: {
+		positionId: number;
+		name?: string;
+		cost?: number;
+		memberIds?: number[];
+		payerId?: number;
+	}) {
 		return this.context.patch(`/position`, data, {withCredentials: true});
 	}
 

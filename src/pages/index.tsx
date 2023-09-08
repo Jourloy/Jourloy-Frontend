@@ -119,7 +119,11 @@ export default function Main() {
 							</Grid.Col>
 
 							<Grid.Col>
-								<Button disabled fullWidth color={`orange`}>
+								<Button 
+									fullWidth 
+									color={`orange.5`}
+									onClick={() => navigate(`/tracker`)}
+								>
 									Денежный трекер
 								</Button>
 							</Grid.Col>

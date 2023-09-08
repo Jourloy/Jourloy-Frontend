@@ -1,15 +1,12 @@
-import axios, {CancelToken} from "axios";
+import {CancelToken} from "axios";
 import BackendContext from "../../context/backend.context";
 import {TUser} from "../../types";
 import {store} from "../../store/store";
 import {userActions} from "../../store/features/user.slice";
 
-export default class LoginAPI {
-	public context = BackendContext.getContext(`/auth`);
-	public source = axios.CancelToken.source();
-
-	public getToken() {
-		return axios.CancelToken.source();
+export default class LoginAPI extends BackendContext {
+	constructor() {
+		super(`/auth`);
 	}
 
 	public checkUser(token: CancelToken) {
