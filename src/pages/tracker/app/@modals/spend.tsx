@@ -16,12 +16,7 @@ import {toast} from "react-toastify";
 import TrackerLogic from "../../logic";
 import {useForm} from "@mantine/form";
 
-type TSpendModalProps = {
-	opened: boolean;
-	onClose: () => void;
-};
-
-export default function SpendModal(props: TSpendModalProps) {
+export default function SpendModal() {
 	const backend = new TrackerAPI();
 	const logic = new TrackerLogic();
 
@@ -35,6 +30,8 @@ export default function SpendModal(props: TSpendModalProps) {
 
 	const [planned, setPlanned] = useState(false);
 	const [addLoading, setAddLoading] = useState(false);
+
+	const [spendModal, setSpendModal] = useState(false);
 
 	const form = useForm({
 		initialValues: {
@@ -72,13 +69,13 @@ export default function SpendModal(props: TSpendModalProps) {
 		form.reset();
 		setAddLoading(false);
 		setPlanned(false);
-		props.onClose();
+		setSpendModal(false);
 		backend.autoUpdateTracker();
 	};
 
 	return (
 		<>
-			<Modal opened={props.opened} onClose={onClose} centered>
+			<Modal opened={spendModal} onClose={onClose} centered>
 				<Grid>
 					<Grid.Col>
 						<Title order={2} align={`center`}>
@@ -162,6 +159,10 @@ export default function SpendModal(props: TSpendModalProps) {
 					</form>
 				</Grid>
 			</Modal>
+
+			<Button fullWidth onClick={() => setSpendModal(true)}>
+				Расход
+			</Button>
 		</>
 	);
 }

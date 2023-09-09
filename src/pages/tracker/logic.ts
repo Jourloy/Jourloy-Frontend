@@ -1,4 +1,5 @@
 import {store} from "../../store/store";
+import {TSpend} from "../../types";
 
 export default class TrackerLogic {
 	private tracker = store.getState().trackerReducer.tracker;
@@ -212,6 +213,89 @@ export default class TrackerLogic {
 		const sums = spends.map(s => s.cost);
 		// Reduce the costs to calculate the total spend
 		return sums.reduce((a, b) => a + b, 0);
+	}
+
+	/**
+	 * Returns the color for a badge based on the cost of a spend.
+	 * @param spend - The spend object containing the cost.
+	 * @returns The color string for the badge.
+	 */
+	public getBadgeColor(spend: TSpend) {
+		// If the cost is greater than or equal to 0, return green.
+		if (spend.cost >= 0) {
+			return `green`;
+		} else {
+			// If the cost is less than 0, return red.
+			return `red`;
+		}
+	}
+	
+	public getDaysCount() {
+		const budget = this.getTodayBudget();
+		return Math.floor(budget / this.tracker.dayLimit);
+	}
+
+	public getTodayBudget() {
+		const spends = this.tracker.spends.filter(s => {
+			if (s.date) return false;
+			return true;
+		})
+		const sums = spends.reduce((a, b) => a + b.cost, 0);
+		return this.tracker.limit + sums;
+	}
+
+	public getTodayLimit() {
+		const spends = this.tracker.spends.filter(s => {
+			if (s.date) return false;
+
+			const todayDay = new Date().getDate();
+			const todayYear = new Date().getFullYear();
+			const todayMonth = new Date().getMonth();
+
+			if (
+				new Date(s.createdAt).getDate() === todayDay &&
+				new Date(s.createdAt).getFullYear() === todayYear &&
+				new Date(s.createdAt).getMonth() === todayMonth
+			) return true;
+			return false;
+		})
+
+		const sums = spends.reduce((a, b) => a + b.cost, 0);
+		return this.tracker.dayLimit + sums;
+	}
+
+	public getMonthSpend() {
+		const spends = this.tracker.spends.filter(s => {
+			if (s.date || s.cost > 0) return false;
+
+			const todayYear = new Date().getFullYear();
+			const todayMonth = new Date().getMonth();
+
+			if (
+				new Date(s.createdAt).getFullYear() === todayYear &&
+				new Date(s.createdAt).getMonth() === todayMonth
+			) return true;
+			return false;
+		})
+
+		return spends.reduce((a, b) => a + b.cost, 0);
+	}
+
+	public getMonthIncome() {
+		const spends = this.tracker.spends.filter(s => {
+			if (s.date || s.cost < 0) return false;
+
+			const todayYear = new Date().getFullYear();
+			const todayMonth = new Date().getMonth();
+
+			if (
+				new Date(s.createdAt).getFullYear() === todayYear &&
+				new Date(s.createdAt).getMonth() === todayMonth
+			) return true;
+			return false;
+		})
+
+		return spends.reduce((a, b) => a + b.cost, 0);
 	}
 }
 

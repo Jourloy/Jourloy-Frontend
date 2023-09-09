@@ -30,13 +30,6 @@ export default function HeaderComponent() {
 		return () => source.cancel();
 	});
 
-	useEffect(() => {
-		if (document.location.href.includes(`.online`)) {
-			if (!store.getState().userReducer.logined) navigate(`/blocked`);
-			if (store.getState().userReducer.username !== `Igor Shaposhnikov`) navigate(`/blocked`);
-		}
-	});
-
 	return (
 		<>
 			<HeaderSettingsModal opened={userSettings} onClose={() => setUserSettings(false)} />

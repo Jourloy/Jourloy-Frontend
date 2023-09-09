@@ -47,8 +47,8 @@ export type TTracker = {
 	months: number;
 	calc: string;
 	spends: TSpend[];
-	createdAt: Date;
-	updatedAt: Date;
+	createdAt: string;
+	updatedAt: string;
 }
 
 export type TSpend = {
@@ -57,6 +57,6 @@ export type TSpend = {
 	category: string;
 	description?: string;
 	date?: Date;
-	createdAt: Date;
-	updatedAt: Date;
+	createdAt: string;
+	updatedAt: string;
 }

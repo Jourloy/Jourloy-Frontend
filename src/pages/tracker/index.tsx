@@ -1,20 +1,10 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import TrackerAPI from "./api";
-import {
-	Paper,
-	Group,
-	Flex,
-	Grid,
-	Center,
-	Title,
-	Divider,
-	Button,
-	Text,
-} from "@mantine/core";
+import {Paper, Group, Flex, Grid, Center, Title, Divider, Button, Text} from "@mantine/core";
 import ScrollHint from "../../components/scrollHint";
 import DefaultLoading from "../../components/loading";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 
 export default function TrackerIndex() {
 	document.title = `Трекер`;
@@ -57,7 +47,7 @@ export default function TrackerIndex() {
 		return () => source.cancel();
 	}, []);
 
-	if (loading) return(<DefaultLoading />);
+	if (loading) return <DefaultLoading />;
 
 	return (
 		<Paper>

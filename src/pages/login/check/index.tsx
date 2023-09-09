@@ -8,6 +8,7 @@ export default function Check() {
 	const [searchParams] = useSearchParams();
 	const navigate = useNavigate();
 
+
 	useEffect(() => {
 		const success = searchParams.get(`success`);
 		const avatar = searchParams.get(`avatar`);
@@ -17,7 +18,7 @@ export default function Check() {
 		if (avatar) store.dispatch(userActions.changeAvatar(avatar));
 
 		if (success) {
-			navigate(`/`);
+			navigate(-3);
 			store.dispatch(userActions.login());
 			toast.success(`Авторизация прошла успешно`);
 		} else {

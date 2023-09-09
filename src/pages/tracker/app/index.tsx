@@ -30,19 +30,39 @@ export default function TrackerApp() {
 
 	const [settingsModal, setSettingsModal] = useState(false);
 	const [incomeModal, setIncomeModal] = useState(false);
-	const [spendModal, setSpendModal] = useState(false);
 	// const [creditModal, setCreditModal] = useState(true);
 	const [historyModal, setHistoryModal] = useState(false);
 	const [plannedModal, setPlannedModal] = useState(false);
 
 	const closeSettingsModal = () => setSettingsModal(false);
 	const closeIncomeModal = () => setIncomeModal(false);
-	const closeSpendModal = () => setSpendModal(false);
 	// const closeCreditModal = () => setCreditModal(false);
 	const closeHistoryModal = () => setHistoryModal(false);
 	const closePlannedModal = () => setPlannedModal(false);
 
-	console.log(tracker.spends)
+	useEffect(() => {
+		if (!loading) return;
+
+		const source = backend.getSource();
+		backend
+			.autoUpdateTracker(source.token)
+			.then(() => {
+				setLoading(false);
+			})
+			.catch(s => {
+				if (s === 403) navigate(`/login`);
+				if (s === 404) navigate(`/tracker/create`);
+				else {
+					toast.error(`Что-то пошло не так`);
+					navigate(`/tracker`);
+				}
+			});
+
+		return () => source.cancel();
+	}, []);
+
+	if (loading) return <DefaultLoading />;
+
 	const spends = tracker.spends
 		.filter(s => s.date == null)
 		.sort(() => -1);
@@ -70,34 +90,10 @@ export default function TrackerApp() {
 		));
 	};
 
-	useEffect(() => {
-		if (!loading) return;
-
-		const source = backend.getSource();
-		backend
-			.autoUpdateTracker(source.token)
-			.then(() => {
-				setLoading(false);
-			})
-			.catch(s => {
-				if (s === 403) navigate(`/login`);
-				if (s === 404) navigate(`/tracker/create`);
-				else {
-					toast.error(`Что-то пошло не так`);
-					navigate(`/tracker`);
-				}
-			});
-
-		return () => source.cancel();
-	}, []);
-
-	if (loading) return <DefaultLoading />;
-
 	return (
 		<>
 			<SettingsModal opened={settingsModal} onClose={closeSettingsModal} />
 			<IncomeModal opened={incomeModal} onClose={closeIncomeModal} />
-			<SpendModal opened={spendModal} onClose={closeSpendModal} />
 
 			<Flex justify={`center`} py={20} px={20}>
 				<Grid maw={`850px`} w={`100%`}>
@@ -113,7 +109,7 @@ export default function TrackerApp() {
 								<Grid.Col>
 									<Flex align={`center`} justify={`space-between`}>
 										<Title order={2}>{logic.getCalcMode()} бюджет</Title>
-										<Title order={2}>{formatter.format(tracker.dayLimit)}</Title>
+										<Title order={2}>{formatter.format(logic.getTodayLimit())}</Title>
 									</Flex>
 								</Grid.Col>
 
@@ -131,9 +127,9 @@ export default function TrackerApp() {
 
 								<Grid.Col>
 									<Flex align={`center`} justify={`space-between`}>
-										<Text c={`dimmed`}>Осталось дней: {logic.getDays()}</Text>
+										<Text c={`dimmed`}>Осталось дней: {logic.getDaysCount()}</Text>
 										<Text c={`dimmed`}>
-											Бюджет: {formatter.format(tracker.limit)}
+											Бюджет: {formatter.format(logic.getTodayBudget())}
 										</Text>
 									</Flex>
 								</Grid.Col>
@@ -159,14 +155,12 @@ export default function TrackerApp() {
 					</Grid.Col>
 
 					<Grid.Col span={4}>
-						<Button fullWidth onClick={() => setSpendModal(true)}>
-							Расход
-						</Button>
+						<SpendModal />
 					</Grid.Col>
 
 					<Grid.Col span={4}>
 						<Button fullWidth disabled>
-							Долг
+							Не готово
 						</Button>
 					</Grid.Col>
 
@@ -182,7 +176,7 @@ export default function TrackerApp() {
 								<Grid.Col span={1}>
 									<Card withBorder>
 										<Title order={3} align={`center`} color={`green`}>
-											+{formatter.format(logic.getTotalIncome())}
+											+{formatter.format(logic.getMonthIncome())}
 										</Title>
 									</Card>
 								</Grid.Col>
@@ -190,7 +184,7 @@ export default function TrackerApp() {
 								<Grid.Col span={1}>
 									<Card withBorder>
 										<Title order={3} align={`center`} color={`red`}>
-											{formatter.format(logic.getTotalSpend())}
+											{formatter.format(logic.getMonthSpend())}
 										</Title>
 									</Card>
 								</Grid.Col>
