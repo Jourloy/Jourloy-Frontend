@@ -44,6 +44,14 @@ export default class TrackerAPI extends BackendContext {
 			});
 	}
 
+	public async updateTracker(data: TTrackerUpdate, token?: CancelToken) {
+		return this.context.patch(`/`, data, {cancelToken: token});
+	}
+
+	public async removeTracker(id: number, token?: CancelToken) {
+		return this.context.delete(`/${id}`, {cancelToken: token});
+	}
+
 	/* SPENDS */
 
 	public async addSpend(data: TSpend, token?: CancelToken) {
@@ -61,6 +69,13 @@ type TTrackerCreate = {
 	dayLimit: number;
 	months: number;
 	calc: string;
+};
+
+type TTrackerUpdate = {
+	dayLimit: number;
+	startDate: string;
+	calc: string;
+	limit: number;
 };
 
 type TSpend = {

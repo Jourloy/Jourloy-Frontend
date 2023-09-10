@@ -15,8 +15,15 @@ import {useState} from "react";
 import {store} from "../../../../store/store";
 import {useForm} from "@mantine/form";
 import {DatePickerInput} from "@mantine/dates";
+import TrackerAPI from "../../api";
+import {toast} from "react-toastify";
+import {trackerActions} from "../../../../store/features/tracker.slice";
+import {useNavigate} from "react-router-dom";
 
 export default function SettingsModal() {
+	const backend = new TrackerAPI();
+	const navigate = useNavigate();
+
 	const [tracker, setTracker] = useState(store.getState().trackerReducer.tracker);
 	store.subscribe(() => {
 		const _tracker = store.getState().trackerReducer.tracker;
@@ -25,12 +32,15 @@ export default function SettingsModal() {
 
 	const [modalShow, setModalShow] = useState(false);
 	const [deleteMode, setDeleteMode] = useState(false);
+	const [changeLoading, setChangeLoading] = useState(false);
+	const [deleteLoading, setDeleteLoading] = useState(false);
 
 	const form = useForm({
 		initialValues: {
 			dayLimit: tracker.dayLimit,
 			calc: tracker.calc,
-			startDate: new Date(tracker.createdAt),
+			startDate: new Date(tracker.createdAt).toDateString(),
+			limit: tracker.limit,
 		},
 		validate: {
 			dayLimit: value => (value <= 0 ? `Сумма должна быть больше нуля` : null),
@@ -40,12 +50,37 @@ export default function SettingsModal() {
 	});
 
 	const onClose = () => {
-		form.reset();
+		store.dispatch(trackerActions.updateTracker());
 		setModalShow(false);
 	};
 
-	const onSubmit = (values: {dayLimit: number; calc: string}) => {
-		console.log(values);
+	const onSubmit = (values: {dayLimit: number; calc: string; startDate: string, limit: number}) => {
+		setChangeLoading(true);
+		backend
+			.updateTracker(values)
+			.then(() => {
+				toast.success(`Настройки успешно сохранены`);
+				onClose();
+			})
+			.catch(() => {
+				toast.error(`Что-то пошло не так`);
+			})
+			.finally(() => setChangeLoading(false));
+	};
+
+	const onRemove = () => {
+		setDeleteLoading(true);
+		backend
+			.removeTracker(tracker.id)
+			.then(() => {
+				toast.success(`Трекер удален`);
+				onClose();
+				navigate(`/tracker`);
+			})
+			.catch(() => {
+				toast.error(`Что-то пошло не так`);
+			})
+			.finally(() => setDeleteLoading(false));
 	};
 
 	return (
@@ -67,8 +102,18 @@ export default function SettingsModal() {
 							<NumberInput
 								label={`Лимит на период`}
 								min={1}
-								required
+								withAsterisk
 								{...form.getInputProps(`dayLimit`)}
+							/>
+						</Grid.Col>
+
+						<Grid.Col>
+							<NumberInput
+								label={`Бюджет`}
+								min={1}
+								description={`Подробнее об этой настройке можно прочесть под трекером`}
+								withAsterisk
+								{...form.getInputProps(`limit`)}
 							/>
 						</Grid.Col>
 
@@ -76,14 +121,14 @@ export default function SettingsModal() {
 							<DatePickerInput
 								label={`Дата начала отсчета`}
 								valueFormat={`DD.MM.YY`}
-								required
-								value={form.values.startDate}
+								withAsterisk
+								value={new Date(form.values.startDate)}
 								onChange={value => {
 									if (!value) {
 										form.setFieldError(`startDate`, `Выбери дату`);
 										return;
 									}
-									form.setFieldValue(`startDate`, value);
+									form.setFieldValue(`startDate`, new Date(value).toDateString());
 								}}
 								autoFocus={false}
 								popoverProps={{
@@ -118,6 +163,7 @@ export default function SettingsModal() {
 								variant={`outline`}
 								type={`submit`}
 								disabled={!form.isDirty()}
+								loading={changeLoading}
 							>
 								Сохранить
 							</Button>
@@ -126,12 +172,6 @@ export default function SettingsModal() {
 
 					<Grid.Col>
 						<Divider />
-					</Grid.Col>
-
-					<Grid.Col hidden={deleteMode}>
-						<Title order={3} align={`center`} tt={`uppercase`} color={`red`}>
-							Опасная зона
-						</Title>
 					</Grid.Col>
 
 					<Grid.Col hidden={deleteMode}>
@@ -153,7 +193,13 @@ export default function SettingsModal() {
 					</Grid.Col>
 
 					<Grid.Col md={6} sm={12} orderMd={1} orderSm={2} hidden={!deleteMode}>
-						<Button fullWidth color={`red`} variant={`outline`}>
+						<Button
+							fullWidth
+							color={`red`}
+							variant={`outline`}
+							loading={deleteLoading}
+							onClick={onRemove}
+						>
 							Да
 						</Button>
 					</Grid.Col>

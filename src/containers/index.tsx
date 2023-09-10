@@ -9,9 +9,7 @@ import {useColorScheme} from "@mantine/hooks";
 export default function DefaultContainer(props: PropsWithChildren) {
 	const colorSchemePrefered = useColorScheme();
 
-	const [colorScheme, setColorScheme] = useState<ColorScheme>(
-		colorSchemePrefered === `dark` ? `light` : `dark`
-	);
+	const [colorScheme, setColorScheme] = useState<ColorScheme>(colorSchemePrefered);
 	const toggleColorScheme = (value?: ColorScheme) =>
 		setColorScheme(value || (colorScheme === `dark` ? `light` : `dark`));
 
