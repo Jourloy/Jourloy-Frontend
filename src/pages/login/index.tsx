@@ -4,12 +4,13 @@ import LoginAPI from "./api";
 import {useEffect, useState} from "react";
 import {store} from "../../store/store";
 import {userActions} from "../../store/features/user.slice";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import DefaultLoading from "../../components/loading";
 
 export default function Login() {
 	const backend = new LoginAPI();
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	const [loading, setLoading] = useState(true);
 
@@ -29,8 +30,10 @@ export default function Login() {
 			.then(d => {
 				if (d.data.user.username) store.dispatch(userActions.changeUsername(d.data.user.username));
 				if (d.data.user.avatar) store.dispatch(userActions.changeAvatar(d.data.user.avatar));
-				if (d.data.user) store.dispatch(userActions.login());
-				if (d.data.user) navigate(`/`);
+				if (d.data.user) {
+					store.dispatch(userActions.login());
+					location.key === `default` ? navigate(`/`) : navigate(-1);
+				}
 			})
 			.catch(() => {
 				setLoading(false);

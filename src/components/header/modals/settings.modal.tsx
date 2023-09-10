@@ -1,10 +1,11 @@
-import {Button, Divider, Grid, Modal, Title} from "@mantine/core";
+import {Button, Divider, Grid, Modal, Switch, Title, useMantineColorScheme, useMantineTheme} from "@mantine/core";
 import {store} from "../../../store/store";
 import {userActions} from "../../../store/features/user.slice";
 import LoginAPI from "../../../pages/login/api";
 import {toast} from "react-toastify";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {IconSun, IconMoonStars} from "@tabler/icons-react";
 
 type TProps = {
 	opened: boolean;
@@ -14,6 +15,8 @@ type TProps = {
 export default function HeaderSettingsModal(props: TProps) {
 	const loginBackend = new LoginAPI();
 	const navigate = useNavigate();
+	const {colorScheme, toggleColorScheme} = useMantineColorScheme();
+	const theme = useMantineTheme();
 
 	const [logined, setLogined] = useState(store.getState().userReducer.logined);
 
@@ -81,6 +84,21 @@ export default function HeaderSettingsModal(props: TProps) {
 
 					<Grid.Col>
 						<Divider />
+					</Grid.Col>
+
+					<Grid.Col>
+						<Switch
+							checked={colorScheme === `light`}
+							onChange={() => toggleColorScheme()}
+							size="lg"
+							onLabel={<IconSun color={theme.white} stroke={1.5} />}
+							offLabel={
+								<IconMoonStars
+									color={theme.colors.gray[6]}
+									stroke={1.5}
+								/>
+							}
+						/>
 					</Grid.Col>
 
 					<Grid.Col>

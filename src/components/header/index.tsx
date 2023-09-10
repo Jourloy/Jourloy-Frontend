@@ -1,4 +1,4 @@
-import {Avatar, Center, Container, Flex, Group, Header, Title, UnstyledButton} from "@mantine/core";
+import {Avatar, Center, Container, Flex, Group, Header, MantineProvider, Title, UnstyledButton} from "@mantine/core";
 import {store} from "../../store/store";
 import {useEffect, useState} from "react";
 import LoginAPI from "../../pages/login/api";
@@ -37,7 +37,7 @@ export default function HeaderComponent() {
 				<Flex h={40} w={`100%`} justify={`center`} align={`center`}>
 					<Container maw={`850px`} w={`100%`} p={0}>
 						<Center h={`100%`}>
-							<Group position={`apart`} w={`100%`} px={8} mt={`5px`}>
+							<Group position={`apart`} w={`100%`} px={8} mt={`4px`}>
 								<UnstyledButton onClick={toMain}>
 									<Flex>
 										<Title color={`white`}>JOU</Title>
@@ -49,7 +49,14 @@ export default function HeaderComponent() {
 								</UnstyledButton>
 								<UnstyledButton onClick={() => setUserSettings(true)}>
 									<Flex>
-										<Avatar src={avatar} />
+										<MantineProvider
+											inherit
+											theme={{
+												colorScheme: `dark`,
+											}}
+										>
+											<Avatar src={avatar}  />
+										</MantineProvider>
 									</Flex>
 								</UnstyledButton>
 							</Group>

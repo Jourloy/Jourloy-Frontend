@@ -31,7 +31,7 @@ export default function SpendModal() {
 	const [planned, setPlanned] = useState(false);
 	const [addLoading, setAddLoading] = useState(false);
 
-	const [spendModal, setSpendModal] = useState(false);
+	const [modalShow, setModalShow] = useState(false);
 
 	const form = useForm({
 		initialValues: {
@@ -67,15 +67,15 @@ export default function SpendModal() {
 
 	const onClose = () => {
 		form.reset();
+		backend.autoUpdateTracker();
 		setAddLoading(false);
 		setPlanned(false);
-		setSpendModal(false);
-		backend.autoUpdateTracker();
+		setModalShow(false);
 	};
 
 	return (
 		<>
-			<Modal opened={spendModal} onClose={onClose} centered>
+			<Modal opened={modalShow} onClose={onClose} centered>
 				<Grid>
 					<Grid.Col>
 						<Title order={2} align={`center`}>
@@ -160,7 +160,7 @@ export default function SpendModal() {
 				</Grid>
 			</Modal>
 
-			<Button fullWidth onClick={() => setSpendModal(true)}>
+			<Button fullWidth onClick={() => setModalShow(true)}>
 				Расход
 			</Button>
 		</>

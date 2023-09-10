@@ -229,38 +229,66 @@ export default class TrackerLogic {
 			return `red`;
 		}
 	}
-	
+
+	/**
+	 * Returns the number of days based on the budget and day limit.
+	 * @returns {number} The number of days.
+	 */
 	public getDaysCount() {
+		// Get the budget for today
 		const budget = this.getTodayBudget();
+
+		// Calculate the number of days based on the budget and day limit
 		return Math.floor(budget / this.tracker.dayLimit);
 	}
 
+	/**
+	 * Retrieves the budget for today.
+	 * @returns The budget for today.
+	 */
 	public getTodayBudget() {
+		// Filter out spends that have a date
 		const spends = this.tracker.spends.filter(s => {
 			if (s.date) return false;
 			return true;
-		})
+		});
+
+		// Calculate the sum of costs
 		const sums = spends.reduce((a, b) => a + b.cost, 0);
+
+		// Return the budget for today
 		return this.tracker.limit + sums;
 	}
 
+	/**
+	 * Calculates the spending limit for today, based on the day limit and the total cost of the spends made today.
+	 * @returns {number} The spending limit for today.
+	 */
 	public getTodayLimit() {
+		// Filter the spends made today
 		const spends = this.tracker.spends.filter(s => {
+			// Ignore spends with a date (not made today)
 			if (s.date) return false;
 
+			// Get today's day, year, and month
 			const todayDay = new Date().getDate();
 			const todayYear = new Date().getFullYear();
 			const todayMonth = new Date().getMonth();
 
+			// Check if the spend was made today
 			if (
 				new Date(s.createdAt).getDate() === todayDay &&
 				new Date(s.createdAt).getFullYear() === todayYear &&
 				new Date(s.createdAt).getMonth() === todayMonth
-			) return true;
+			)
+				return true;
 			return false;
-		})
+		});
 
+		// Calculate the total cost of the spends made today
 		const sums = spends.reduce((a, b) => a + b.cost, 0);
+
+		// Return the spending limit for today (day limit + total cost of spends made today)
 		return this.tracker.dayLimit + sums;
 	}
 
@@ -274,9 +302,10 @@ export default class TrackerLogic {
 			if (
 				new Date(s.createdAt).getFullYear() === todayYear &&
 				new Date(s.createdAt).getMonth() === todayMonth
-			) return true;
+			)
+				return true;
 			return false;
-		})
+		});
 
 		return spends.reduce((a, b) => a + b.cost, 0);
 	}
@@ -291,9 +320,10 @@ export default class TrackerLogic {
 			if (
 				new Date(s.createdAt).getFullYear() === todayYear &&
 				new Date(s.createdAt).getMonth() === todayMonth
-			) return true;
+			)
+				return true;
 			return false;
-		})
+		});
 
 		return spends.reduce((a, b) => a + b.cost, 0);
 	}

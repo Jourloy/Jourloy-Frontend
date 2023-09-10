@@ -4,7 +4,7 @@ import TrackerAPI from "../api";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import DefaultLoading from "../../../components/loading";
-import {Flex, Grid, Button, Card, Title, Divider, Progress, Space, Text} from "@mantine/core";
+import {Flex, Grid, Button, Card, Title, Divider, Progress, Text} from "@mantine/core";
 import {formatter} from "../../../context";
 import TrackerLogic from "../logic";
 import IncomeModal from "./@modals/income";
@@ -24,21 +24,7 @@ export default function TrackerApp() {
 		if (tracker !== _tracker) setTracker(_tracker);
 	});
 
-	if (!tracker) navigate(`/tracker`);
-
 	const [loading, setLoading] = useState(!tracker);
-
-	const [settingsModal, setSettingsModal] = useState(false);
-	const [incomeModal, setIncomeModal] = useState(false);
-	// const [creditModal, setCreditModal] = useState(true);
-	const [historyModal, setHistoryModal] = useState(false);
-	const [plannedModal, setPlannedModal] = useState(false);
-
-	const closeSettingsModal = () => setSettingsModal(false);
-	const closeIncomeModal = () => setIncomeModal(false);
-	// const closeCreditModal = () => setCreditModal(false);
-	const closeHistoryModal = () => setHistoryModal(false);
-	const closePlannedModal = () => setPlannedModal(false);
 
 	useEffect(() => {
 		if (!loading) return;
@@ -59,42 +45,23 @@ export default function TrackerApp() {
 			});
 
 		return () => source.cancel();
-	}, []);
+	});
 
 	if (loading) return <DefaultLoading />;
 
-	const spends = tracker.spends
-		.filter(s => s.date == null)
-		.sort(() => -1);
+	const spends = tracker.spends.filter(s => s.date == null).sort(() => -1);
 	const plannedSpends = tracker.spends.filter(s => s.date != null);
 
 	const getSpendsComponents = () => {
-		return spends.map(s => (
-			<HistorySpend
-				spend={s}
-				opened={historyModal}
-				onClose={closeHistoryModal}
-				onOpen={() => setHistoryModal(true)}
-			/>
-		));
+		return spends.map(s => <HistorySpend key={s.id} spend={s} />);
 	};
 
 	const getPlannedSpendsComponents = () => {
-		return plannedSpends.map(s => (
-			<PlannedSpend
-				spend={s}
-				opened={plannedModal}
-				onClose={closePlannedModal}
-				onOpen={() => setPlannedModal(true)}
-			/>
-		));
+		return plannedSpends.map(s => <PlannedSpend key={s.id} spend={s} />);
 	};
 
 	return (
 		<>
-			<SettingsModal opened={settingsModal} onClose={closeSettingsModal} />
-			<IncomeModal opened={incomeModal} onClose={closeIncomeModal} />
-
 			<Flex justify={`center`} py={20} px={20}>
 				<Grid maw={`850px`} w={`100%`}>
 					<Grid.Col>
@@ -109,7 +76,9 @@ export default function TrackerApp() {
 								<Grid.Col>
 									<Flex align={`center`} justify={`space-between`}>
 										<Title order={2}>{logic.getCalcMode()} бюджет</Title>
-										<Title order={2}>{formatter.format(logic.getTodayLimit())}</Title>
+										<Title order={2}>
+											{formatter.format(logic.getTodayLimit())}
+										</Title>
 									</Flex>
 								</Grid.Col>
 
@@ -134,24 +103,13 @@ export default function TrackerApp() {
 									</Flex>
 								</Grid.Col>
 
-								<Grid.Col>
-									<Space h={`10px`} />
-									<Button
-										fullWidth
-										variant={`outline`}
-										onClick={() => setSettingsModal(true)}
-									>
-										Настроить
-									</Button>
-								</Grid.Col>
+								<SettingsModal />
 							</Grid>
 						</Card>
 					</Grid.Col>
 
 					<Grid.Col span={4}>
-						<Button fullWidth onClick={() => setIncomeModal(true)}>
-							Доход
-						</Button>
+						<IncomeModal />
 					</Grid.Col>
 
 					<Grid.Col span={4}>
@@ -224,7 +182,7 @@ export default function TrackerApp() {
 							labelPosition={`center`}
 							my={`10px`}
 						/>
-						<Card p={0}>
+						<Card p={0} bg={`transparent`}>
 							<Grid>{getPlannedSpendsComponents()}</Grid>
 						</Card>
 					</Grid.Col>
@@ -239,7 +197,7 @@ export default function TrackerApp() {
 							labelPosition={`center`}
 							my={`10px`}
 						/>
-						<Card p={0}>
+						<Card p={0} bg={`transparent`}>
 							<Grid>
 								<Grid.Col hidden={tracker.spends !== null && tracker.spends.length > 0}>
 									<Title

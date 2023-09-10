@@ -3,22 +3,26 @@ import {TSpend} from "../../../../types";
 import dayjs from "dayjs";
 import TrackerLogic from "../../logic";
 import {formatter} from "../../../../context";
+import { useState } from "react";
 
 type TPlannedSpendProps = {
 	spend: TSpend;
-	opened: boolean;
-	onClose: () => void;
-	onOpen: () => void;
 };
 
 export default function PlannedSpend(props: TPlannedSpendProps) {
 	const logic = new TrackerLogic();
 
-	return (
-		<Grid.Col md={6} sm={12} key={props.spend.id}>
-			<Modal opened={props.opened} onClose={props.onClose} centered></Modal>
+	const [modalShow, setModalShow] = useState(false);
 
-			<UnstyledButton w={`100%`} onClick={props.onOpen}>
+	const onClose = () => {
+		setModalShow(false);
+	};
+
+	return (
+		<Grid.Col md={6} sm={12}>
+			<Modal opened={modalShow} onClose={onClose} centered></Modal>
+
+			<UnstyledButton w={`100%`} onClick={() => setModalShow(true)}>
 				<Card withBorder py={`sm`} px={`md`}>
 					<Grid>
 						<Grid.Col span={4}>

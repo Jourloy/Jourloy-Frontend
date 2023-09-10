@@ -18,7 +18,7 @@ export default function Check() {
 		if (avatar) store.dispatch(userActions.changeAvatar(avatar));
 
 		if (success) {
-			navigate(-3);
+			navigate(-2);
 			store.dispatch(userActions.login());
 			toast.success(`Авторизация прошла успешно`);
 		} else {
