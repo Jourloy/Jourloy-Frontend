@@ -10,8 +10,9 @@ import {
 	Group,
 	Space,
 	Text,
+	Paper,
 } from "@mantine/core";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {store} from "../../../../store/store";
 import {useForm} from "@mantine/form";
 import {DatePickerInput} from "@mantine/dates";
@@ -35,6 +36,13 @@ export default function SettingsModal() {
 	const [changeLoading, setChangeLoading] = useState(false);
 	const [deleteLoading, setDeleteLoading] = useState(false);
 
+	/**
+	 * Progress for animation
+	 * 
+	 * Used as width of progress bar
+	 */
+	const [progress, setProgress] = useState(0);
+
 	const form = useForm({
 		initialValues: {
 			dayLimit: tracker.dayLimit,
@@ -54,7 +62,21 @@ export default function SettingsModal() {
 		setModalShow(false);
 	};
 
-	const onSubmit = (values: {dayLimit: number; calc: string; startDate: string, limit: number}) => {
+	/**
+	 * When mouse down or touch start set width to max
+	 */
+	const onRemoveStart = () => {
+		setProgress(100);
+	};
+
+	/**
+	 * When mouse up or touch end set width to min
+	 */
+	const onRemoveEnd = () => {
+		setProgress(0);
+	};
+
+	const onSubmit = (values: {dayLimit: number; calc: string; startDate: string; limit: number}) => {
 		setChangeLoading(true);
 		backend
 			.updateTracker(values)
@@ -82,6 +104,22 @@ export default function SettingsModal() {
 			})
 			.finally(() => setDeleteLoading(false));
 	};
+
+	/**
+	 * Animation of delete button
+	 */
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			if (progress === 100) {
+				setProgress(0);
+				onRemove();
+			}
+		}, 2000);
+
+		return () => {
+			clearTimeout(timeout);
+		};
+	}, [progress]);
 
 	return (
 		<>
@@ -192,19 +230,36 @@ export default function SettingsModal() {
 						</Text>
 					</Grid.Col>
 
-					<Grid.Col md={6} sm={12} orderMd={1} orderSm={2} hidden={!deleteMode}>
+					<Grid.Col span={6} hidden={!deleteMode}>
 						<Button
 							fullWidth
 							color={`red`}
 							variant={`outline`}
 							loading={deleteLoading}
-							onClick={onRemove}
+							onMouseDown={onRemoveStart}
+							onMouseUp={onRemoveEnd}
+							onTouchStart={onRemoveStart}
+							onTouchEnd={onRemoveEnd}
+							style={{
+							}}
 						>
-							Да
+							<Paper
+								radius={`sm`}
+								style={{
+									position: `absolute`,
+									width: `${progress}%`,
+									backgroundColor: `#fa5252`,
+									height: `100%`,
+									marginLeft: `-45.5%`,
+									zIndex: 50,
+									transition: `all 2s ease-in-out`,
+								}}
+							/>
+							<Text style={{zIndex: 51, color: `black`}}>Да</Text>
 						</Button>
 					</Grid.Col>
 
-					<Grid.Col md={6} sm={12} orderMd={2} orderSm={1} hidden={!deleteMode}>
+					<Grid.Col span={6} hidden={!deleteMode}>
 						<Button fullWidth color={`green`} onClick={() => setDeleteMode(false)}>
 							Нет
 						</Button>

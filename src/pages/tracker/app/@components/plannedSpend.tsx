@@ -7,6 +7,7 @@ import { useState } from "react";
 
 type TPlannedSpendProps = {
 	spend: TSpend;
+	length: number;
 };
 
 export default function PlannedSpend(props: TPlannedSpendProps) {
@@ -19,7 +20,7 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 	};
 
 	return (
-		<Grid.Col md={6} sm={12}>
+		<Grid.Col md={props.length === 1 ? 12 : 6} sm={12}>
 			<Modal opened={modalShow} onClose={onClose} centered></Modal>
 
 			<UnstyledButton w={`100%`} onClick={() => setModalShow(true)}>

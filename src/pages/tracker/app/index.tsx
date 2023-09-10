@@ -53,11 +53,11 @@ export default function TrackerApp() {
 	const plannedSpends = tracker.spends.filter(s => s.date != null);
 
 	const getSpendsComponents = () => {
-		return spends.map(s => <HistorySpend key={s.id} spend={s} />);
+		return spends.map(s => <HistorySpend key={s.id} length={spends.length} spend={s} />);
 	};
 
 	const getPlannedSpendsComponents = () => {
-		return plannedSpends.map(s => <PlannedSpend key={s.id} spend={s} />);
+		return plannedSpends.map(s => <PlannedSpend key={s.id} length={plannedSpends.length} spend={s} />);
 	};
 
 	return (
@@ -183,7 +183,19 @@ export default function TrackerApp() {
 							my={`10px`}
 						/>
 						<Card p={0} bg={`transparent`}>
-							<Grid>{getPlannedSpendsComponents()}</Grid>
+							<Grid>
+								<Grid.Col hidden={plannedSpends.length > 0}>
+									<Title
+										align={`center`}
+										c={`dimmed`}
+										tt={`uppercase`}
+										opacity={`20%`}
+									>
+										Нет запланированных расходов
+									</Title>
+								</Grid.Col>
+								{getPlannedSpendsComponents()}
+							</Grid>
 						</Card>
 					</Grid.Col>
 
@@ -199,7 +211,7 @@ export default function TrackerApp() {
 						/>
 						<Card p={0} bg={`transparent`}>
 							<Grid>
-								<Grid.Col hidden={tracker.spends !== null && tracker.spends.length > 0}>
+								<Grid.Col hidden={spends.length > 0}>
 									<Title
 										align={`center`}
 										c={`dimmed`}

@@ -1,4 +1,4 @@
-import {Button, Divider, Grid, Modal, NumberInput, Select, Title} from "@mantine/core";
+import {Button, Divider, Grid, Modal, NumberInput, Select, TextInput, Title} from "@mantine/core";
 import {useForm} from "@mantine/form";
 import TrackerAPI from "../../api";
 import {toast} from "react-toastify";
@@ -18,6 +18,7 @@ export default function IncomeModal() {
 		initialValues: {
 			cost: 1,
 			category: ``,
+			description: ``,
 		},
 
 		validate: {
@@ -26,11 +27,11 @@ export default function IncomeModal() {
 		},
 	});
 
-	const sumbit = (values: {cost: number; category: string}) => {
+	const sumbit = (values: {cost: number; category: string, description: string}) => {
 		setAddLoading(true);
 
 		backend
-			.addSpend({cost: values.cost, category: values.category})
+			.addSpend({cost: values.cost, category: values.category, description: values.description})
 			.then(() => {
 				toast.success(`Доход успешно добавлен`);
 				onClose();
@@ -65,7 +66,7 @@ export default function IncomeModal() {
 						<Grid.Col>
 							<NumberInput
 								label={`Сколько пришло`}
-								placeholder={`В рублях`}
+								description={`В рублях`}
 								withAsterisk
 								min={1}
 								{...form.getInputProps(`cost`)}
@@ -76,8 +77,17 @@ export default function IncomeModal() {
 							<Select
 								data={data}
 								label={`Какая категория`}
+								placeholder={`Категория не выбрана`}
 								withAsterisk
 								{...form.getInputProps(`category`)}
+							/>
+						</Grid.Col>
+
+						<Grid.Col>
+							<TextInput
+								label={`Описание`}
+								placeholder={`Не обязательно`}
+								{...form.getInputProps(`description`)}
 							/>
 						</Grid.Col>
 
