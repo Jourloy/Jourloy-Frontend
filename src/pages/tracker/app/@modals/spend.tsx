@@ -21,16 +21,9 @@ export default function SpendModal() {
 	const logic = new TrackerLogic();
 
 	const data = logic.getSpendCategory();
-	const repeatData = [
-		{value: `never`, label: `Никогда`},
-		{value: `week`, label: `Каждую неделю`},
-		{value: `month`, label: `Каждый месяц`},
-		{value: `year`, label: `Каждый год`},
-	];
 
 	const [planned, setPlanned] = useState(false);
 	const [addLoading, setAddLoading] = useState(false);
-
 	const [modalShow, setModalShow] = useState(false);
 
 	const form = useForm({
@@ -64,6 +57,8 @@ export default function SpendModal() {
 				toast.error(`Произошла ошибка, попробуй еще раз позже`);
 			});
 	};
+
+	
 
 	const onClose = () => {
 		form.reset();
@@ -133,17 +128,9 @@ export default function SpendModal() {
 							<DateInput
 								label={`Выбери дату`}
 								withAsterisk
+								valueFormat={`DD.MM.YY`}
 								minDate={new Date(Date.now() + 24 * 60 * 60 * 1000)}
 								{...form.getInputProps(`date`)}
-							/>
-						</Grid.Col>
-
-						<Grid.Col hidden={!planned}>
-							<Select
-								data={repeatData}
-								label={`Повторяется?`}
-								withAsterisk
-								{...form.getInputProps(`repeat`)}
 							/>
 						</Grid.Col>
 

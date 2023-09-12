@@ -60,3 +60,7 @@ export type TSpend = {
 	createdAt: string;
 	updatedAt: string;
 }
+
+export interface IPlannedSpend extends TSpend {
+	date: Date;
+}

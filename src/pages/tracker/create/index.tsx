@@ -171,6 +171,7 @@ export default function TrackerCreate() {
 												label={
 													<Text size={`md`}>Как рассчитывать лимит денег</Text>
 												}
+												description={`Еще работаем над этим, можно будет позже изменить`}
 												onChange={e => setCalcMode(e)}
 											>
 												<Group position={`apart`}>
@@ -180,6 +181,7 @@ export default function TrackerCreate() {
 														color={`orange`}
 													/>
 													<Radio
+														disabled
 														label={`По неделям`}
 														value={`weekCalc`}
 														color={`orange`}

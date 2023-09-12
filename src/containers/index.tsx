@@ -24,7 +24,8 @@ export default function DefaultContainer(props: PropsWithChildren) {
 					components: {
 						Button: {
 							defaultProps: theme => ({
-								color: theme.colorScheme === `dark` ? `` : `dark`,
+								color: theme.colorScheme === `dark` ? `gray` : `dark`,
+								variant: theme.colorScheme === `dark` ? `white` : `filled`,
 							}),
 							styles: () => ({
 								root: {

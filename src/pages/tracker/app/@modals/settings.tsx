@@ -10,9 +10,8 @@ import {
 	Group,
 	Space,
 	Text,
-	Paper,
 } from "@mantine/core";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {store} from "../../../../store/store";
 import {useForm} from "@mantine/form";
 import {DatePickerInput} from "@mantine/dates";
@@ -20,6 +19,7 @@ import TrackerAPI from "../../api";
 import {toast} from "react-toastify";
 import {trackerActions} from "../../../../store/features/tracker.slice";
 import {useNavigate} from "react-router-dom";
+import DeleteButton from "../../../../components/deleteButton";
 
 export default function SettingsModal() {
 	const backend = new TrackerAPI();
@@ -34,14 +34,6 @@ export default function SettingsModal() {
 	const [modalShow, setModalShow] = useState(false);
 	const [deleteMode, setDeleteMode] = useState(false);
 	const [changeLoading, setChangeLoading] = useState(false);
-	const [deleteLoading, setDeleteLoading] = useState(false);
-
-	/**
-	 * Progress for animation
-	 * 
-	 * Used as width of progress bar
-	 */
-	const [progress, setProgress] = useState(0);
 
 	const form = useForm({
 		initialValues: {
@@ -62,20 +54,6 @@ export default function SettingsModal() {
 		setModalShow(false);
 	};
 
-	/**
-	 * When mouse down or touch start set width to max
-	 */
-	const onRemoveStart = () => {
-		setProgress(100);
-	};
-
-	/**
-	 * When mouse up or touch end set width to min
-	 */
-	const onRemoveEnd = () => {
-		setProgress(0);
-	};
-
 	const onSubmit = (values: {dayLimit: number; calc: string; startDate: string; limit: number}) => {
 		setChangeLoading(true);
 		backend
@@ -91,8 +69,7 @@ export default function SettingsModal() {
 	};
 
 	const onRemove = () => {
-		setDeleteLoading(true);
-		backend
+		return backend
 			.removeTracker(tracker.id)
 			.then(() => {
 				toast.success(`Трекер удален`);
@@ -101,25 +78,8 @@ export default function SettingsModal() {
 			})
 			.catch(() => {
 				toast.error(`Что-то пошло не так`);
-			})
-			.finally(() => setDeleteLoading(false));
+			});
 	};
-
-	/**
-	 * Animation of delete button
-	 */
-	useEffect(() => {
-		const timeout = setTimeout(() => {
-			if (progress === 100) {
-				setProgress(0);
-				onRemove();
-			}
-		}, 2000);
-
-		return () => {
-			clearTimeout(timeout);
-		};
-	}, [progress]);
 
 	return (
 		<>
@@ -186,6 +146,7 @@ export default function SettingsModal() {
 									<Group position={`apart`}>
 										<Radio label={`По дням`} value={`dayCalc`} color={`orange`} />
 										<Radio
+											disabled
 											label={`По неделям`}
 											value={`weekCalc`}
 											color={`orange`}
@@ -231,32 +192,7 @@ export default function SettingsModal() {
 					</Grid.Col>
 
 					<Grid.Col span={6} hidden={!deleteMode}>
-						<Button
-							fullWidth
-							color={`red`}
-							variant={`outline`}
-							loading={deleteLoading}
-							onMouseDown={onRemoveStart}
-							onMouseUp={onRemoveEnd}
-							onTouchStart={onRemoveStart}
-							onTouchEnd={onRemoveEnd}
-							style={{
-							}}
-						>
-							<Paper
-								radius={`sm`}
-								style={{
-									position: `absolute`,
-									width: `${progress}%`,
-									backgroundColor: `#fa5252`,
-									height: `100%`,
-									marginLeft: `-45.5%`,
-									zIndex: 50,
-									transition: `all 2s ease-in-out`,
-								}}
-							/>
-							<Text style={{zIndex: 51, color: `black`}}>Да</Text>
-						</Button>
+						<DeleteButton onEnd={onRemove} />
 					</Grid.Col>
 
 					<Grid.Col span={6} hidden={!deleteMode}>
