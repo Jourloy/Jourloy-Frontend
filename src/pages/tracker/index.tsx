@@ -3,7 +3,6 @@ import {useNavigate} from "react-router-dom";
 import TrackerAPI from "./api";
 import {Paper, Group, Flex, Grid, Center, Title, Divider, Button, Text} from "@mantine/core";
 import ScrollHint from "../../components/scrollHint";
-import DefaultLoading from "../../components/loading";
 import {toast} from "react-toastify";
 
 export default function TrackerIndex() {
@@ -12,7 +11,6 @@ export default function TrackerIndex() {
 	const navigate = useNavigate();
 	const backend = new TrackerAPI();
 
-	const [loading, setLoading] = useState(true);
 	const [tracker, setTracker] = useState(false);
 	const [block, setBlock] = useState(false);
 
@@ -24,30 +22,22 @@ export default function TrackerIndex() {
 	};
 
 	useEffect(() => {
-		setLoading(true);
-
 		const source = backend.getSource();
 
 		backend
 			.autoUpdateTracker()
 			.then(s => {
-				if (s === 404) setTracker(false);
-				else if (s !== 200) {
-					toast.error(`Сервер не доступен, попробуй позже`);
-					setBlock(true);
-				} else setTracker(true);
+				if (s >= 400 && s < 500) setTracker(false);
+				else setTracker(true);
 			})
 			.catch(() => {
 				setTracker(false);
 				toast.error(`Сервер не доступен, попробуй позже`);
 				setBlock(true);
-			})
-			.finally(() => setLoading(false));
+			});
 
 		return () => source.cancel();
 	}, []);
-
-	if (loading) return <DefaultLoading />;
 
 	return (
 		<Paper>

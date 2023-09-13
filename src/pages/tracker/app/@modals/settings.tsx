@@ -20,6 +20,7 @@ import {toast} from "react-toastify";
 import {trackerActions} from "../../../../store/features/tracker.slice";
 import {useNavigate} from "react-router-dom";
 import DeleteButton from "../../../../components/deleteButton";
+import {formatter} from "../../../../context";
 
 export default function SettingsModal() {
 	const backend = new TrackerAPI();
@@ -99,6 +100,9 @@ export default function SettingsModal() {
 						<Grid.Col>
 							<NumberInput
 								label={`Лимит на период`}
+								formatter={value =>
+									!Number.isNaN(parseInt(value)) ? formatter.format(+value) : value
+								}
 								min={1}
 								withAsterisk
 								{...form.getInputProps(`dayLimit`)}
@@ -108,6 +112,9 @@ export default function SettingsModal() {
 						<Grid.Col>
 							<NumberInput
 								label={`Бюджет`}
+								formatter={value =>
+									!Number.isNaN(parseInt(value)) ? formatter.format(+value) : value
+								}
 								min={1}
 								description={`Подробнее об этой настройке можно прочесть под трекером`}
 								{...form.getInputProps(`limit`)}

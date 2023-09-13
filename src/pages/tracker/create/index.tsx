@@ -15,7 +15,8 @@ import {useState} from "react";
 import {toast} from "react-toastify";
 import TrackerLogic from "../logic";
 import TrackerAPI from "../api";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import {formatter} from "../../../context";
 
 export default function TrackerCreate() {
 	const logic = new TrackerLogic();
@@ -80,23 +81,23 @@ export default function TrackerCreate() {
 		if (!dayLimit) return;
 		if (months == null) return;
 
-		backend.createTracker({
-			limit: budget,
-			startLimit: budget,
-			calc: calcMode,
-			dayLimit: dayLimit,
-			months: months,
-		})
+		backend
+			.createTracker({
+				limit: budget,
+				startLimit: budget,
+				calc: calcMode,
+				dayLimit: dayLimit,
+				months: months,
+			})
 			.then(() => {
-				backend.autoUpdateTracker()
-					.then(s => {
-						if (s === 200) {
-							toast.success(`Трекер успешно создан`);
-							navigate(`/tracker/app`);
-						} else {
-							toast.error(`Произошла ошибка, попробуй еще раз позже`);
-						}
-					})
+				backend.autoUpdateTracker().then(s => {
+					if (s === 200) {
+						toast.success(`Трекер успешно создан`);
+						navigate(`/tracker/app`);
+					} else {
+						toast.error(`Произошла ошибка, попробуй еще раз позже`);
+					}
+				});
 			})
 			.catch(() => {
 				toast.error(`Произошла ошибка, попробуй еще раз позже`);
@@ -136,6 +137,10 @@ export default function TrackerCreate() {
 									placeholder={`В рублях`}
 									onChange={v => checkBudget(v)}
 									error={budgetError}
+									formatter={value =>
+										!Number.isNaN(parseInt(value)) ? formatter.format(+value) : value
+									}
+									min={1}
 								/>
 							</Grid.Col>
 						</Grid>
@@ -207,8 +212,7 @@ export default function TrackerCreate() {
 								<Grid columns={1} gutter={10}>
 									<Grid.Col>
 										<Title order={2} align={`center`}>
-											Сколько ты хочешь тратить в{" "}
-											{logic.getMode(calcMode)}
+											Сколько ты хочешь тратить в {logic.getMode(calcMode)}
 										</Title>
 									</Grid.Col>
 
@@ -224,6 +228,12 @@ export default function TrackerCreate() {
 											placeholder={`В рублях`}
 											onChange={v => checkDayLimit(v)}
 											error={dayLimitError}
+											formatter={value =>
+												!Number.isNaN(parseInt(value))
+													? formatter.format(+value)
+													: value
+											}
+											min={1}
 										/>
 									</Grid.Col>
 								</Grid>
@@ -256,9 +266,10 @@ export default function TrackerCreate() {
 
 									<Grid.Col>
 										<NumberInput
-											placeholder={`1`}
+											placeholder={`0`}
 											onChange={v => checkMonths(v)}
 											error={monthsError}
+											min={0}
 										/>
 									</Grid.Col>
 								</Grid>
