@@ -16,13 +16,13 @@ import {
 import ScrollHint from "../../components/scrollHint";
 import {motion} from "framer-motion";
 import {useState} from "react";
-import KeyboardBuyModal from "./modals/buy.modal";
-import KeyboardFeature1 from "./modals/feature1.modal";
-import KeyboardFeature2 from "./modals/feature2.modal";
-import KeyboardFeature3 from "./modals/feature3.modal";
-import KeyboardFeature4 from "./modals/feature4.modal";
-import KeyboardFeature5 from "./modals/feature5.modal";
-import KeyboardFeature6 from "./modals/feature6.modal";
+import KeyboardBuyModal from "./@modals/buy.modal";
+import KeyboardFeature1 from "./@modals/feature1.modal";
+import KeyboardFeature2 from "./@modals/feature2.modal";
+import KeyboardFeature3 from "./@modals/feature3.modal";
+import KeyboardFeature4 from "./@modals/feature4.modal";
+import KeyboardFeature5 from "./@modals/feature5.modal";
+import KeyboardFeature6 from "./@modals/feature6.modal";
 
 export default function KeyboardIndex() {
 	const [buyModal, setBuyModal] = useState(false);

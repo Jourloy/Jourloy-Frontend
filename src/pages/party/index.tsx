@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import PartyAPI from "./api";
 import {CancelToken} from "axios";
 import {partyActions} from "../../store/features/party.slice";
-import DefaultLoading from "../@loading";
+import DefaultLoading from "../../components/loading";
 
 export default function PartyIndex() {
 	document.title = `Party-Калькулятор`;
@@ -43,7 +43,7 @@ export default function PartyIndex() {
 
 	useEffect(() => {
 		if (!store.getState().userReducer.username) navigate(`/login`);
-		const source = backend.getToken();
+		const source = backend.getSource();
 
 		getCalculator(source.token).then(() => {
 			setLoading(false);

@@ -37,3 +37,31 @@ export type TPosition = {
 	calculator: TCalculator;
 	calculatorId: number;
 };
+
+export type TTracker = {
+	id: number;
+	name: string;
+	limit: number;
+	startLimit: number;
+	dayLimit: number;
+	months: number;
+	calc: string;
+	spends: TSpend[];
+	startDate: string;
+	createdAt: string;
+	updatedAt: string;
+}
+
+export type TSpend = {
+	id: number;
+	cost: number;
+	category: string;
+	description?: string;
+	date?: Date;
+	createdAt: string;
+	updatedAt: string;
+}
+
+export interface IPlannedSpend extends TSpend {
+	date: Date;
+}
