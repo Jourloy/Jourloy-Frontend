@@ -1,8 +1,11 @@
-import axios, { AxiosInstance } from "axios";
+import axios, {AxiosInstance} from "axios";
 
-const backendLink = process.env.NODE_ENV !== "production" 
-	? "https://api.jourloy.online" 
-	: "https://api.jourloy.com";
+const backendLink =
+	process.env.NODE_ENV !== "production"
+		? process.env.DEPLOYMENT_MODE === `local`
+			? `http://localhost:${process.env.BACKEND_PORT}`
+			: "https://api.jourloy.online"
+		: "https://api.jourloy.com";
 
 export default class BackendContext {
 	public context: AxiosInstance;
@@ -13,7 +16,7 @@ export default class BackendContext {
 		this.context = axios.create({
 			baseURL: link,
 			withCredentials: true,
-		})
+		});
 	}
 
 	public getSource() {
