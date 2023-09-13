@@ -9,7 +9,7 @@ import {
 	NumberInput,
 	Select,
 	Text,
-	TextInput,
+	Textarea,
 	Title,
 	UnstyledButton,
 } from "@mantine/core";
@@ -21,7 +21,7 @@ import {useState} from "react";
 import {useForm} from "@mantine/form";
 import DeleteButton from "../../../../components/deleteButton";
 import TrackerAPI from "../../api";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 
 type THistorySpendProps = {
 	spend: TSpend;
@@ -38,8 +38,11 @@ export default function HistorySpend(props: THistorySpendProps) {
 	const [modalShow, setModalShow] = useState(false);
 	const [deleteMode, setDeleteMode] = useState(false);
 
+	const [changeLoading, setChangeLoading] = useState(false);
+
 	const onRemove = async () => {
-		return backend.removeSpend(props.spend.id)
+		return backend
+			.removeSpend(props.spend.id)
 			.then(() => {
 				toast.success(`Расход успешно удален`);
 				backend.autoUpdateTracker();
@@ -48,11 +51,26 @@ export default function HistorySpend(props: THistorySpendProps) {
 			.catch(() => {
 				toast.error(`Что-то пошло не так`);
 			});
-	}
+	};
 
 	const onClose = () => {
 		setModalShow(false);
 		setDeleteMode(false);
+	};
+
+	const onChange = (values: {cost: number; category: string; description?: string}) => {
+		setChangeLoading(true);
+		backend
+			.updateSpend(props.spend.id, {...values, createdAt: props.spend.createdAt})
+			.then(() => {
+				toast.success(`Расход успешно изменен`);
+				backend.autoUpdateTracker();
+				onClose();
+			})
+			.catch(() => {
+				toast.error(`Произошла ошибка, попробуй еще раз позже`);
+			})
+			.finally(() => setChangeLoading(false));
 	};
 
 	const form = useForm({
@@ -62,7 +80,12 @@ export default function HistorySpend(props: THistorySpendProps) {
 			description: props.spend.description,
 		},
 		validate: {
-			cost: value => (value <= 0 ? `Сумма должна быть больше нуля` : null),
+			cost: value =>
+				props.spend.cost < 0 && value > 0
+					? `Сумма должна быть меньше нуля`
+					: props.spend.cost > 0 && value < 0
+					? `Сумма должна быть больше нуля`
+					: null,
 			category: value => (value === `` ? `Выберите категорию` : null),
 		},
 	});
@@ -79,13 +102,18 @@ export default function HistorySpend(props: THistorySpendProps) {
 					<Grid.Col>
 						<Divider />
 					</Grid.Col>
-					<form style={{width: `100%`}}>
+					<form style={{width: `100%`}} onSubmit={form.onSubmit(values => onChange(values))}>
 						<Grid.Col>
 							<NumberInput
 								label={`Сумма`}
 								description={`В рублях`}
 								withAsterisk
 								{...form.getInputProps(`cost`)}
+								min={props.spend.cost > 0 ? 1 : undefined}
+								max={props.spend.cost < 0 ? -1 : undefined}
+								formatter={value =>
+									!Number.isNaN(parseInt(value)) ? formatter.format(+value) : value
+								}
 							/>
 						</Grid.Col>
 
@@ -100,15 +128,23 @@ export default function HistorySpend(props: THistorySpendProps) {
 						</Grid.Col>
 
 						<Grid.Col>
-							<TextInput
+							<Textarea
 								label={`Описание`}
 								placeholder={`Не обязательно`}
 								{...form.getInputProps(`description`)}
+								maxLength={200}
+								minRows={2}
+								maxRows={2}
 							/>
 						</Grid.Col>
 
 						<Grid.Col>
-							<Button disabled={!form.isDirty()} type={`submit`} fullWidth>
+							<Button
+								disabled={!form.isDirty()}
+								type={`submit`}
+								fullWidth
+								loading={changeLoading}
+							>
 								Сохранить
 							</Button>
 						</Grid.Col>
@@ -132,7 +168,7 @@ export default function HistorySpend(props: THistorySpendProps) {
 						</Text>
 					</Grid.Col>
 					<Grid.Col span={6} hidden={!deleteMode}>
-						<DeleteButton onEnd={onRemove} />
+						<DeleteButton onEnd={onRemove} seconds={1} />
 					</Grid.Col>
 					<Grid.Col span={6} hidden={!deleteMode}>
 						<Button fullWidth color={`green`} onClick={() => setDeleteMode(false)}>

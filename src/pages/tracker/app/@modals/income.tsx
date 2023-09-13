@@ -1,9 +1,10 @@
-import {Button, Divider, Grid, Modal, NumberInput, Select, TextInput, Title} from "@mantine/core";
+import {Button, Divider, Grid, Modal, NumberInput, Select, Textarea, Title} from "@mantine/core";
 import {useForm} from "@mantine/form";
 import TrackerAPI from "../../api";
 import {toast} from "react-toastify";
 import {useState} from "react";
 import TrackerLogic from "../../logic";
+import { formatter } from "../../../../context";
 
 export default function IncomeModal() {
 	const backend = new TrackerAPI();
@@ -24,6 +25,7 @@ export default function IncomeModal() {
 		validate: {
 			cost: value => (value <= 0 ? `Сумма должна быть больше нуля` : null),
 			category: value => (value === `` ? `Выберите категорию` : null),
+			description: value => (value.length > 200 ? `Максимум 200 символов` : null),
 		},
 	});
 
@@ -68,6 +70,11 @@ export default function IncomeModal() {
 								label={`Сколько пришло`}
 								description={`В рублях`}
 								withAsterisk
+								formatter={value =>
+									!Number.isNaN(parseInt(value))
+										? formatter.format(+value)
+										: value
+								}
 								min={1}
 								{...form.getInputProps(`cost`)}
 							/>
@@ -86,10 +93,13 @@ export default function IncomeModal() {
 						</Grid.Col>
 
 						<Grid.Col>
-							<TextInput
-								label={`Описание`}
+							<Textarea
+								label={`Заметка`}
 								placeholder={`Не обязательно`}
 								{...form.getInputProps(`description`)}
+								maxLength={200}
+								minRows={2}
+								maxRows={2}
 							/>
 						</Grid.Col>
 

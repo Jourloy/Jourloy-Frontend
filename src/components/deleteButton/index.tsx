@@ -3,12 +3,18 @@ import {PropsWithChildren, useEffect, useState} from "react";
 
 type TProps = {
 	onEnd: () => Promise<unknown>;
+	/**
+	 * Default: 2
+	 */
+	seconds?: number;
 };
 
 export default function DeleteButton(props: PropsWithChildren<TProps>) {
 	// Initial value of progress width
 	const [progress, setProgress] = useState(0);
 	const [loading, setLoading] = useState(false);
+
+	const seconds = props.seconds ? props.seconds : 2;
 
 	// When user start touch or mouse down
 	const onRemoveStart = () => {
@@ -29,7 +35,7 @@ export default function DeleteButton(props: PropsWithChildren<TProps>) {
 					setProgress(0);
 				});
 			}
-		}, 2000);
+		}, seconds * 1000);
 
 		return () => {
 			clearTimeout(timeout);
@@ -57,7 +63,7 @@ export default function DeleteButton(props: PropsWithChildren<TProps>) {
 					height: `100%`,
 					marginLeft: `-45.5%`,
 					zIndex: 50,
-					transition: `all 2s ease-in-out`,
+					transition: `all ${seconds}s ease-in-out`,
 				}}
 			/>
 			<Text style={{zIndex: 51, color: `black`}}>Да</Text>

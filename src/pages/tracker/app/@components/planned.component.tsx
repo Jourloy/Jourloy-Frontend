@@ -9,7 +9,7 @@ import {
 	NumberInput,
 	Select,
 	Text,
-	TextInput,
+	Textarea,
 	Title,
 	UnstyledButton,
 } from "@mantine/core";
@@ -106,6 +106,11 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 								label={`Сумма`}
 								description={`В рублях`}
 								withAsterisk
+								formatter={value =>
+									!Number.isNaN(parseInt(value))
+										? formatter.format(+value)
+										: value
+								}
 								max={-1}
 								{...form.getInputProps(`cost`)}
 							/>
@@ -132,10 +137,13 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 						</Grid.Col>
 
 						<Grid.Col>
-							<TextInput
+							<Textarea
 								label={`Описание`}
 								placeholder={`Не обязательно`}
 								{...form.getInputProps(`description`)}
+								maxLength={200}
+								minRows={2}
+								maxRows={2}
 							/>
 						</Grid.Col>
 
@@ -168,7 +176,7 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 					</Grid.Col>
 
 					<Grid.Col span={6} hidden={!deleteMode}>
-						<DeleteButton onEnd={() => {
+						<DeleteButton seconds={1} onEnd={() => {
 							return onMove(form.values);
 						}} />
 					</Grid.Col>
