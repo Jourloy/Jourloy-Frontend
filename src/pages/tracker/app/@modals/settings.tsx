@@ -110,7 +110,6 @@ export default function SettingsModal() {
 								label={`Бюджет`}
 								min={1}
 								description={`Подробнее об этой настройке можно прочесть под трекером`}
-								withAsterisk
 								{...form.getInputProps(`limit`)}
 							/>
 						</Grid.Col>
@@ -119,7 +118,6 @@ export default function SettingsModal() {
 							<DatePickerInput
 								label={`Дата начала отсчета`}
 								valueFormat={`DD.MM.YY`}
-								withAsterisk
 								value={new Date(form.values.startDate)}
 								description={`Подробнее об этой настройке можно прочесть под трекером`}
 								onChange={value => {
@@ -141,7 +139,6 @@ export default function SettingsModal() {
 								<Radio.Group
 									name={`calc`}
 									label={`Как рассчитывать лимит денег`}
-									withAsterisk
 									{...form.getInputProps(`calc`)}
 								>
 									<Group position={`apart`}>

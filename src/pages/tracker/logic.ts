@@ -149,7 +149,8 @@ export default class TrackerLogic {
 	 */
 	public getIncomeCategory() {
 		return [
-			{value: `work`, label: `Зарплата`}, // Represents income from work
+			{value: `work`, label: `Работа`}, // Represents income from work
+			{value: `present`, label: `Подарок`}, // Represents income from presents
 			{value: `other`, label: `Другое`}, // Represents other income sources
 		];
 	}
@@ -157,10 +158,16 @@ export default class TrackerLogic {
 	// Returns an array of spend categories with their corresponding values and labels
 	public getSpendCategory() {
 		return [
-			{value: `food`, label: `Еда`}, // Represents the category for food expenses
-			{value: `entertainment`, label: `Развлечения`}, // Represents the category for entertainment expenses
 			{value: `health`, label: `Здоровье`}, // Represents the category for health expenses
-			{value: `other`, label: `Другое`}, // Represents the category for other expenses
+			{value: `food`, label: `Еда и товары`}, // Represents the category for food expenses
+			{value: `education`, label: `Образование`}, // Represents the category for education expenses
+			{value: `entertainment`, label: `Развлечения`}, // Represents the category for entertainment expenses
+			{value: `transport`, label: `Транспорт`}, // Represents the category for transport expenses
+			{value: `travel`, label: `Путешествие`}, // Represents the category for travel expenses
+			{value: `housing`, label: `Жилье`}, // Represents the category for housing expenses
+			{value: `clothing`, label: `Одежда`}, // Represents the category for clothing expenses
+			{value: `digital`, label: `Цифровые покупки`}, // Represents the category for digital purchases
+			{value: `other`, label: `Другое или непредвиденное`}, // Represents the category for other expenses
 		];
 	}
 

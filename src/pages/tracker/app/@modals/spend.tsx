@@ -99,6 +99,8 @@ export default function SpendModal() {
 								label={`Какая категория`}
 								withAsterisk
 								{...form.getInputProps(`category`)}
+								maxDropdownHeight={170}
+								searchable
 							/>
 						</Grid.Col>
 

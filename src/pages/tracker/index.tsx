@@ -55,6 +55,7 @@ export default function TrackerIndex() {
 				style={{
 					position: `absolute`,
 					top: `90dvh`,
+					display: `none`,
 				}}
 				w={`100%`}
 				ml={`-16px`}
@@ -110,7 +111,12 @@ export default function TrackerIndex() {
 										<Grid.Col>
 											<Center>
 												<Button fullWidth onClick={toTracker}>
-													Начать пользоваться
+													<Text>
+													Начать пользоваться {` `}
+													<Text span color={`red`}>
+														[ БЕТА ]
+													</Text>
+													</Text>
 												</Button>
 											</Center>
 										</Grid.Col>

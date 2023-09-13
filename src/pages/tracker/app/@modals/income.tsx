@@ -80,6 +80,8 @@ export default function IncomeModal() {
 								placeholder={`Категория не выбрана`}
 								withAsterisk
 								{...form.getInputProps(`category`)}
+								maxDropdownHeight={120}
+								searchable
 							/>
 						</Grid.Col>
 
