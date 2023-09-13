@@ -4,7 +4,6 @@ import Main from "./pages";
 import Login from "./pages/login";
 import PartyIndex from "./pages/party";
 import Check from "./pages/login/check";
-import FilmsIndex from "./pages/films";
 import PartyApp from "./pages/party/app";
 import LayoutContainer from "./containers/layout";
 import KeyboardIndex from "./pages/keyboard";
@@ -57,15 +56,6 @@ export default function App() {
 						</LayoutContainer>
 					}
 					path="/party/app"
-				/>
-
-				<Route
-					element={
-						<LayoutContainer>
-							<FilmsIndex />
-						</LayoutContainer>
-					}
-					path="/films"
 				/>
 
 				<Route

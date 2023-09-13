@@ -121,6 +121,7 @@ export default function SettingsModal() {
 								valueFormat={`DD.MM.YY`}
 								withAsterisk
 								value={new Date(form.values.startDate)}
+								description={`Подробнее об этой настройке можно прочесть под трекером`}
 								onChange={value => {
 									if (!value) {
 										form.setFieldError(`startDate`, `Выбери дату`);

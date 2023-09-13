@@ -25,7 +25,6 @@ export default function DefaultContainer(props: PropsWithChildren) {
 						Button: {
 							defaultProps: theme => ({
 								color: theme.colorScheme === `dark` ? `gray` : `dark`,
-								variant: theme.colorScheme === `dark` ? `white` : `filled`,
 							}),
 							styles: () => ({
 								root: {
@@ -46,6 +45,12 @@ export default function DefaultContainer(props: PropsWithChildren) {
 								radius: `md`,
 							},
 						},
+						Pagination: {
+							defaultProps: theme => ({
+								color: theme.colorScheme === `dark` ? `gray` : `dark`,
+								variant: theme.colorScheme === `dark` ? `white` : `filled`,
+							})
+						}
 					},
 				}}
 			>

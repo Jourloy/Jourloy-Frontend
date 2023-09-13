@@ -270,17 +270,10 @@ export default class TrackerLogic {
 			// Ignore spends with a date (not made today)
 			if (s.date) return false;
 
-			// Get today's day, year, and month
-			const todayDay = new Date().getDate();
-			const todayYear = new Date().getFullYear();
-			const todayMonth = new Date().getMonth();
+			const todayMilliseconds = Date.now();
 
 			// Check if the spend was made today
-			if (
-				new Date(s.createdAt).getDate() === todayDay &&
-				new Date(s.createdAt).getFullYear() === todayYear &&
-				new Date(s.createdAt).getMonth() === todayMonth
-			)
+			if (new Date(s.createdAt).getTime() <= todayMilliseconds)
 				return true;
 			return false;
 		});
@@ -288,8 +281,11 @@ export default class TrackerLogic {
 		// Calculate the total cost of the spends made today
 		const sums = spends.reduce((a, b) => a + b.cost, 0);
 
+		// Calculate the number of days
+		const days = Math.ceil((Date.now() - new Date(this.tracker.startDate).getTime()) / 1000 / 60 / 60 / 24)
+
 		// Return the spending limit for today (day limit + total cost of spends made today)
-		return this.tracker.dayLimit + sums;
+		return this.tracker.dayLimit * days + sums;
 	}
 
 	public getMonthSpend() {

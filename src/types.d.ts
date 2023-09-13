@@ -47,6 +47,7 @@ export type TTracker = {
 	months: number;
 	calc: string;
 	spends: TSpend[];
+	startDate: string;
 	createdAt: string;
 	updatedAt: string;
 }

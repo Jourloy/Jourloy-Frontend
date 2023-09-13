@@ -21,6 +21,7 @@ import {useState} from "react";
 import {useForm} from "@mantine/form";
 import DeleteButton from "../../../../components/deleteButton";
 import TrackerAPI from "../../api";
+import { toast } from "react-toastify";
 
 type THistorySpendProps = {
 	spend: TSpend;
@@ -38,7 +39,15 @@ export default function HistorySpend(props: THistorySpendProps) {
 	const [deleteMode, setDeleteMode] = useState(false);
 
 	const onRemove = async () => {
-		return backend.removeSpend(props.spend.id);
+		return backend.removeSpend(props.spend.id)
+			.then(() => {
+				toast.success(`Расход успешно удален`);
+				backend.autoUpdateTracker();
+				onClose();
+			})
+			.catch(() => {
+				toast.error(`Что-то пошло не так`);
+			});
 	}
 
 	const onClose = () => {
