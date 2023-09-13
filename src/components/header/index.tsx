@@ -1,4 +1,15 @@
-import {Avatar, Center, Container, Flex, Group, Header, MantineProvider, Title, UnstyledButton} from "@mantine/core";
+import {
+	Avatar,
+	Center,
+	Container,
+	Flex,
+	Group,
+	Header,
+	MantineProvider,
+	Title,
+	UnstyledButton,
+	Text,
+} from "@mantine/core";
 import {store} from "../../store/store";
 import {useEffect, useState} from "react";
 import LoginAPI from "../../pages/login/api";
@@ -49,14 +60,19 @@ export default function HeaderComponent() {
 								</UnstyledButton>
 								<UnstyledButton onClick={() => setUserSettings(true)}>
 									<Flex>
-										<MantineProvider
-											inherit
-											theme={{
-												colorScheme: `dark`,
-											}}
-										>
-											<Avatar src={avatar}  />
-										</MantineProvider>
+										<Group position={`right`} spacing={`xs`}>
+											<MantineProvider
+												inherit
+												theme={{
+													colorScheme: `dark`,
+												}}
+											>
+												<Avatar src={avatar} />
+											</MantineProvider>
+											<Text color={`white`}>
+												{store.getState().userReducer.username?.split(` `)[0]}
+											</Text>
+										</Group>
 									</Flex>
 								</UnstyledButton>
 							</Group>
