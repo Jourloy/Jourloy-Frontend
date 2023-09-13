@@ -4,6 +4,7 @@ import TrackerAPI from "./api";
 import {Paper, Group, Flex, Grid, Center, Title, Divider, Button, Text} from "@mantine/core";
 import ScrollHint from "../../components/scrollHint";
 import {toast} from "react-toastify";
+import { store } from "../../store/store";
 
 export default function TrackerIndex() {
 	document.title = `Трекер`;
@@ -17,7 +18,8 @@ export default function TrackerIndex() {
 	const toTracker = () => {
 		if (block) return;
 
-		if (tracker) navigate(`/tracker/app`);
+		if (!store.getState().userReducer.logined) navigate(`/login`);
+		else if (tracker) navigate(`/tracker/app`);
 		else navigate(`/tracker/create`);
 	};
 
