@@ -1,9 +1,9 @@
 import axios, {AxiosInstance} from "axios";
 
 const backendLink =
-	process.env.NODE_ENV !== "production"
-		? process.env.DEPLOYMENT_MODE === `local`
-			? `http://localhost:${process.env.BACKEND_PORT}`
+	import.meta.env.VITE_NODE_ENV !== "production"
+		? import.meta.env.VITE_DEPLOYMENT_MODE === `local`
+			? `http://localhost:${import.meta.env.VITE_BACKEND_PORT}`
 			: "https://api.jourloy.online"
 		: "https://api.jourloy.com";
 
@@ -12,7 +12,7 @@ export default class BackendContext {
 
 	constructor(path?: string) {
 		let link = backendLink;
-		if (path) link += `/${path}`;
+		if (path) link += `${path}`;
 		this.context = axios.create({
 			baseURL: link,
 			withCredentials: true,

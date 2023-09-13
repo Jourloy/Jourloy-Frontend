@@ -1,35 +1,58 @@
-<h1 align="center">
-    Web
-</h1>
+<a href="https://jourloy.com/">
+	<h1 align="center">
+		JOURLOY.com
+	</h1>
+</a>
 
-## Description
+<p align="center">
+	<a href="" target="_blank"><img src="https://img.shields.io/github/v/tag/jourloy-com/frontend?color=red&label=version&style=for-the-badge&labelColor=000000"/></a>
+</p>
 
-Main repository for frontend of [JOURLOY.com](https://jourloy.com)
+<p align="center">Main repository for frontend</p>
 
-## Installation
+## Getting Started
+
+### Installation
 
 ```bash
 $ yarn install
 ```
 
-## Running the app
+### .env
 
-### Docker
+Don't forget create `.env` from `.env.sample` and add data
+
+#### Deployment mode
+
+If you want start server locally, so you should set `DEPLOYMENT_MODE` to `local`, else to any other value
+
+### Running the app
 
 ```bash
-$ docker-compose up -d
+# Developmemt
+$ yarn dev
+
+# Production (Not recommend)
+$ yarn start
 ```
 
-### NPM / Yarn
+### Running the storybook
+
 ```bash
 # Development
-$ yarn start
-
-# Or for production
+$ yarn storybook
 
 # Build
-$ yarn build
-
-# Serve
-$ serve dist/
+$ yarn build-storybook
 ```
+
+<h2 align="center">
+	Technologies
+</h2>
+
+<div align="center">
+	<a href="" target="_blank"><img src="https://img.shields.io/static/v1?label=&message=TailwindCSS&logo=tailwindcss&style=for-the-badge&labelColor=000000&color=000000"/></a>
+	<a href="" target="_blank"><img src="https://img.shields.io/static/v1?label=&message=Storybook&logo=storybook&style=for-the-badge&labelColor=000000&color=000000"/></a>
+	<a href="" target="_blank"><img src="https://img.shields.io/static/v1?label=&message=Next.js&logo=next.js&style=for-the-badge&labelColor=000000&color=000000"/></a>
+	<a href="" target="_blank"><img src="https://img.shields.io/static/v1?label=&message=Sentry&logo=sentry&style=for-the-badge&labelColor=000000&color=000000"/></a>
+</div>
