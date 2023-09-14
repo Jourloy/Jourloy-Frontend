@@ -1,12 +1,10 @@
 name: Deploy to server
 
-on:
-  push:
-    branches:
-      - main
-
 jobs:
   deploy:
+    only:
+      refs:
+        - main
     name: Deploy
       runs-on: ubuntu-latest
       steps:
