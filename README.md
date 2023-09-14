@@ -5,7 +5,7 @@
 </a>
 
 <p align="center">
-	<a href="" target="_blank"><img src="https://img.shields.io/github/v/tag/jourloy-com/frontend?color=red&label=version&style=for-the-badge&labelColor=000000"/></a>
+	<a href="" target="_blank"><img src="https://img.shields.io/github/v/tag/jourloy-com/Jourloy-Frontend?color=red&label=version&style=for-the-badge&labelColor=000000"/></a>
 </p>
 
 <p align="center">Main repository for frontend</p>
@@ -28,6 +28,14 @@ If you want start server locally, so you should set `DEPLOYMENT_MODE` to `local`
 
 ### Running the app
 
+#### Docker
+
+```bash
+$ docker-compose up -d
+```
+
+#### Yarn
+
 ```bash
 # Developmemt
 $ yarn dev
@@ -35,24 +43,3 @@ $ yarn dev
 # Production (Not recommend)
 $ yarn start
 ```
-
-### Running the storybook
-
-```bash
-# Development
-$ yarn storybook
-
-# Build
-$ yarn build-storybook
-```
-
-<h2 align="center">
-	Technologies
-</h2>
-
-<div align="center">
-	<a href="" target="_blank"><img src="https://img.shields.io/static/v1?label=&message=TailwindCSS&logo=tailwindcss&style=for-the-badge&labelColor=000000&color=000000"/></a>
-	<a href="" target="_blank"><img src="https://img.shields.io/static/v1?label=&message=Storybook&logo=storybook&style=for-the-badge&labelColor=000000&color=000000"/></a>
-	<a href="" target="_blank"><img src="https://img.shields.io/static/v1?label=&message=Next.js&logo=next.js&style=for-the-badge&labelColor=000000&color=000000"/></a>
-	<a href="" target="_blank"><img src="https://img.shields.io/static/v1?label=&message=Sentry&logo=sentry&style=for-the-badge&labelColor=000000&color=000000"/></a>
-</div>
