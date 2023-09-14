@@ -16,7 +16,11 @@ import LoginAPI from "../../pages/login/api";
 import HeaderSettingsModal from "./modals/settings.modal";
 import {useNavigate} from "react-router-dom";
 
-export default function HeaderComponent() {
+type TProps = {
+	ignoreWidthLimit?: boolean;
+};
+
+export default function HeaderComponent(props: TProps) {
 	const loginBackend = new LoginAPI();
 	const navigate = useNavigate();
 
@@ -46,7 +50,7 @@ export default function HeaderComponent() {
 			<HeaderSettingsModal opened={userSettings} onClose={() => setUserSettings(false)} />
 			<Header height={45} w={`100%`} bg={`dark`}>
 				<Flex h={40} w={`100%`} justify={`center`} align={`center`}>
-					<Container maw={`850px`} w={`100%`} p={0}>
+					<Container maw={props.ignoreWidthLimit ? `100%` : `850px`} w={`100%`} p={props.ignoreWidthLimit ? 20 : 0}>
 						<Center h={`100%`}>
 							<Group position={`apart`} w={`100%`} px={8} mt={`4px`}>
 								<UnstyledButton onClick={toMain}>
@@ -61,6 +65,9 @@ export default function HeaderComponent() {
 								<UnstyledButton onClick={() => setUserSettings(true)}>
 									<Flex>
 										<Group position={`right`} spacing={`xs`}>
+											<Text color={`white`}>
+												{store.getState().userReducer.username?.split(` `)[0]}
+											</Text>
 											<MantineProvider
 												inherit
 												theme={{
@@ -69,9 +76,6 @@ export default function HeaderComponent() {
 											>
 												<Avatar src={avatar} />
 											</MantineProvider>
-											<Text color={`white`}>
-												{store.getState().userReducer.username?.split(` `)[0]}
-											</Text>
 										</Group>
 									</Flex>
 								</UnstyledButton>
