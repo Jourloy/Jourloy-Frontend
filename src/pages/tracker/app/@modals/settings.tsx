@@ -40,7 +40,7 @@ export default function SettingsModal() {
 		initialValues: {
 			dayLimit: tracker.dayLimit,
 			calc: tracker.calc,
-			startDate: new Date(tracker.createdAt).toDateString(),
+			startDate: new Date(tracker.createdAt),
 			limit: tracker.limit,
 		},
 		validate: {
@@ -55,7 +55,7 @@ export default function SettingsModal() {
 		setModalShow(false);
 	};
 
-	const onSubmit = (values: {dayLimit: number; calc: string; startDate: string; limit: number}) => {
+	const onSubmit = (values: {dayLimit: number; calc: string; startDate: Date; limit: number}) => {
 		setChangeLoading(true);
 		backend
 			.updateTracker(values)
@@ -125,19 +125,11 @@ export default function SettingsModal() {
 							<DatePickerInput
 								label={`Дата начала отсчета`}
 								valueFormat={`DD.MM.YY`}
-								value={new Date(form.values.startDate)}
 								description={`Подробнее об этой настройке можно прочесть под трекером`}
-								onChange={value => {
-									if (!value) {
-										form.setFieldError(`startDate`, `Выбери дату`);
-										return;
-									}
-									form.setFieldValue(`startDate`, new Date(value).toDateString());
-								}}
-								autoFocus={false}
 								popoverProps={{
 									withinPortal: true,
 								}}
+								{...form.getInputProps(`startDate`)}
 							/>
 						</Grid.Col>
 

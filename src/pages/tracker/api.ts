@@ -88,7 +88,7 @@ type TTrackerCreate = {
 
 type TTrackerUpdate = {
 	dayLimit: number;
-	startDate: string;
+	startDate: Date;
 	calc: string;
 	limit: number;
 };
