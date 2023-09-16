@@ -35,7 +35,7 @@ export default function HeaderSettingsModal(props: TProps) {
 
 	const [logined, setLogined] = useState(store.getState().userReducer.logined);
 
-	const [bugMode, setBugMode] = useState(true);
+	const [bugMode, setBugMode] = useState(false);
 
 	store.subscribe(() => {
 		const _logined = store.getState().userReducer.logined;
