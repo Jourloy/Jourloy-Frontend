@@ -1,6 +1,8 @@
-import {Flex, Grid, Title, Text, Image, Accordion, Card, Divider} from "@mantine/core";
+import {Flex, Grid, Title, Text, Image, Accordion, Card, Divider, Button} from "@mantine/core";
+import { useNavigate } from "react-router-dom";
 
 export default function TutorialFramework() {
+	const navigate = useNavigate();
 	return (
 		<Flex justify={`center`} py={20} px={20}>
 			<Grid maw={`850px`} w={`100%`} gutter={`xl`}>
@@ -195,6 +197,16 @@ export default function TutorialFramework() {
 							</Accordion.Panel>
 						</Accordion.Item>
 					</Accordion>
+				</Grid.Col>
+
+				<Grid.Col>
+					<Divider />
+				</Grid.Col>
+
+				<Grid.Col>
+					<Button fullWidth onClick={() => navigate(`/keyboard`)}>
+						На страницу клавиатуры
+					</Button>
 				</Grid.Col>
 			</Grid>
 		</Flex>

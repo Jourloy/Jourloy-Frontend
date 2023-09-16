@@ -10,8 +10,6 @@ import {
 	Title,
 	Image,
 	Card,
-	Accordion,
-	Space,
 } from "@mantine/core";
 import ScrollHint from "../../components/scrollHint";
 import {motion} from "framer-motion";
@@ -23,8 +21,11 @@ import KeyboardFeature3 from "./@modals/feature3.modal";
 import KeyboardFeature4 from "./@modals/feature4.modal";
 import KeyboardFeature5 from "./@modals/feature5.modal";
 import KeyboardFeature6 from "./@modals/feature6.modal";
+import {useNavigate} from "react-router-dom";
 
 export default function KeyboardIndex() {
+	const navigate = useNavigate();
+
 	const [buyModal, setBuyModal] = useState(false);
 
 	const [feature1Modal, setFeature1Modal] = useState(false);
@@ -404,46 +405,15 @@ export default function KeyboardIndex() {
 							</Grid.Col>
 
 							<Grid.Col>
-								<Title order={2} align={`center`}>Частые вопросы</Title>
+								<Title order={2} align={`center`}>
+									Частые вопросы
+								</Title>
 							</Grid.Col>
 
 							<Grid.Col>
-								<Accordion variant={`separated`} radius={`md`}>
-									<Accordion.Item value={`org`}>
-										<Accordion.Control>Что такое слои?</Accordion.Control>
-										<Accordion.Panel>
-											<Text>
-												Слои - виртуальные значения клавиш. Например, у тебя есть
-												клавиша W, но если ты зажмешь специальную клавишу на
-												клавиатуре, то W превратится в любую другую, как ты
-												настроишь
-											</Text>
-											<Space h={`xs`} />
-											<Text>
-												Это можно сравнить с шифтом и цифрами. Если просто нажать
-												- 1, а если с шифтом - !
-											</Text>
-										</Accordion.Panel>
-									</Accordion.Item>
-
-									<Accordion.Item value={`howUse`}>
-										<Accordion.Control>
-											Что делать, если возникли проблемы?
-										</Accordion.Control>
-										<Accordion.Panel>
-											<Text>
-												Мы помогаем с любыми проблемами, которые связаны с нашей
-												клавиатурой. Просто напиши нам в telegram и опиши
-												проблему
-											</Text>
-											<Space h={`xs`} />
-											<Text>
-												В крайнем случае оплатим доставку до нас и обратно, чтобы
-												мы почили все сами.
-											</Text>
-										</Accordion.Panel>
-									</Accordion.Item>
-								</Accordion>
+								<Button fullWidth onClick={() => navigate(`/tutorial/framework`)}>
+									Узнать
+								</Button>
 							</Grid.Col>
 						</Grid>
 					</Flex>
