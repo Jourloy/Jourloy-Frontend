@@ -1,35 +1,45 @@
-<h1 align="center">
-    Web
-</h1>
+<a href="https://jourloy.com/">
+	<h1 align="center">
+		JOURLOY.com
+	</h1>
+</a>
 
-## Description
+<p align="center">
+	<a href="" target="_blank"><img src="https://img.shields.io/github/v/tag/jourloy-com/Jourloy-Frontend?color=red&label=version&style=for-the-badge&labelColor=000000"/></a>
+</p>
 
-Main repository for frontend of [JOURLOY.com](https://jourloy.com)
+<p align="center">Main repository for frontend</p>
 
-## Installation
+## Getting Started
+
+### Installation
 
 ```bash
 $ yarn install
 ```
 
-## Running the app
+### .env
 
-### Docker
+Don't forget create `.env` from `.env.sample` and add data
+
+#### Deployment mode
+
+If you want start server locally, so you should set `DEPLOYMENT_MODE` to `local`, else to any other value
+
+### Running the app
+
+#### Docker
 
 ```bash
 $ docker-compose up -d
 ```
 
-### NPM / Yarn
+#### Yarn
+
 ```bash
-# Development
+# Developmemt
+$ yarn dev
+
+# Production (Not recommend)
 $ yarn start
-
-# Or for production
-
-# Build
-$ yarn build
-
-# Serve
-$ serve dist/
 ```

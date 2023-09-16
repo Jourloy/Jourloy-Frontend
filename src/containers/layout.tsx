@@ -1,12 +1,14 @@
-import {Footer, Text, Center, AppShell} from "@mantine/core";
+import {AppShell} from "@mantine/core";
 import {PropsWithChildren, useEffect, useState} from "react";
 import HeaderComponent from "../components/header";
 import {store} from "../store/store";
 import Blocked from "../pages/blocked";
+import FooterComponent from "../components/footer";
 
 type TProps = {
 	needAuth?: boolean;
 	ignoreDomainCheck?: boolean;
+	ignoreAppShell?: boolean;
 };
 
 export default function LayoutContainer(props: PropsWithChildren<TProps>) {
@@ -39,19 +41,20 @@ export default function LayoutContainer(props: PropsWithChildren<TProps>) {
 		}
 	});
 
+	if (props.ignoreAppShell) {
+		return (
+			<>
+				{show && props.children}
+				{!show && <Blocked />}
+			</>
+		);
+	}
+
 	return (
 		<>
 			<AppShell
 				header={<HeaderComponent />}
-				footer={
-					<Footer height={45}>
-						<Center h={`100%`} w={`100%`}>
-							<Text align={`center`} size={`sm`}>
-								Developed with ❤️ by Jourloy
-							</Text>
-						</Center>
-					</Footer>
-				}
+				footer={<FooterComponent />}
 			>
 				{show && props.children}
 				{!show && <Blocked />}

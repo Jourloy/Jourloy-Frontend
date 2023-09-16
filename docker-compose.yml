@@ -12,7 +12,7 @@ services:
         env_file:
             - .env
         ports:
-            - "10000:10000"
+            - "${DOCKER_PORT}:10000"
         restart: always
 
 volumes:
