@@ -12,6 +12,7 @@ import TrackerApp from "./pages/tracker/app";
 import TrackerCreate from "./pages/tracker/create";
 import Blocked from "./pages/blocked";
 import {Page404} from "./pages/404";
+import TutorialFramework from "./pages/tutorial/framewok";
 
 export default function App() {
 	return (
@@ -93,6 +94,15 @@ export default function App() {
 						</LayoutContainer>
 					}
 					path="/tracker/app"
+				/>
+
+				<Route
+					element={
+						<LayoutContainer>
+							<TutorialFramework />
+						</LayoutContainer>
+					}
+					path="/tutorial/framework"
 				/>
 
 				<Route
