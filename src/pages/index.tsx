@@ -12,10 +12,13 @@ import {
 	Center,
 	Space,
 } from "@mantine/core";
+import { useDocumentTitle } from "@mantine/hooks";
 import {IconBrandDiscord, IconBrandGithub, IconBrandTwitch} from "@tabler/icons-react";
 import {useNavigate} from "react-router-dom";
 
 export default function Main() {
+	useDocumentTitle(`Jourloy`);
+	
 	const navigate = useNavigate();
 
 	return (

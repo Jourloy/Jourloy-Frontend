@@ -6,8 +6,11 @@ import {store} from "../../store/store";
 import {userActions} from "../../store/features/user.slice";
 import {useLocation, useNavigate} from "react-router-dom";
 import DefaultLoading from "../../components/loading";
+import { useDocumentTitle } from "@mantine/hooks";
 
 export default function Login() {
+	useDocumentTitle(`Вход`);
+	
 	const backend = new LoginAPI();
 	const navigate = useNavigate();
 	const location = useLocation();

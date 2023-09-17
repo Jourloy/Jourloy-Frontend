@@ -12,10 +12,13 @@ import {
 	Skeleton,
 	Stack,
 } from "@mantine/core";
+import { useDocumentTitle } from "@mantine/hooks";
 import {Suspense} from "react";
 import {useNavigate} from "react-router-dom";
 
 export default function TutorialFramework() {
+	useDocumentTitle(`Framework`);
+	
 	const navigate = useNavigate();
 	return (
 		<Flex justify={`center`} py={20} px={20}>

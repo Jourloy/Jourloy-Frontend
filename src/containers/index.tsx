@@ -25,11 +25,6 @@ export default function DefaultContainer(props: PropsWithChildren) {
 							defaultProps: theme => ({
 								color: theme.colorScheme === `dark` ? `gray` : `dark`,
 							}),
-							styles: () => ({
-								root: {
-									fontWeight: 400,
-								},
-							}),
 						},
 						Modal: {
 							defaultProps: {

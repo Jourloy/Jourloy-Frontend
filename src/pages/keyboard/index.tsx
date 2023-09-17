@@ -22,8 +22,11 @@ import KeyboardFeature4 from "./@modals/feature4.modal";
 import KeyboardFeature5 from "./@modals/feature5.modal";
 import KeyboardFeature6 from "./@modals/feature6.modal";
 import {useNavigate} from "react-router-dom";
+import { useDocumentTitle } from "@mantine/hooks";
 
 export default function KeyboardIndex() {
+	useDocumentTitle(`Framework`);
+	
 	const navigate = useNavigate();
 
 	const [buyModal, setBuyModal] = useState(false);

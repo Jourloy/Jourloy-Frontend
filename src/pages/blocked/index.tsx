@@ -1,6 +1,9 @@
 import { Container, Grid, Card, Title, Text } from "@mantine/core";
+import { useDocumentTitle } from "@mantine/hooks";
 
 export default function Blocked() {
+	useDocumentTitle(`Нет доступа`);
+	
 	return (
 		<>
 			<Container

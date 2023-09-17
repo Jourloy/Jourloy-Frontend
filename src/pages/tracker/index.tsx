@@ -5,9 +5,10 @@ import {Paper, Group, Flex, Grid, Center, Title, Divider, Button, Text} from "@m
 import ScrollHint from "../../components/scrollHint";
 import {toast} from "react-toastify";
 import { store } from "../../store/store";
+import { useDocumentTitle } from "@mantine/hooks";
 
 export default function TrackerIndex() {
-	document.title = `Трекер`;
+	useDocumentTitle(`Трекер`);
 
 	const navigate = useNavigate();
 	const backend = new TrackerAPI();

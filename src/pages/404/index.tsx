@@ -1,6 +1,8 @@
 import {Box, Button, Container, createStyles, Group, Text, Title, useMantineTheme} from "@mantine/core";
 import {useNavigate} from "react-router-dom";
 import {useDocumentTitle} from "@mantine/hooks";
+import * as Sentry from "@sentry/react";
+import { useEffect } from "react";
 
 const useStyles = createStyles(theme => ({
 	root: {
@@ -42,6 +44,7 @@ const useStyles = createStyles(theme => ({
 
 export function Page404() {
 	useDocumentTitle(`404`);
+	
 	const {classes} = useStyles();
 	const navigate = useNavigate();
 	const theme = useMantineTheme();
@@ -49,6 +52,10 @@ export function Page404() {
 	const onButton = () => {
 		navigate(`/`);
 	};
+
+	useEffect(() => {
+		Sentry.captureMessage(`Undefined page | ${document.location.href}`);
+	}, [])
 
 	return (
 		<Box
