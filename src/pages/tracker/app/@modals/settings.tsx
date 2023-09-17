@@ -189,7 +189,7 @@ export default function SettingsModal() {
 					</Grid.Col>
 
 					<Grid.Col span={6} hidden={!deleteMode}>
-						<DeleteButton onEnd={onRemove} />
+						<DeleteButton loading={changeLoading} onEnd={onRemove} />
 					</Grid.Col>
 
 					<Grid.Col span={6} hidden={!deleteMode}>

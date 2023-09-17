@@ -9,7 +9,7 @@ import {
 	Textarea,
 	Title,
 } from "@mantine/core";
-import {DateInput} from "@mantine/dates";
+import {DatePickerInput} from "@mantine/dates";
 import {useState} from "react";
 import TrackerAPI from "../../api";
 import {toast} from "react-toastify";
@@ -136,7 +136,7 @@ export default function SpendModal() {
 						</Grid.Col>
 
 						<Grid.Col hidden={!planned}>
-							<DateInput
+							<DatePickerInput
 								label={`Выбери дату`}
 								withAsterisk
 								valueFormat={`DD.MM.YY`}

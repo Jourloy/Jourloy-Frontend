@@ -19,10 +19,10 @@ import TrackerLogic from "../../logic";
 import {formatter} from "../../../../context";
 import {useState} from "react";
 import {useForm} from "@mantine/form";
-import {DateInput} from "@mantine/dates";
-import DeleteButton from "../../../../components/deleteButton";
+import {DatePickerInput} from "@mantine/dates";
 import TrackerAPI from "../../api";
 import {toast} from "react-toastify";
+import DeleteButton from "../../../../components/deleteButton";
 
 type TPlannedSpendProps = {
 	spend: IPlannedSpend;
@@ -127,7 +127,7 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 						</Grid.Col>
 
 						<Grid.Col>
-							<DateInput
+							<DatePickerInput
 								label={`Выбери дату`}
 								withAsterisk
 								valueFormat={`DD.MM.YY`}
@@ -176,9 +176,7 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 					</Grid.Col>
 
 					<Grid.Col span={6} hidden={!deleteMode}>
-						<DeleteButton seconds={1} onEnd={() => {
-							return onMove(form.values);
-						}} />
+						<DeleteButton loading={changeLoading} onEnd={() => onMove(form.values)} />
 					</Grid.Col>
 
 					<Grid.Col span={6} hidden={!deleteMode}>
