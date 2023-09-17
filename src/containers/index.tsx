@@ -20,8 +20,6 @@ export default function DefaultContainer(props: PropsWithChildren) {
 				withNormalizeCSS
 				theme={{
 					colorScheme: colorScheme,
-					fontFamily: `SF_Pro_Display_Regular`,
-					fontFamilyMonospace: `SF_Pro_Display_Regular`,
 					components: {
 						Button: {
 							defaultProps: theme => ({
@@ -29,7 +27,7 @@ export default function DefaultContainer(props: PropsWithChildren) {
 							}),
 							styles: () => ({
 								root: {
-									fontWeight: 300,
+									fontWeight: 400,
 								},
 							}),
 						},
