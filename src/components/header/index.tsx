@@ -56,7 +56,7 @@ export default function HeaderComponent(props: TProps) {
 								<UnstyledButton onClick={toMain}>
 									<Flex>
 										<Title color={`white`}>JOU</Title>
-										<Title color={`blue`} style={{rotate: `180deg`}}>
+										<Title color={`blue`} mt={`2px`} style={{rotate: `180deg`}}>
 											R
 										</Title>
 										<Title color={`red`}>LOY</Title>
