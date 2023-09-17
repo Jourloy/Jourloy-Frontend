@@ -1,5 +1,19 @@
-import {Flex, Grid, Title, Text, Image, Accordion, Card, Divider, Button} from "@mantine/core";
-import { useNavigate } from "react-router-dom";
+import {
+	Flex,
+	Grid,
+	Title,
+	Text,
+	Image,
+	Accordion,
+	Card,
+	Divider,
+	Button,
+	Center,
+	Skeleton,
+	Stack,
+} from "@mantine/core";
+import {Suspense} from "react";
+import {useNavigate} from "react-router-dom";
 
 export default function TutorialFramework() {
 	const navigate = useNavigate();
@@ -8,6 +22,153 @@ export default function TutorialFramework() {
 			<Grid maw={`850px`} w={`100%`} gutter={`xl`}>
 				<Grid.Col>
 					<Title align={`center`}>FRAMEWORK</Title>
+				</Grid.Col>
+
+				<Grid.Col>
+					<Divider />
+				</Grid.Col>
+
+				<Grid.Col>
+					<Title order={2} align={`center`}>
+						Как использовать
+					</Title>
+				</Grid.Col>
+
+				<Grid.Col>
+					<Text align={`center`}>
+						Мы позаботились о твоем времени, а потому перед отправкой подготовили клавиатуру
+						к использованию, все что нужно - вставить Type-C провод, который шел в комплекте
+						в клавиатуру и компьютер.
+					</Text>
+				</Grid.Col>
+
+				<Grid.Col>
+					<Divider />
+				</Grid.Col>
+
+				<Grid.Col>
+					<Title order={2} align={`center`}>
+						Как настраивать
+					</Title>
+				</Grid.Col>
+
+				<Grid.Col>
+					<Text align={`center`}>
+						И это еще не все возможности, которые тебе доступны. Чтобы изменить любой слой по
+						своему желанию нужно скачать программу. Мы рекомендуем скачивать
+						<Text component={`span`} inherit>
+							<a
+								href={`https://get.vial.today`}
+								target={`_blank`}
+								style={{textDecoration: `none`}}
+							>
+								<Text component={`a`} color={`red`}>
+									{" "}
+									Vial
+								</Text>
+							</a>
+						</Text>
+						. У этой программы не современный интерфейс, но она дает больше возможностей, чем
+						аналогичные.
+					</Text>
+				</Grid.Col>
+
+				<Grid.Col>
+					<Text align={`center`}>
+						Предлагаем немного разобраться в том, как использовать эту программу. Как только
+						ты ее откроешь, убедись, что клавиатура подключена к ноутбуку или компьютеру.
+						Если клавиатура подключена, то ты увидите примерно вот такой интерфейс.
+					</Text>
+				</Grid.Col>
+
+				<Grid.Col mt={`-15px`}>
+					<Text align={`center`} color={`dimmed`} size={`sm`}>
+						Возможно, что программа при первом запуске не определит клавиатуру. Для этого
+						нажми file -{`>`} Download VIA definitions
+					</Text>
+				</Grid.Col>
+
+				<Grid.Col>
+					<Image
+						src={`https://s.jourloy.com/web-images/FrameworkVial.png`}
+						style={{maxWidth: `880px`, width: `100%`}}
+					/>
+				</Grid.Col>
+
+				<Grid.Col>
+					<Text align={`center`}>
+						Обрати внимание сразу на пробел. Если он у тебя такой же неразделенный, то вверху
+						выбери вкладку Layout, а там переключи раскладку на Grid, как на картинке ниже.
+					</Text>
+				</Grid.Col>
+
+				<Grid.Col>
+					<Image
+						src={`https://s.jourloy.com/web-images/FrameworkVial1.png`}
+						style={{maxWidth: `880px`, width: `100%`}}
+					/>
+				</Grid.Col>
+
+				<Grid.Col>
+					<Text align={`center`}>
+						Далее можешь вернуться на вкладку Keymap. Тут ты настраиваешь своб собственную
+						раскладку. На самом деле все просто, Layer - текущий выбранный слой. Нулевой слой
+						это тот, который активен всегда, он самый первый и для него не нужно зажимать
+						никаких клавиш.
+					</Text>
+				</Grid.Col>
+
+				<Grid.Col>
+					<Text align={`center`}>
+						Если хочешь поменять какую-нибудь клавишу, то просто нажимаете на нее и внизу
+						выбираешь ту, на которую хочешь заменить.
+					</Text>
+				</Grid.Col>
+
+				<Grid.Col>
+					<Center>
+						<Card
+							withBorder
+							shadow={`md`}
+							style={{
+								maxWidth: `500px`,
+							}}
+						>
+							<Stack>
+								<Text>
+									Если нужно поменять клавиши на клавиатуре местами, то советуем
+									воспользоваться keycap puller, который мы положили в комплект. Вставь
+									его сверху в клавишу и потяни на себя. А когда будешь ставить клавишу
+									на место, то положи ее сверху на свич и надави.
+								</Text>
+								<Suspense fallback={<Skeleton height={262} radius={5} />}>
+									<Image
+										src={`https://s.jourloy.com/web-images/keycapSwitch.gif`}
+										style={{
+											maxWidth: `880px`,
+											width: `100%`,
+										}}
+										withPlaceholder
+										radius={5}
+									/>
+								</Suspense>
+								<Text color={`dimmed`} align={`center`} size={`sm`}>
+									Клавиатуру необязательно отключать, но стоит, чтобы случайно не
+									нажать на клавишу
+								</Text>
+							</Stack>
+						</Card>
+					</Center>
+				</Grid.Col>
+
+				<Grid.Col>
+					<Text align={`center`}>
+						Для настройки энкодера, в приложении, справа от клавиатуры, есть 3 квадратика.
+						Первый отвечает за нажатие на энкодер, второй за поворот по часовой стрелке, а
+						третий за поворот против часовой стрелки. 1 шаг поворота симулирует 1 нажатие на
+						кнопку. Так, например, если ты назначишь букву А, то с каждым шагом при повороте
+						будет вставляться одна буква А.
+					</Text>
 				</Grid.Col>
 
 				<Grid.Col>
@@ -51,7 +212,10 @@ export default function TutorialFramework() {
 									</Grid.Col>
 
 									<Grid.Col my={`10px`}>
-										<Image withPlaceholder />
+										<Image
+											withPlaceholder
+											src={`https://s.jourloy.com/web-images/DefaultLayout.png`}
+										/>
 									</Grid.Col>
 
 									<Grid.Col>
@@ -105,12 +269,15 @@ export default function TutorialFramework() {
 									<Grid.Col>
 										<Text>
 											Вот примерно также работает и твоя клавиатура, только вот все
-											клавиши ты назнаечаешь сам
+											клавиши ты назначаешь сам
 										</Text>
 									</Grid.Col>
 
 									<Grid.Col my={`10px`}>
-										<Image withPlaceholder />
+										<Image
+											withPlaceholder
+											src={`https://s.jourloy.com/web-images/LayerExample.png`}
+										/>
 									</Grid.Col>
 								</Grid>
 							</Accordion.Panel>
@@ -183,14 +350,24 @@ export default function TutorialFramework() {
 								<Grid>
 									<Grid.Col>
 										<Text>
-											Можешь написать нам в telegram, там поможем тебе с любыми
-											вопросами по поводу клавиатуры, слоев и так далее
+											Можешь написать нам в telegram или на почту, там поможем тебе
+											с любыми вопросами по поводу клавиатуры, слоев и так далее
 										</Text>
 									</Grid.Col>
 
 									<Grid.Col>
 										<Card withBorder>
 											<Text align={`center`}>@JOURLOY</Text>
+										</Card>
+									</Grid.Col>
+
+									<Grid.Col>
+										<Divider />
+									</Grid.Col>
+
+									<Grid.Col>
+										<Card withBorder>
+											<Text align={`center`}>support@jourloy.com</Text>
 										</Card>
 									</Grid.Col>
 								</Grid>

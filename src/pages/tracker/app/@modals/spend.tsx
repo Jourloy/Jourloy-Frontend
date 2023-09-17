@@ -32,10 +32,12 @@ export default function SpendModal() {
 			cost: -1,
 			category: ``,
 			description: ``,
+			date: undefined,
 		},
 		validate: {
 			cost: value => (value >= 0 ? `Сумма должна быть меньше нуля` : null),
 			category: value => (value === `` ? `Выберите категорию` : null),
+			date: value => (value === undefined && planned ? `Выберите дату` : null), 
 		},
 	});
 
