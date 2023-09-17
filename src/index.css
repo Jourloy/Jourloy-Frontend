@@ -1,34 +1,24 @@
 @font-face {
-  font-family: 'SF Pro Display Bold';
-  src: local('SF Pro Display Bold'), url(./assets/fonts/SFProDisplay-Bold.otf) format('OpenType');
+  font-family: 'SF_Pro_Display_Bold';
+  src: local('SF_Pro_Display_Bold'), url(./assets/fonts/SFProDisplay-Bold.otf) format('OpenType');
 }
 
 @font-face {
-  font-family: 'SF Pro Display Light';
-  src: local('SF Pro Display Light'), url(../assets/fonts/SFProDisplay-Light.ttf) format('OpenType');
+  font-family: 'SF_Pro_Display_Light';
+  src: local('SF_Pro_Display_Light'), url(../assets/fonts/SFProDisplay-Light.ttf) format('OpenType');
 }
 
 @font-face {
-  font-family: 'SF Pro Display Medium';
-  src: local('SF Pro Display Medium'), url(./assets/fonts/SFProDisplay-Medium.otf) format('OpenType');
+  font-family: 'SF_Pro_Display_Medium';
+  src: local('SF_Pro_Display_Medium'), url(./assets/fonts/SFProDisplay-Medium.otf) format('OpenType');
 }
 
 @font-face {
-  font-family: 'SF Pro Display Regular';
-  src: local('SF Pro Display Regular'), url(./assets/fonts/SFProDisplay-Regular.otf) format('OpenType');
+  font-family: 'SF_Pro_Display_Regular';
+  src: local('SF_Pro_Display_Regular'), url(./assets/fonts/SFProDisplay-Regular.otf) format('OpenType');
 }
 
 @font-face {
-  font-family: 'SF Pro Display Thin';
-  src: local('SF Pro Display Thin'), url(./assets/fonts/SFProDisplay-Thin.ttf) format('OpenType');
-}
-
-h1 {
-  font-family: 'SF Pro Display Bold';
-  line-height: 1;
-}
-
-h2 {
-  font-family: 'SF Pro Display Bold';
-  line-height: 1;
+  font-family: 'SF_Pro_Display_Thin';
+  src: local('SF_Pro_Display_Thin'), url(./assets/fonts/SFProDisplay-Thin.ttf) format('OpenType');
 }
