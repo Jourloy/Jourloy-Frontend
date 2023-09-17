@@ -41,6 +41,7 @@ export default function HistorySpend(props: THistorySpendProps) {
 	const [changeLoading, setChangeLoading] = useState(false);
 
 	const onRemove = async () => {
+		setChangeLoading(true);
 		return backend
 			.removeSpend(props.spend.id)
 			.then(() => {
@@ -168,7 +169,7 @@ export default function HistorySpend(props: THistorySpendProps) {
 						</Text>
 					</Grid.Col>
 					<Grid.Col span={6} hidden={!deleteMode}>
-						<DeleteButton onEnd={onRemove} seconds={1} />
+						<DeleteButton loading={changeLoading} onEnd={onRemove} />
 					</Grid.Col>
 					<Grid.Col span={6} hidden={!deleteMode}>
 						<Button fullWidth color={`green`} onClick={() => setDeleteMode(false)}>
