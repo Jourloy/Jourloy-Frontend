@@ -37,7 +37,7 @@ export default function SpendModal() {
 		validate: {
 			cost: value => (value >= 0 ? `Сумма должна быть меньше нуля` : null),
 			category: value => (value === `` ? `Выберите категорию` : null),
-			date: value => (value === undefined && planned ? `Выберите дату` : null), 
+			date: value => (value === undefined && planned ? `Выберите дату` : null),
 		},
 	});
 
@@ -60,8 +60,6 @@ export default function SpendModal() {
 				toast.error(`Произошла ошибка, попробуй еще раз позже`);
 			});
 	};
-
-	
 
 	const onClose = () => {
 		form.reset();
@@ -160,7 +158,7 @@ export default function SpendModal() {
 				</Grid>
 			</Modal>
 
-			<Button fullWidth onClick={() => setModalShow(true)}>
+			<Button onClick={() => setModalShow(true)}>
 				Расход
 			</Button>
 		</>
