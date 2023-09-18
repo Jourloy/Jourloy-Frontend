@@ -19,8 +19,8 @@ import TrackerAPI from "../../api";
 import {toast} from "react-toastify";
 import {trackerActions} from "../../../../store/features/tracker.slice";
 import {useNavigate} from "react-router-dom";
-import DeleteButton from "../../../../components/deleteButton";
 import {formatter} from "../../../../context";
+import LongPressButton from "../../../../components/longPressButton";
 
 export default function SettingsModal() {
 	const backend = new TrackerAPI();
@@ -33,7 +33,7 @@ export default function SettingsModal() {
 	});
 
 	const [modalShow, setModalShow] = useState(false);
-	const [deleteMode, setDeleteMode] = useState(false);
+	const [deleteLoading, setDeleteLoading] = useState(false);
 	const [changeLoading, setChangeLoading] = useState(false);
 
 	const form = useForm({
@@ -70,6 +70,7 @@ export default function SettingsModal() {
 	};
 
 	const onRemove = () => {
+		setDeleteLoading(true);
 		return backend
 			.removeTracker(tracker.id)
 			.then(() => {
@@ -79,7 +80,8 @@ export default function SettingsModal() {
 			})
 			.catch(() => {
 				toast.error(`Что-то пошло не так`);
-			});
+			})
+			.finally(() => setDeleteLoading(false));
 	};
 
 	return (
@@ -170,32 +172,28 @@ export default function SettingsModal() {
 						<Divider />
 					</Grid.Col>
 
-					<Grid.Col hidden={deleteMode}>
-						<Button fullWidth color={`red`} onClick={() => setDeleteMode(true)}>
-							Удалить
-						</Button>
+					<Grid.Col>
+						<LongPressButton
+							loading={deleteLoading}
+							seconds={3}
+							color={`red`}
+							fullWidth
+							variant={`outline`}
+							label={`Удалить трекер`}
+							onPressed={onRemove}
+						/>
 					</Grid.Col>
 
-					<Grid.Col hidden={!deleteMode}>
-						<Title order={3} align={`center`} tt={`uppercase`}>
-							Точно удалить?
-						</Title>
-					</Grid.Col>
-
-					<Grid.Col hidden={!deleteMode}>
-						<Text align={`center`} color={`dimmed`} mt={`-15px`}>
+					<Grid.Col>
+						<Text
+							color={`dimmed`}
+							align={`center`}
+							size={`xs`}
+							tt={`lowercase`}
+							mt={`-10px`}
+						>
 							Это действие нельзя будет отменить
 						</Text>
-					</Grid.Col>
-
-					<Grid.Col span={6} hidden={!deleteMode}>
-						<DeleteButton loading={changeLoading} onEnd={onRemove} />
-					</Grid.Col>
-
-					<Grid.Col span={6} hidden={!deleteMode}>
-						<Button fullWidth color={`green`} onClick={() => setDeleteMode(false)}>
-							Нет
-						</Button>
 					</Grid.Col>
 				</Grid>
 			</Modal>

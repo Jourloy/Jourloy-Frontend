@@ -19,13 +19,14 @@ import TrackerLogic from "../../logic";
 import {formatter} from "../../../../context";
 import {useState} from "react";
 import {useForm} from "@mantine/form";
-import DeleteButton from "../../../../components/deleteButton";
 import TrackerAPI from "../../api";
 import {toast} from "react-toastify";
+import LongPressButton from "../../../../components/longPressButton";
 
 type THistorySpendProps = {
 	spend: TSpend;
 	length: number;
+	index: number;
 };
 
 export default function HistorySpend(props: THistorySpendProps) {
@@ -36,12 +37,12 @@ export default function HistorySpend(props: THistorySpendProps) {
 	const spendData = logic.getSpendCategory();
 
 	const [modalShow, setModalShow] = useState(false);
-	const [deleteMode, setDeleteMode] = useState(false);
 
 	const [changeLoading, setChangeLoading] = useState(false);
+	const [deleteLoading, setDeleteLoading] = useState(false);
 
 	const onRemove = async () => {
-		setChangeLoading(true);
+		setDeleteLoading(true);
 		return backend
 			.removeSpend(props.spend.id)
 			.then(() => {
@@ -51,12 +52,8 @@ export default function HistorySpend(props: THistorySpendProps) {
 			})
 			.catch(() => {
 				toast.error(`Что-то пошло не так`);
-			});
-	};
-
-	const onClose = () => {
-		setModalShow(false);
-		setDeleteMode(false);
+			})
+			.finally(() => setDeleteLoading(false));
 	};
 
 	const onChange = (values: {cost: number; category: string; description?: string}) => {
@@ -91,8 +88,24 @@ export default function HistorySpend(props: THistorySpendProps) {
 		},
 	});
 
+	const calculateSpan = () => {
+		if (props.length === 1) {
+			return 12;
+		}
+		if (props.length -1 === props.index && props.length % 2 !== 0) {
+			return 12;
+		}
+		return 6;
+	}
+
+	const onClose = () => {
+		setModalShow(false);
+		setDeleteLoading(false);
+		setChangeLoading(false);
+	};
+
 	return (
-		<Grid.Col md={props.length === 1 ? 12 : 6} sm={12}>
+		<Grid.Col md={calculateSpan()} sm={12}>
 			<Modal opened={modalShow} onClose={onClose} centered>
 				<Grid>
 					<Grid.Col>
@@ -150,32 +163,29 @@ export default function HistorySpend(props: THistorySpendProps) {
 							</Button>
 						</Grid.Col>
 					</form>
+
 					<Grid.Col>
+
 						<Divider />
 					</Grid.Col>
-					<Grid.Col hidden={deleteMode}>
-						<Button fullWidth color={`red`} onClick={() => setDeleteMode(true)}>
-							Удалить
-						</Button>
+
+					<Grid.Col>
+						<LongPressButton
+							label={`Удалить`}
+							seconds={1}
+							color={`red`}
+							variant={`outline`}
+							loading={deleteLoading}
+							onPressed={onRemove}
+							fullWidth
+						/>
 					</Grid.Col>
-					<Grid.Col hidden={!deleteMode}>
-						<Title order={3} align={`center`} tt={`uppercase`}>
-							Точно удалить?
-						</Title>
-					</Grid.Col>
-					<Grid.Col hidden={!deleteMode}>
-						<Text align={`center`} color={`dimmed`} mt={`-15px`}>
+
+					<Grid.Col>
+						<Text align={`center`} color={`dimmed`} mt={`-15px`} size={`sm`} tt={`lowercase`}>
 							Это действие нельзя будет отменить
 						</Text>
 					</Grid.Col>
-					<Grid.Col span={6} hidden={!deleteMode}>
-						<DeleteButton loading={changeLoading} onEnd={onRemove} />
-					</Grid.Col>
-					<Grid.Col span={6} hidden={!deleteMode}>
-						<Button fullWidth color={`green`} onClick={() => setDeleteMode(false)}>
-							Нет
-						</Button>
-					</Grid.Col>{" "}
 				</Grid>
 			</Modal>
 

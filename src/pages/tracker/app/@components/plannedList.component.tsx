@@ -38,8 +38,8 @@ export default function PlannedList() {
 	const [plannedPages] = useState(Math.ceil(plannedSpends.length / 6));
 
 	const getPlannedSpendsComponents = () => {
-		return plannedSpends.map(s => (
-			<PlannedSpend key={s.id} length={plannedSpends.length} spend={s as IPlannedSpend} />
+		return plannedSpends.map((s, i) => (
+			<PlannedSpend key={s.id} length={plannedSpends.length} spend={s as IPlannedSpend} index={i} />
 		));
 	};
 

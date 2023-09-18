@@ -3,13 +3,26 @@ import {useCallback, useState} from "react";
 import {useLongPress} from "use-long-press";
 
 type TProps = {
-	loading: boolean;
-	label: string;
-	onPressed: () => void;
 	/**
-	 * Default: 2
+	 * State of the button. Get from `useState`
+	 */
+	loading: boolean;
+
+	/**
+	 * Label of the button
+	 *
+	 * Default: `Удалить`
+	 */
+	label: string;
+
+	/**
+	 * How long to wait before triggering the `onPressed`
+	 *
+	 * Default: `2`
 	 */
 	seconds?: number;
+
+	onPressed: () => void;
 };
 
 const useStyles = createStyles(
@@ -47,15 +60,17 @@ const useStyles = createStyles(
 
 export default function LongPressButton({
 	onPressed,
-	label,
+	label = `Удалить`,
 	seconds = 2,
 	loading,
 	...props
 }: TProps & ButtonProps) {
 	const [progress, setProgress] = useState(0);
+
 	const callback = useCallback(() => {
 		onPressed();
 	}, []);
+
 	const bind = useLongPress(callback, {
 		onStart: () => setProgress(100),
 		onCancel: () => setProgress(0),
@@ -65,7 +80,7 @@ export default function LongPressButton({
 		threshold: 1000 * seconds,
 	});
 
-	const {classes, cx} = useStyles({color: props.color || "gray", seconds: seconds + `s`});
+	const {classes, cx} = useStyles({color: props.color || `gray`, seconds: seconds + `s`});
 
 	return (
 		<Button
@@ -73,10 +88,10 @@ export default function LongPressButton({
 			className={cx(classes.button, {[classes.onMousedown]: progress === 100})}
 			data-content={label}
 			{...bind()}
-			loaderPosition={"center"}
+			loaderPosition={`center`}
 			loading={loading}
 		>
-			{label}
+			{!loading && label}
 		</Button>
 	);
 }

@@ -12,13 +12,13 @@ import {
 	Skeleton,
 	Stack,
 } from "@mantine/core";
-import { useDocumentTitle } from "@mantine/hooks";
+import {useDocumentTitle} from "@mantine/hooks";
 import {Suspense} from "react";
 import {useNavigate} from "react-router-dom";
 
 export default function TutorialFramework() {
 	useDocumentTitle(`Framework`);
-	
+
 	const navigate = useNavigate();
 	return (
 		<Flex justify={`center`} py={20} px={20}>
@@ -60,16 +60,16 @@ export default function TutorialFramework() {
 						И это еще не все возможности, которые тебе доступны. Чтобы изменить любой слой по
 						своему желанию нужно скачать программу. Мы рекомендуем скачивать
 						<Text component={`span`} inherit>
-							<a
-								href={`https://get.vial.today`}
+							<Text
+								component={`a`}
+								color={`red`}
 								target={`_blank`}
+								href={`https://get.vial.today`}
 								style={{textDecoration: `none`}}
 							>
-								<Text component={`a`} color={`red`}>
-									{" "}
-									Vial
-								</Text>
-							</a>
+								{" "}
+								Vial
+							</Text>
 						</Text>
 						. У этой программы не современный интерфейс, но она дает больше возможностей, чем
 						аналогичные.
