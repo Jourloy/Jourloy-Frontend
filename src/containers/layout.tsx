@@ -40,10 +40,7 @@ export default function LayoutContainer(props: PropsWithChildren<TProps>) {
 
 	return (
 		<>
-			<AppShell
-				header={<HeaderComponent />}
-				footer={<FooterComponent />}
-			>
+			<AppShell header={<HeaderComponent />} footer={<FooterComponent />}>
 				{show && props.children}
 				{!show && <Blocked />}
 			</AppShell>

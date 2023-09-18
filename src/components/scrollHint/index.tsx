@@ -15,7 +15,7 @@ export default function ScrollHint(props: TProps) {
 	return (
 		<motion.div style={{opacity: 1 - scroll.y / maxScroll}}>
 			<Flex>
-				<IconMouse stroke={1} color={`rgb(115 115 115)`}/>
+				<IconMouse stroke={1} color={`rgb(115 115 115)`} />
 				<Text color={`dimmed`}>{props.label ? props.label : `Скролл чтобы узнать больше`}</Text>
 			</Flex>
 		</motion.div>

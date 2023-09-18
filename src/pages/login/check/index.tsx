@@ -8,7 +8,6 @@ export default function Check() {
 	const [searchParams] = useSearchParams();
 	const navigate = useNavigate();
 
-
 	useEffect(() => {
 		const success = searchParams.get(`success`);
 		const avatar = searchParams.get(`avatar`);

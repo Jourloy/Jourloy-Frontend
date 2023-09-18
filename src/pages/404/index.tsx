@@ -2,7 +2,7 @@ import {Box, Button, Container, createStyles, Group, Text, Title, useMantineThem
 import {useNavigate} from "react-router-dom";
 import {useDocumentTitle} from "@mantine/hooks";
 import * as Sentry from "@sentry/react";
-import { useEffect } from "react";
+import {useEffect} from "react";
 
 const useStyles = createStyles(theme => ({
 	root: {
@@ -44,7 +44,7 @@ const useStyles = createStyles(theme => ({
 
 export function Page404() {
 	useDocumentTitle(`404`);
-	
+
 	const {classes} = useStyles();
 	const navigate = useNavigate();
 	const theme = useMantineTheme();
@@ -55,7 +55,7 @@ export function Page404() {
 
 	useEffect(() => {
 		Sentry.captureMessage(`Undefined page | ${document.location.href}`);
-	}, [])
+	}, []);
 
 	return (
 		<Box
@@ -91,9 +91,14 @@ export function Page404() {
 					</svg>
 					<div className={classes.content}>
 						<Title className={classes.title}>Здесь ничего нет</Title>
-						<Text color={`dimmed`} size={`lg`} align={`center`} className={classes.description}>
-							Страница, которую ты пытаешься открыть, не существует. Возможно, ошибка
-							в адресе или страница переехала на новый URL.
+						<Text
+							color={`dimmed`}
+							size={`lg`}
+							align={`center`}
+							className={classes.description}
+						>
+							Страница, которую ты пытаешься открыть, не существует. Возможно, ошибка в
+							адресе или страница переехала на новый URL.
 						</Text>
 						<Group position={`center`}>
 							<Button variant={`outline`} onClick={onButton} size={`md`}>

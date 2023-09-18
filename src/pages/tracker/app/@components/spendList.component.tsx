@@ -17,7 +17,9 @@ export default function SpendList() {
 	const [spendCategory] = useState(``);
 
 	const getSpendsComponents = () => {
-		return spends.map((s, i) => <HistorySpend key={s.id} length={spends.length} spend={s} index={i} />);
+		return spends.map((s, i) => (
+			<HistorySpend key={s.id} length={spends.length} spend={s} index={i} />
+		));
 	};
 
 	const spendsArray = tracker.spends.filter(s => s.date == null).sort(() => -1);

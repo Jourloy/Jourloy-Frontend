@@ -1,4 +1,14 @@
-import {Button, Divider, Grid, Modal, MultiSelect, NumberInput, Select, TextInput, Title} from "@mantine/core";
+import {
+	Button,
+	Divider,
+	Grid,
+	Modal,
+	MultiSelect,
+	NumberInput,
+	Select,
+	TextInput,
+	Title,
+} from "@mantine/core";
 import {TPosition} from "../../../../../types";
 import {store} from "../../../../../store/store";
 import {partyActions} from "../../../../../store/features/party.slice";
@@ -28,7 +38,9 @@ export default function PositionModal(props: TProps) {
 	const [positionNameError, setPositionNameError] = useState<undefined | string>(undefined);
 	const [positonCost, setPositionCost] = useState<number | undefined>(props.position.cost);
 	const [positionCostError, setPositionCostError] = useState<undefined | string>(undefined);
-	const [positionMembers, setPositionMembers] = useState<string[]>(logic.getMembersAsString(props.position.id));
+	const [positionMembers, setPositionMembers] = useState<string[]>(
+		logic.getMembersAsString(props.position.id)
+	);
 	const [positionPayer, setPositionPayer] = useState<number | undefined>(props.position.payerId);
 
 	const [removePositionLoading, setRemovePositionLoading] = useState(false);
@@ -45,7 +57,8 @@ export default function PositionModal(props: TProps) {
 	const getDataOrgs = () => {
 		const data = [];
 		for (const member of calculator.members) {
-			if (member.payer) data.push({value: member.id.toString(), label: member.name, image: member.avatar});
+			if (member.payer)
+				data.push({value: member.id.toString(), label: member.name, image: member.avatar});
 		}
 		return data;
 	};
@@ -55,7 +68,7 @@ export default function PositionModal(props: TProps) {
 		else setPositionNameError(undefined);
 
 		setPositionName(str);
-	}
+	};
 
 	const checkCost = (num: number | "") => {
 		const checked = logic.checkNumber(num);
@@ -67,7 +80,7 @@ export default function PositionModal(props: TProps) {
 
 		setPositionCostError(undefined);
 		setPositionCost(checked.result);
-	}
+	};
 
 	const submitChange = () => {
 		if (positionNameError != undefined) return;
@@ -76,22 +89,23 @@ export default function PositionModal(props: TProps) {
 		setChangePositionLoading(true);
 
 		const members: number[] = [];
-		positionMembers.forEach((v) => members.push(+v));
+		positionMembers.forEach(v => members.push(+v));
 
-		backend.updatePosition({
-			name: positionName,
-			cost: positonCost,
-			memberIds: members,
-			positionId: props.position.id,
-			payerId: positionPayer,
-		})
+		backend
+			.updatePosition({
+				name: positionName,
+				cost: positonCost,
+				memberIds: members,
+				positionId: props.position.id,
+				payerId: positionPayer,
+			})
 			.then(() => {
-				toast.success(`Позиция обновлена`)
+				toast.success(`Позиция обновлена`);
 				store.dispatch(partyActions.updateCalculator());
 				closeModal();
 			})
 			.catch(() => {
-				toast.error(`Что-то пошло не так`)
+				toast.error(`Что-то пошло не так`);
 			})
 			.finally(() => {
 				setChangePositionLoading(false);
@@ -106,7 +120,7 @@ export default function PositionModal(props: TProps) {
 		setChangePositionLoading(false);
 		setRemovePositionLoading(false);
 		props.onClose();
-	}
+	};
 
 	const removePosition = (positionId: number) => {
 		setRemovePositionLoading(true);
@@ -140,16 +154,16 @@ export default function PositionModal(props: TProps) {
 					</Grid.Col>
 
 					<Grid.Col span={6}>
-						<TextInput 
+						<TextInput
 							label={`Название`}
 							value={positionName}
-							onChange={(e) => checkName(e.target.value)}
+							onChange={e => checkName(e.target.value)}
 							error={positionNameError}
 						/>
 					</Grid.Col>
 
 					<Grid.Col span={6}>
-						<NumberInput 
+						<NumberInput
 							label={`Стоимость`}
 							value={positonCost}
 							onChange={checkCost}
@@ -176,11 +190,7 @@ export default function PositionModal(props: TProps) {
 					</Grid.Col>
 
 					<Grid.Col mt={`15px`}>
-						<Button 
-							fullWidth 
-							onClick={submitChange}
-							loading={changePositionLoading}
-						>
+						<Button fullWidth onClick={submitChange} loading={changePositionLoading}>
 							Сохранить
 						</Button>
 					</Grid.Col>

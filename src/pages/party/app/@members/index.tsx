@@ -20,7 +20,7 @@ export default function PartyMembers() {
 	const [memberSearch, setMemberSearch] = useState(``);
 	const [memberFilter, setMemberFilter] = useState(`all`);
 
-	if (!calculator) return(<></>)
+	if (!calculator) return <></>;
 
 	if (calculator.members.length === 0) {
 		return (
@@ -71,25 +71,23 @@ export default function PartyMembers() {
 			<Grid.Col md={4} sm={12}>
 				<Menu>
 					<Menu.Target>
-						<Button fullWidth>
-							Фильтр
-						</Button>
+						<Button fullWidth>Фильтр</Button>
 					</Menu.Target>
 
 					<Menu.Dropdown>
-						<Menu.Item 
+						<Menu.Item
 							disabled={memberFilter === `all`}
 							onClick={() => setMemberFilter(`all`)}
 						>
 							Все
 						</Menu.Item>
-						<Menu.Item 
+						<Menu.Item
 							disabled={memberFilter === `noOrg`}
 							onClick={() => setMemberFilter(`noOrg`)}
 						>
 							Не организаторы
 						</Menu.Item>
-						<Menu.Item 
+						<Menu.Item
 							disabled={memberFilter === `org`}
 							onClick={() => setMemberFilter(`org`)}
 						>
@@ -103,11 +101,11 @@ export default function PartyMembers() {
 
 			<Grid.Col hidden={memberSearch !== ``}>
 				<Center>
-					<Pagination 
-						total={memberPages} 
-						value={memberPage} 
-						onChange={setMemberPage} 
-						color={`dark`} 
+					<Pagination
+						total={memberPages}
+						value={memberPage}
+						onChange={setMemberPage}
+						color={`dark`}
 					/>
 				</Center>
 			</Grid.Col>

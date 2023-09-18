@@ -68,7 +68,12 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 			.finally(() => setChangeLoading(false));
 	};
 
-	const onMove = async (values: {cost: number; category: string; description?: string; date: Date}) => {
+	const onMove = async (values: {
+		cost: number;
+		category: string;
+		description?: string;
+		date: Date;
+	}) => {
 		setDeleteLoading(true);
 		backend
 			.updateSpend(props.spend.id, {...values, date: null, createdAt: new Date().toString()})
@@ -79,18 +84,19 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 			})
 			.catch(() => {
 				toast.error(`Произошла ошибка, попробуй еще раз позже`);
-			}).finally(() => setDeleteLoading(false));
+			})
+			.finally(() => setDeleteLoading(false));
 	};
 
 	const calculateSpan = () => {
 		if (props.length === 1) {
 			return 12;
 		}
-		if (props.length -1 === props.index && props.length % 2 !== 0) {
+		if (props.length - 1 === props.index && props.length % 2 !== 0) {
 			return 12;
 		}
 		return 6;
-	}
+	};
 
 	const onClose = () => {
 		setModalShow(false);
@@ -119,9 +125,7 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 								description={`В рублях`}
 								withAsterisk
 								formatter={value =>
-									!Number.isNaN(parseInt(value))
-										? formatter.format(+value)
-										: value
+									!Number.isNaN(parseInt(value)) ? formatter.format(+value) : value
 								}
 								max={-1}
 								{...form.getInputProps(`cost`)}
@@ -174,7 +178,6 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 					<Grid.Col>
 						<Divider />
 					</Grid.Col>
-
 
 					<Grid.Col>
 						<LongPressButton

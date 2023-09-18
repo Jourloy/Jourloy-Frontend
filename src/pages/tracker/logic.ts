@@ -280,8 +280,7 @@ export default class TrackerLogic {
 			const todayMilliseconds = Date.now();
 
 			// Check if the spend was made today
-			if (new Date(s.createdAt).getTime() <= todayMilliseconds)
-				return true;
+			if (new Date(s.createdAt).getTime() <= todayMilliseconds) return true;
 			return false;
 		});
 
@@ -289,7 +288,9 @@ export default class TrackerLogic {
 		const sums = spends.reduce((a, b) => a + b.cost, 0);
 
 		// Calculate the number of days
-		const days = Math.ceil((Date.now() - new Date(this.tracker.startDate).getTime()) / 1000 / 60 / 60 / 24)
+		const days = Math.ceil(
+			(Date.now() - new Date(this.tracker.startDate).getTime()) / 1000 / 60 / 60 / 24
+		);
 
 		// Return the spending limit for today (day limit + total cost of spends made today)
 		return this.tracker.dayLimit * days + sums;

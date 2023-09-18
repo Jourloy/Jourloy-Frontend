@@ -29,7 +29,7 @@ export default function PartyAddMemberModal(props: TProps) {
 		setAddMemberLoading(false);
 		setPayer(false);
 		props.onClose();
-	}
+	};
 
 	const submit = () => {
 		setAddMemberLoading(true);
@@ -61,7 +61,10 @@ export default function PartyAddMemberModal(props: TProps) {
 				</Grid.Col>
 
 				<Grid.Col>
-					<TextInput placeholder={`Как зовут участника?`} onChange={e => setMemberName(e.target.value)} />
+					<TextInput
+						placeholder={`Как зовут участника?`}
+						onChange={e => setMemberName(e.target.value)}
+					/>
 				</Grid.Col>
 
 				<Grid.Col>

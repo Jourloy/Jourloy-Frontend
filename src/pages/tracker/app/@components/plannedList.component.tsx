@@ -39,7 +39,12 @@ export default function PlannedList() {
 
 	const getPlannedSpendsComponents = () => {
 		return plannedSpends.map((s, i) => (
-			<PlannedSpend key={s.id} length={plannedSpends.length} spend={s as IPlannedSpend} index={i} />
+			<PlannedSpend
+				key={s.id}
+				length={plannedSpends.length}
+				spend={s as IPlannedSpend}
+				index={i}
+			/>
 		));
 	};
 

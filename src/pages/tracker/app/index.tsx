@@ -1,6 +1,18 @@
 import {useEffect, useState} from "react";
 import {store} from "../../../store/store";
-import {Flex, Grid, Button, Card, Title, Divider, Progress, Text, Accordion, Space, Group} from "@mantine/core";
+import {
+	Flex,
+	Grid,
+	Button,
+	Card,
+	Title,
+	Divider,
+	Progress,
+	Text,
+	Accordion,
+	Space,
+	Group,
+} from "@mantine/core";
 import {formatter} from "../../../context";
 import TrackerLogic from "../logic";
 import IncomeModal from "./@modals/income";
@@ -100,18 +112,13 @@ export default function TrackerApp() {
 					</Grid.Col>
 
 					<Grid.Col>
-					<Group grow>
-						<IncomeModal />
+						<Group grow>
+							<IncomeModal />
 
+							<SpendModal />
 
-						<SpendModal />
-
-
-
-						<Button disabled>
-							Не готово
-						</Button>
-					</Group>
+							<Button disabled>Не готово</Button>
+						</Group>
 					</Grid.Col>
 
 					<Grid.Col md={8} sm={12}>

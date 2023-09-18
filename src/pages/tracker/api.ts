@@ -55,26 +55,15 @@ export default class TrackerAPI extends BackendContext {
 	/* SPENDS */
 
 	public async addSpend(data: TSpend, token?: CancelToken) {
-		return await this.context.post(
-			`/spend`,
-			data,
-			{cancelToken: token}
-		);
+		return await this.context.post(`/spend`, data, {cancelToken: token});
 	}
 
 	public async updateSpend(id: number, data: TSpend, token?: CancelToken) {
-		return await this.context.patch(
-			`/spend/${id}`,
-			data,
-			{cancelToken: token}
-		);
+		return await this.context.patch(`/spend/${id}`, data, {cancelToken: token});
 	}
 
 	public async removeSpend(id: number, token?: CancelToken) {
-		return await this.context.delete(
-			`/spend/${id}`,
-			{cancelToken: token}
-		);
+		return await this.context.delete(`/spend/${id}`, {cancelToken: token});
 	}
 }
 

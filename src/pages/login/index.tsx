@@ -6,7 +6,7 @@ import {store} from "../../store/store";
 import {userActions} from "../../store/features/user.slice";
 import {useLocation, useNavigate} from "react-router-dom";
 import DefaultLoading from "../../components/loading";
-import { useDocumentTitle } from "@mantine/hooks";
+import {useDocumentTitle} from "@mantine/hooks";
 
 export default function Login() {
 	useDocumentTitle(`Вход`);
@@ -31,7 +31,8 @@ export default function Login() {
 		backend
 			.checkUser(source.token)
 			.then(d => {
-				if (d.data.user.username) store.dispatch(userActions.changeUsername(d.data.user.username));
+				if (d.data.user.username)
+					store.dispatch(userActions.changeUsername(d.data.user.username));
 				if (d.data.user.avatar) store.dispatch(userActions.changeAvatar(d.data.user.avatar));
 				if (d.data.user) {
 					store.dispatch(userActions.login());
@@ -56,9 +57,9 @@ export default function Login() {
 				transform: `translate(-50%, -50%)`,
 				maxWidth: `720px`,
 				width: `100%`,
-				}}
+			}}
 		>
-			<Flex direction={'column'} align={`flex-start`}>
+			<Flex direction={"column"} align={`flex-start`}>
 				<Button mb={`5px`} variant={`subtle`} p={0} compact onClick={toMain}>
 					<Center inline>
 						<IconArrowNarrowLeft stroke={1.3} />
@@ -66,27 +67,30 @@ export default function Login() {
 					</Center>
 				</Button>
 
-				<Card withBorder w={'100%'}>
+				<Card withBorder w={"100%"}>
 					<Stack>
-							<Title align={`center`}>Привет!</Title>
+						<Title align={`center`}>Привет!</Title>
 
-							<Text c={`dimmed`} align={`center`} mt={`-10px`}>
-								Если аккаунта нет, то он будет создан автоматически
-							</Text>
-							<Divider
-								label={
-									<Text size={`md`} tt={`uppercase`}>
-										войти через
-									</Text>
-								}
-								labelPosition={`center`}
-							/>
+						<Text c={`dimmed`} align={`center`} mt={`-10px`}>
+							Если аккаунта нет, то он будет создан автоматически
+						</Text>
+						<Divider
+							label={
+								<Text size={`md`} tt={`uppercase`}>
+									войти через
+								</Text>
+							}
+							labelPosition={`center`}
+						/>
 
-							<Button leftIcon={
-								<IconBrandGoogle />
-							} w={`100%`} variant={`outline`} onClick={googleRedirect}>
-								Google
-							</Button>
+						<Button
+							leftIcon={<IconBrandGoogle />}
+							w={`100%`}
+							variant={`outline`}
+							onClick={googleRedirect}
+						>
+							Google
+						</Button>
 					</Stack>
 				</Card>
 			</Flex>

@@ -1,10 +1,5 @@
 import {PropsWithChildren} from "react";
-import {
-	motion,
-	useTransform,
-	useMotionValue,
-	useAnimationFrame,
-} from "framer-motion";
+import {motion, useTransform, useMotionValue, useAnimationFrame} from "framer-motion";
 import {wrap} from "@motionone/utils";
 import "./index.css";
 

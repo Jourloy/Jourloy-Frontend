@@ -92,11 +92,11 @@ export default function HistorySpend(props: THistorySpendProps) {
 		if (props.length === 1) {
 			return 12;
 		}
-		if (props.length -1 === props.index && props.length % 2 !== 0) {
+		if (props.length - 1 === props.index && props.length % 2 !== 0) {
 			return 12;
 		}
 		return 6;
-	}
+	};
 
 	const onClose = () => {
 		setModalShow(false);
@@ -165,7 +165,6 @@ export default function HistorySpend(props: THistorySpendProps) {
 					</form>
 
 					<Grid.Col>
-
 						<Divider />
 					</Grid.Col>
 
@@ -182,7 +181,13 @@ export default function HistorySpend(props: THistorySpendProps) {
 					</Grid.Col>
 
 					<Grid.Col>
-						<Text align={`center`} color={`dimmed`} mt={`-15px`} size={`sm`} tt={`lowercase`}>
+						<Text
+							align={`center`}
+							color={`dimmed`}
+							mt={`-15px`}
+							size={`sm`}
+							tt={`lowercase`}
+						>
 							Это действие нельзя будет отменить
 						</Text>
 					</Grid.Col>

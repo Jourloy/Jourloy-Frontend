@@ -9,7 +9,7 @@ import {useColorScheme, useLocalStorage} from "@mantine/hooks";
 export default function DefaultContainer(props: PropsWithChildren) {
 	const prefersColorScheme = useColorScheme();
 	const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
-		key: 'mantine-color-scheme',
+		key: "mantine-color-scheme",
 		defaultValue: prefersColorScheme,
 		getInitialValueInEffect: true,
 	});
@@ -46,8 +46,8 @@ export default function DefaultContainer(props: PropsWithChildren) {
 							defaultProps: theme => ({
 								color: theme.colorScheme === `dark` ? `gray` : `dark`,
 								variant: theme.colorScheme === `dark` ? `white` : `filled`,
-							})
-						}
+							}),
+						},
 					},
 				}}
 			>
