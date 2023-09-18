@@ -14,7 +14,7 @@ export default function SpendList() {
 
 	const [spendPage, setSpendPage] = useState(1);
 	const [spendSearch, setSpendSearch] = useState(``);
-	const [spendCategory, setSpendCategory] = useState(``);
+	const [spendCategory] = useState(``);
 
 	const getSpendsComponents = () => {
 		return spends.map((s, i) => <HistorySpend key={s.id} length={spends.length} spend={s} index={i} />);

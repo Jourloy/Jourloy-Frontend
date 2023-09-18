@@ -1,7 +1,6 @@
 import {
 	Button,
 	Divider,
-	Grid,
 	Group,
 	Modal,
 	Switch,
@@ -9,7 +8,7 @@ import {
 	useMantineColorScheme,
 	useMantineTheme,
 	Text,
-	Textarea,
+	Textarea, Stack,
 } from "@mantine/core";
 import {store} from "../../../store/store";
 import {userActions} from "../../../store/features/user.slice";
@@ -42,7 +41,7 @@ export default function HeaderSettingsModal(props: TProps) {
 		if (logined !== _logined) setLogined(_logined);
 	});
 
-	
+
 
 	const logout = () => {
 		loginBackend
@@ -100,44 +99,35 @@ export default function HeaderSettingsModal(props: TProps) {
 
 	if (!logined) {
 		return (
-			<>
 				<Modal
 					opened={props.opened}
 					onClose={closeModal}
 					centered
 					style={{position: `absolute`}}
 				>
-					<Grid>
-						<Grid.Col>
+					<Stack>
 							<Title order={2} align={`center`}>
 								Кажется ты не вошел в аккаунт
 							</Title>
-						</Grid.Col>
 
-						<Grid.Col>
 							<Button fullWidth onClick={login}>
 								Войти
 							</Button>
-						</Grid.Col>
-					</Grid>
+					</Stack>
 				</Modal>
-			</>
 		);
 	}
 
 	return (
 		<>
 			<Modal opened={props.opened} onClose={closeModal} centered style={{position: `absolute`}}>
-				<Grid>
-					<Grid.Col>
+				<Stack>
 						<Title align={`center`}>{store.getState().userReducer.username}</Title>
-					</Grid.Col>
 
-					<Grid.Col>
+
+
 						<Divider />
-					</Grid.Col>
 
-					<Grid.Col>
 						<Group w={`100%`} position={`center`}>
 							<Text>Изменить тему сайта</Text>
 							<Switch
@@ -167,20 +157,17 @@ export default function HeaderSettingsModal(props: TProps) {
 								}
 							/>
 						</Group>
-					</Grid.Col>
 
-					<Grid.Col>
+
+
 						<Divider />
-					</Grid.Col>
 
-					<Grid.Col hidden={bugMode}>
 						<Button fullWidth variant={`outline`} onClick={() => setBugMode(true)}>
 							Сообщить о баге
 						</Button>
-					</Grid.Col>
 
-					<form style={{width: `100%`}} onSubmit={form.onSubmit(onSubmit)}>
-						<Grid.Col hidden={!bugMode}>
+					{bugMode && <form onSubmit={form.onSubmit(onSubmit)}>
+						<Stack>
 							<Textarea
 								label={`В чем проблема?`}
 								placeholder={`Можешь вкратце описать действия`}
@@ -188,31 +175,24 @@ export default function HeaderSettingsModal(props: TProps) {
 								maxRows={5}
 								{...form.getInputProps(`description`)}
 							/>
-						</Grid.Col>
 
-						<Grid.Col hidden={!bugMode}>
 							<Button fullWidth type={`submit`}>
 								Отправить
 							</Button>
-						</Grid.Col>
 
-						<Grid.Col hidden={!bugMode}>
 							<Button fullWidth variant={`outline`} onClick={onCloseBugMode}>
 								Отменить
 							</Button>
-						</Grid.Col>
+					</Stack>
 					</form>
+					}
+					{bugMode && <Divider />}
 
-					<Grid.Col hidden={!bugMode}>
-						<Divider />
-					</Grid.Col>
 
-					<Grid.Col>
 						<Button color={`red`} fullWidth onClick={logout}>
 							Выйти
 						</Button>
-					</Grid.Col>
-				</Grid>
+				</Stack>
 			</Modal>
 		</>
 	);

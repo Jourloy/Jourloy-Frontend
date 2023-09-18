@@ -116,7 +116,7 @@ export default function IncomeModal() {
 				</Grid>
 			</Modal>
 
-			<Button fullWidth onClick={() => setModalShow(true)}>
+			<Button onClick={() => setModalShow(true)}>
 				Доход
 			</Button>
 		</>

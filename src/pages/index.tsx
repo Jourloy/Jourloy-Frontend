@@ -10,7 +10,7 @@ import {
 	ActionIcon,
 	Flex,
 	Center,
-	Space,
+	Space, Stack,
 } from "@mantine/core";
 import { useDocumentTitle } from "@mantine/hooks";
 import {IconBrandDiscord, IconBrandGithub, IconBrandTwitch} from "@tabler/icons-react";
@@ -18,7 +18,7 @@ import {useNavigate} from "react-router-dom";
 
 export default function Main() {
 	useDocumentTitle(`Jourloy`);
-	
+
 	const navigate = useNavigate();
 
 	return (
@@ -33,47 +33,39 @@ export default function Main() {
 				</Grid.Col>
 
 				<Grid.Col sm={12} md={8} mah={`284px`} h={`100%`}>
-					<Card withBorder h={`100%`}>
-						<Center h={`100%`}>
-							<Grid gutter={3}>
-								<Grid.Col>
-									<Title align={`center`} tt={`uppercase`}>
+					<Card withBorder h={"100%"}>
+						<Center h={'100%'}>
+							<Flex direction={'column'} align={'center'} gap={'xs'}>
+									<Title tt={`uppercase`}>
 										✌️ Это я ✌️
 									</Title>
-								</Grid.Col>
 
-								<Grid.Col>
-									<Divider my={`10px`} />
-								</Grid.Col>
+									<Divider w={'100%'} />
 
-								<Grid.Col>
-									<Text align={`center`}>
+									<Text>
 										Мужчина, муж, брат, сын, программист и просто хороший человек
 									</Text>
-								</Grid.Col>
 
-								<Grid.Col mt={`5px`}>
-									<Group position={`center`}>
-										<a href={`https://discord.gg/PB8rdcXyRR`}>
-											<ActionIcon style={{color: `#5865F2`}}>
+									<Group>
+											<ActionIcon component={'a'}
+														href={`https://discord.gg/PB8rdcXyRR`}
+														color={'indigo.5'}>
 												<IconBrandDiscord />
 											</ActionIcon>
-										</a>
 
-										<a href={`https://twitch.tv/jourloy`}>
-											<ActionIcon style={{color: `#6441A4`}}>
+											<ActionIcon component={'a'}
+														href={`https://twitch.tv/jourloy`}
+												color={'violet.5'}>
 												<IconBrandTwitch />
 											</ActionIcon>
-										</a>
 
-										<a href={`https://github.com/jourloy`}>
-											<ActionIcon color={`dark`}>
+											<ActionIcon component={'a'}
+														href={'https://github.com/jourloy'}
+												color={`dark`}>
 												<IconBrandGithub />
 											</ActionIcon>
-										</a>
 									</Group>
-								</Grid.Col>
-							</Grid>
+							</Flex>
 						</Center>
 					</Card>
 				</Grid.Col>
@@ -105,22 +97,16 @@ export default function Main() {
 				</Grid.Col>
 
 				<Grid.Col>
-					<Card withBorder w={`100%`} h={`100%`}>
-						<Grid>
-							<Grid.Col>
+					<Card withBorder>
+						<Stack align={'center'}>
 								<Title align={`center`}>Инструменты</Title>
-							</Grid.Col>
 
-							<Grid.Col>
-								<Divider />
-							</Grid.Col>
+								<Divider w={'100%'}/>
 
-							<Grid.Col>
 								<Button fullWidth onClick={() => navigate(`/party`)} variant={`outline`}>
 									Party калькулятор
 								</Button>
-							</Grid.Col>
-						</Grid>
+						</Stack>
 					</Card>
 				</Grid.Col>
 

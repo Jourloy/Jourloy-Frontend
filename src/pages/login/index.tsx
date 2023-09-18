@@ -1,5 +1,5 @@
-import {Button, Card, Container, Divider, Flex, Grid, Text, Title} from "@mantine/core";
-import {IconArrowNarrowLeft} from "@tabler/icons-react";
+import {Button, Card, Center, Container, Divider, Flex, Stack, Text, Title} from "@mantine/core";
+import {IconArrowNarrowLeft, IconBrandGoogle} from "@tabler/icons-react";
 import LoginAPI from "./api";
 import {useEffect, useState} from "react";
 import {store} from "../../store/store";
@@ -10,7 +10,7 @@ import { useDocumentTitle } from "@mantine/hooks";
 
 export default function Login() {
 	useDocumentTitle(`Вход`);
-	
+
 	const backend = new LoginAPI();
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -51,37 +51,28 @@ export default function Login() {
 		<Container
 			style={{
 				position: `absolute`,
-				left: `50%`,
 				top: `50%`,
+				left: `50%`,
 				transform: `translate(-50%, -50%)`,
-				display: `flex`,
-				justifyContent: `space-between`,
-				alignItems: `center`,
 				maxWidth: `720px`,
 				width: `100%`,
-			}}
+				}}
 		>
-			<Grid columns={6} maw={`700px`} w={`100%`} p={0} align={`center`}>
-				<Button mb={`5px`} ml={`15px`} variant={`subtle`} p={0} compact onClick={toMain}>
-					<Flex>
+			<Flex direction={'column'} align={`flex-start`}>
+				<Button mb={`5px`} variant={`subtle`} p={0} compact onClick={toMain}>
+					<Center inline>
 						<IconArrowNarrowLeft stroke={1.3} />
-						<Text mt={`2px`}>Вернуться на главную</Text>
-					</Flex>
+						<Text>Вернуться на главную</Text>
+					</Center>
 				</Button>
 
-				<Card ml={`15px`} withBorder w={`100%`} h={`100%`}>
-					<Grid gutter={10}>
-						<Grid.Col>
+				<Card withBorder w={'100%'}>
+					<Stack>
 							<Title align={`center`}>Привет!</Title>
-						</Grid.Col>
 
-						<Grid.Col>
 							<Text c={`dimmed`} align={`center`} mt={`-10px`}>
 								Если аккаунта нет, то он будет создан автоматически
 							</Text>
-						</Grid.Col>
-
-						<Grid.Col>
 							<Divider
 								label={
 									<Text size={`md`} tt={`uppercase`}>
@@ -90,16 +81,15 @@ export default function Login() {
 								}
 								labelPosition={`center`}
 							/>
-						</Grid.Col>
 
-						<Grid.Col>
-							<Button w={`100%`} variant={`outline`} onClick={googleRedirect}>
+							<Button leftIcon={
+								<IconBrandGoogle />
+							} w={`100%`} variant={`outline`} onClick={googleRedirect}>
 								Google
 							</Button>
-						</Grid.Col>
-					</Grid>
+					</Stack>
 				</Card>
-			</Grid>
+			</Flex>
 		</Container>
 	);
 }
