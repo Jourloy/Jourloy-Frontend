@@ -32,4 +32,4 @@ jobs:
                       echo DOCKER_PORT=${{ secrets.DOCKER_PORT }} >> .env
                       git pull
                       yarn
-                      pm2 --name frontend serve --spa ./dist 10000
+                      pm2 --name frontend serve --spa ./dist
