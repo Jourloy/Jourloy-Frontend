@@ -62,7 +62,8 @@ export default function PartyMemberComponent(props: TProps) {
 	};
 
 	const [deleteLoading, setDeleteLoading] = useState(false);
-	const [changeLoading, setChangeLoading] = useState(false);
+	// TODO
+	const [changeLoading] = useState(false);
 
 	const onRemove = () => {
 		setDeleteLoading(true);

@@ -14,7 +14,8 @@ export default function PlannedList() {
 
 	const [plannedPage, setPlannedPage] = useState(1);
 	const [plannedSearch, setPlannedSearch] = useState(``);
-	const [plannedCategory, setPlannedCategory] = useState(``);
+	// TODO
+	const [plannedCategory] = useState(``);
 
 	const plannedSpendsArray = tracker.spends.filter(s => s.date != null);
 	const plannedSpends: TSpend[] = [];

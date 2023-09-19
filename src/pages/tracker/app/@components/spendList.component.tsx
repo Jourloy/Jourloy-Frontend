@@ -14,6 +14,7 @@ export default function SpendList() {
 
 	const [spendPage, setSpendPage] = useState(1);
 	const [spendSearch, setSpendSearch] = useState(``);
+	// TODO
 	const [spendCategory] = useState(``);
 
 	const getSpendsComponents = () => {
