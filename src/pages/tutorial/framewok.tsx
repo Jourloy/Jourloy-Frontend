@@ -173,6 +173,10 @@ export default function TutorialFramework() {
 									src={`https://s.jourloy.com/web-images/DefaultLayout.png`}
 								/>
 
+								<Text align={`center`} color={`dimmed`} size={`sm`} mt={`-25px`}>
+									Более подробно расмотреть ее можно в программе
+								</Text>
+
 								<Text>
 									На нижней линии, в центре, находятся два пробела, а побокам от них
 									клавиша переключения слоя. Им необязательно находится именно там, но
