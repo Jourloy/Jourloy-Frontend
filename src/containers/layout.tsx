@@ -1,5 +1,5 @@
 import {AppShell} from "@mantine/core";
-import {PropsWithChildren, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import HeaderComponent from "../components/header";
 import {store} from "../store/store";
 import Blocked from "../pages/blocked";
@@ -7,11 +7,12 @@ import FooterComponent from "../components/footer";
 
 type TProps = {
 	needAuth?: boolean;
-	ignoreDomainCheck?: boolean;
 	ignoreAppShell?: boolean;
+
+	children: React.ReactNode;
 };
 
-export default function LayoutContainer(props: PropsWithChildren<TProps>) {
+export default function LayoutContainer(props: TProps) {
 	const [logined, setLogined] = useState(store.getState().userReducer.logined);
 	store.subscribe(() => {
 		const _logined = store.getState().userReducer.logined;
