@@ -3,5 +3,3 @@ export const formatter = new Intl.NumberFormat("ru", {
 	currency: `RUB`,
 	maximumFractionDigits: 0,
 });
-
-export const DOMAIN = process.env.VITE_NODE_ENV === `production` ? `jourloy.com` : `jourloy.online`;
