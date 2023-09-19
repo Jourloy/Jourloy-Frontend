@@ -119,12 +119,9 @@ export default function HeaderSettingsModal(props: TProps) {
 	}
 
 	return (
-		<>
 			<Modal opened={props.opened} onClose={closeModal} centered style={{position: `absolute`}}>
 				<Stack>
 						<Title align={`center`}>{store.getState().userReducer.username}</Title>
-
-
 
 						<Divider />
 
@@ -158,13 +155,11 @@ export default function HeaderSettingsModal(props: TProps) {
 							/>
 						</Group>
 
-
-
 						<Divider />
 
-						<Button fullWidth variant={`outline`} onClick={() => setBugMode(true)}>
-							Сообщить о баге
-						</Button>
+					{!bugMode && <Button fullWidth variant={`outline`} onClick={() => setBugMode(true)}>
+						Сообщить о баге
+					</Button>}
 
 					{bugMode && <form onSubmit={form.onSubmit(onSubmit)}>
 						<Stack>
@@ -188,12 +183,10 @@ export default function HeaderSettingsModal(props: TProps) {
 					}
 					{bugMode && <Divider />}
 
-
 						<Button color={`red`} fullWidth onClick={logout}>
 							Выйти
 						</Button>
 				</Stack>
 			</Modal>
-		</>
 	);
 }
