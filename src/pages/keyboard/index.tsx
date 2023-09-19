@@ -1,4 +1,17 @@
-import {Button, Center, Divider, Flex, Text, Title, Image, Card, Container, Stack} from "@mantine/core";
+import {
+	Button,
+	Center,
+	Divider,
+	Flex,
+	Text,
+	Title,
+	Image,
+	Card,
+	Container,
+	Stack,
+	Group,
+	Paper,
+} from "@mantine/core";
 import ScrollHint from "../../components/scrollHint";
 import {motion} from "framer-motion";
 import {useState} from "react";
@@ -23,27 +36,41 @@ export default function KeyboardIndex() {
 				}}
 			/>
 
-			<Container mt={100}>
-				<Flex justify={`center`} align={`stretch`} direction={`column`} gap={"md"}>
-					<Stack mb={50}>
-						<Image src={`https://s.jourloy.com/web-images/FrameworkPreview.png`} />
+			<Paper
+				style={{
+					position: `absolute`,
+					top: `90dvh`,
+				}}
+				w={`100%`}
+				ml={`-16px`}
+			>
+				<Group position={`center`} w={`100%`}>
+					<ScrollHint />
+				</Group>
+			</Paper>
 
-						<Text align={`center`} color={`dimmed`} size={`20px`}>
-							Самая удобная клавиатура
-						</Text>
+			<Container>
+				<Flex justify={`center`} align={`stretch`} direction={`column`} gap={`md`}>
+					<Stack mb={50} h={`calc(100dvh - 80px)`}>
+						<Center h={`100%`}>
+							<Stack>
+								<Image src={`https://s.jourloy.com/web-images/FrameworkPreview.png`} />
 
-						<Divider />
+								<Text align={`center`} color={`dimmed`} size={`20px`}>
+									Самая удобная клавиатура
+								</Text>
 
-						<Center>
-							<Button fullWidth onClick={() => setBuyModal(true)}>
-								Начать пользоваться
-							</Button>
+								<Divider />
+
+								<Center>
+									<Button fullWidth onClick={() => setBuyModal(true)}>
+										Начать пользоваться
+									</Button>
+								</Center>
+							</Stack>
 						</Center>
 					</Stack>
-					<Center>
-						<ScrollHint />
-					</Center>
-					<Stack mt={50} align={"center"}>
+					<Stack mt={50} align={`center`}>
 						<Title tt={`uppercase`}>
 							Это все, что {` `}
 							<Text span color={`indigo.5`}>
@@ -125,7 +152,7 @@ export default function KeyboardIndex() {
 						</Card>
 					</motion.div>
 
-					<Divider w={`100%`} />
+					<Divider w={`100%`} my={`md`}/>
 
 					<Title order={2} align={`center`}>
 						Частые вопросы

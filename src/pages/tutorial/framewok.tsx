@@ -211,11 +211,6 @@ export default function TutorialFramework() {
 									Вот примерно также работает и твоя клавиатура, только вот все клавиши
 									ты назначаешь сам
 								</Text>
-
-								<Image
-									withPlaceholder
-									src={`https://s.jourloy.com/web-images/LayerExample.png`}
-								/>
 							</Stack>
 						</Accordion.Panel>
 					</Accordion.Item>
