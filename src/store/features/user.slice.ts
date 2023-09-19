@@ -15,10 +15,10 @@ export const userSlice = createSlice({
 	initialState,
 	reducers: {
 		reset: () => initialState,
-		login: (state) => {
+		login: state => {
 			state.logined = true;
 		},
-		logout: (state) => {
+		logout: state => {
 			state.logined = false;
 		},
 		changeUsername: (state, action: PayloadAction<string>) => {

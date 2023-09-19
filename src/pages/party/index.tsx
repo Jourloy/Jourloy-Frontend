@@ -6,9 +6,10 @@ import PartyAPI from "./api";
 import {CancelToken} from "axios";
 import {partyActions} from "../../store/features/party.slice";
 import DefaultLoading from "../../components/loading";
+import {useDocumentTitle} from "@mantine/hooks";
 
 export default function PartyIndex() {
-	document.title = `Party-Калькулятор`;
+	useDocumentTitle(`Party-Калькулятор`);
 
 	const navigate = useNavigate();
 	const backend = new PartyAPI();
@@ -51,7 +52,7 @@ export default function PartyIndex() {
 
 		return () => source.cancel();
 	}, [checked]);
-	
+
 	if (loading) return <DefaultLoading />;
 	return <PartyCreate />;
 }

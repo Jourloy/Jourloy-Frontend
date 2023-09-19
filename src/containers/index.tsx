@@ -1,15 +1,18 @@
 import {ColorScheme, ColorSchemeProvider, MantineProvider} from "@mantine/core";
 import {DatesProvider} from "@mantine/dates";
-import {PropsWithChildren, useState} from "react";
+import {PropsWithChildren} from "react";
 import {ToastContainer} from "react-toastify";
 import "dayjs/locale/ru";
 import {Providers} from "../store/provider";
-import {useColorScheme} from "@mantine/hooks";
+import {useColorScheme, useLocalStorage} from "@mantine/hooks";
 
 export default function DefaultContainer(props: PropsWithChildren) {
-	const colorSchemePrefered = useColorScheme();
-
-	const [colorScheme, setColorScheme] = useState<ColorScheme>(colorSchemePrefered);
+	const prefersColorScheme = useColorScheme();
+	const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
+		key: "mantine-color-scheme",
+		defaultValue: prefersColorScheme,
+		getInitialValueInEffect: true,
+	});
 	const toggleColorScheme = (value?: ColorScheme) =>
 		setColorScheme(value || (colorScheme === `dark` ? `light` : `dark`));
 
@@ -20,16 +23,10 @@ export default function DefaultContainer(props: PropsWithChildren) {
 				withNormalizeCSS
 				theme={{
 					colorScheme: colorScheme,
-					fontFamily: `SF Pro Display Regular`,
 					components: {
 						Button: {
 							defaultProps: theme => ({
 								color: theme.colorScheme === `dark` ? `gray` : `dark`,
-							}),
-							styles: () => ({
-								root: {
-									fontWeight: 500,
-								},
 							}),
 						},
 						Modal: {
@@ -49,8 +46,8 @@ export default function DefaultContainer(props: PropsWithChildren) {
 							defaultProps: theme => ({
 								color: theme.colorScheme === `dark` ? `gray` : `dark`,
 								variant: theme.colorScheme === `dark` ? `white` : `filled`,
-							})
-						}
+							}),
+						},
 					},
 				}}
 			>

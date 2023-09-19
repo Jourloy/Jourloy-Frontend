@@ -1,6 +1,9 @@
-import { Container, Grid, Card, Title, Text } from "@mantine/core";
+import {Container, Grid, Card, Title, Text} from "@mantine/core";
+import {useDocumentTitle} from "@mantine/hooks";
 
 export default function Blocked() {
+	useDocumentTitle(`Нет доступа`);
+
 	return (
 		<>
 			<Container
@@ -25,8 +28,8 @@ export default function Blocked() {
 
 							<Grid.Col>
 								<Text c={`dimmed`} align={`center`} mt={`-10px`}>
-									Кажется у тебя нет доступа к страницам. Войди в свой
-									аккаунт, чтобы получить его
+									Кажется у тебя нет доступа к страницам. Войди в свой аккаунт, чтобы
+									получить его
 								</Text>
 							</Grid.Col>
 						</Grid>

@@ -23,21 +23,9 @@ export default function LayoutContainer(props: PropsWithChildren<TProps>) {
 	useEffect(() => {
 		if (props.needAuth) {
 			if (!logined) setShow(false);
-			else if (
-				document.location.host.includes(`.online`) &&
-				store.getState().userReducer.username !== `Igor Shaposhnikov` &&
-				!props.ignoreDomainCheck
-			) {
-				setShow(false);
-			} else setShow(true);
+			else setShow(true);
 		} else {
-			if (
-				document.location.host.includes(`.online`) &&
-				store.getState().userReducer.username !== `Igor Shaposhnikov` &&
-				!props.ignoreDomainCheck
-			) {
-				setShow(false);
-			} else setShow(true);
+			setShow(true);
 		}
 	});
 
@@ -52,10 +40,7 @@ export default function LayoutContainer(props: PropsWithChildren<TProps>) {
 
 	return (
 		<>
-			<AppShell
-				header={<HeaderComponent />}
-				footer={<FooterComponent />}
-			>
+			<AppShell header={<HeaderComponent />} footer={<FooterComponent />}>
 				{show && props.children}
 				{!show && <Blocked />}
 			</AppShell>

@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {TCalculator} from "../../types";
 import PartyAPI from "../../pages/party/api";
-import { store } from "../store";
+import {store} from "../store";
 
 type PartyState = {
 	calculator: TCalculator;
@@ -22,11 +22,13 @@ const updateCalculator = () => {
 			if (d && d.data && d.data.id) {
 				store.dispatch(partyActions.forceUpdateCalculator(d.data));
 				store.dispatch(partyActions.updateMemberPages(Math.ceil(d.data.members.length / 5)));
-				store.dispatch(partyActions.updatePositionPages(Math.ceil(d.data.positions.length / 10)));
+				store.dispatch(
+					partyActions.updatePositionPages(Math.ceil(d.data.positions.length / 10))
+				);
 			}
 		})
 		.catch(() => null);
-}
+};
 
 export const partySlice = createSlice({
 	name: "partySlice",

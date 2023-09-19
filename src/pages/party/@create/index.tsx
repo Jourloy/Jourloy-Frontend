@@ -19,7 +19,7 @@ import {partyActions} from "../../../store/features/party.slice";
 import {store} from "../../../store/store";
 import {useState} from "react";
 import {formatter} from "../../../context";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ScrollHint from "../../../components/scrollHint";
 
 export default function PartyCreate() {
@@ -37,12 +37,12 @@ export default function PartyCreate() {
 			.then(() => {
 				toast.success(`Калькулятор создан`);
 				store.dispatch(partyActions.updateCalculator());
-				navigate(`/party/app`)
+				navigate(`/party/app`);
 			})
 			.catch(e => {
 				if (e && e.response) {
 					if (e.response.status === 400) {
-						navigate(`/party/app`)
+						navigate(`/party/app`);
 					} else toast.error(`Что-то пошло не так, попробуй позже`);
 				} else toast.error(`Что-то пошло не так, попробуй позже`);
 			});
@@ -72,7 +72,11 @@ export default function PartyCreate() {
 										<Grid.Col>
 											<Title align={`center`} tt={`uppercase`} order={1}>
 												У тебя еще нет {` `}
-												<Text span variant={`gradient`} gradient={{from: `yellow`, to: `red`}}>
+												<Text
+													span
+													variant={`gradient`}
+													gradient={{from: `yellow`, to: `red`}}
+												>
 													Party
 												</Text>
 												{` `} калькулятора?
@@ -80,7 +84,12 @@ export default function PartyCreate() {
 										</Grid.Col>
 
 										<Grid.Col>
-											<Text align={`center`} color={`dimmed`} size={`18px`} mt={`-10px`}>
+											<Text
+												align={`center`}
+												color={`dimmed`}
+												size={`18px`}
+												mt={`-10px`}
+											>
 												Удобный способ устроить вечеринку
 											</Text>
 										</Grid.Col>
@@ -117,17 +126,18 @@ export default function PartyCreate() {
 											<Grid>
 												<Grid.Col>
 													<Text>
-														Давай представим ситуацию. Ты хочешь устроить вечеринку, будет
-														много людей, много еды и развлечений. Как стоимость всего честно
+														Давай представим ситуацию. Ты хочешь устроить
+														вечеринку, будет много людей, много еды и
+														развлечений. Как стоимость всего честно
 														распределить между всеми участниками?
 													</Text>
 												</Grid.Col>
 
 												<Grid.Col>
 													<Text>
-														Взять со всех одинаковую сумму? Но ведь тогда кто-то переплатит,
-														ведь он может не пить / кушать / использовать все, что будет на
-														вечеринке
+														Взять со всех одинаковую сумму? Но ведь тогда
+														кто-то переплатит, ведь он может не пить / кушать
+														/ использовать все, что будет на вечеринке
 													</Text>
 												</Grid.Col>
 											</Grid>
@@ -178,8 +188,9 @@ export default function PartyCreate() {
 
 												<Grid.Col>
 													<Text>
-														В калькуляторе нет ограничения на количество участников. Можешь
-														добавить двух, а можешь и сотню
+														В калькуляторе нет ограничения на количество
+														участников. Можешь добавить двух, а можешь и
+														сотню
 													</Text>
 												</Grid.Col>
 											</Grid>
@@ -194,7 +205,11 @@ export default function PartyCreate() {
 										<Card withBorder>
 											<Grid>
 												<Grid.Col>
-													<TextInput label={`Наименование`} value={`Кола`} disabled />
+													<TextInput
+														label={`Наименование`}
+														value={`Кола`}
+														disabled
+													/>
 												</Grid.Col>
 
 												<Grid.Col>
@@ -214,7 +229,8 @@ export default function PartyCreate() {
 											<Grid>
 												<Grid.Col>
 													<Text>
-														Добавляем то, что будет на вечеринке. Здесь это называется {` `}
+														Добавляем то, что будет на вечеринке. Здесь это
+														называется {` `}
 														<Text span color={`red`} weight={800}>
 															позиция
 														</Text>
@@ -223,8 +239,8 @@ export default function PartyCreate() {
 
 												<Grid.Col>
 													<Text>
-														Если выбрано несколько человек, то стоимость разделится между
-														ними
+														Если выбрано несколько человек, то стоимость
+														разделится между ними
 													</Text>
 												</Grid.Col>
 											</Grid>
@@ -256,12 +272,18 @@ export default function PartyCreate() {
 														<Grid>
 															<Grid.Col span={4}>
 																<Text mt={`3px`}>
-																	{formatter.format(Math.ceil(+exPositionCost / 2))}
+																	{formatter.format(
+																		Math.ceil(+exPositionCost / 2)
+																	)}
 																</Text>
 															</Grid.Col>
 
 															<Grid.Col span={8}>
-																<Text align={`right`} mt={`3px`} truncate>
+																<Text
+																	align={`right`}
+																	mt={`3px`}
+																	truncate
+																>
 																	{exMemberNameF}
 																</Text>
 															</Grid.Col>
@@ -274,12 +296,18 @@ export default function PartyCreate() {
 														<Grid>
 															<Grid.Col span={4}>
 																<Text mt={`3px`}>
-																	{formatter.format(Math.ceil(+exPositionCost / 2))}
+																	{formatter.format(
+																		Math.ceil(+exPositionCost / 2)
+																	)}
 																</Text>
 															</Grid.Col>
 
 															<Grid.Col span={8}>
-																<Text align={`right`} mt={`3px`} truncate>
+																<Text
+																	align={`right`}
+																	mt={`3px`}
+																	truncate
+																>
 																	{exMemberNameS}
 																</Text>
 															</Grid.Col>
@@ -299,7 +327,8 @@ export default function PartyCreate() {
 
 												<Grid.Col>
 													<Text>
-														Около каждого участника будет сумма, которую он должен заплатить
+														Около каждого участника будет сумма, которую он
+														должен заплатить
 													</Text>
 												</Grid.Col>
 											</Grid>
@@ -327,16 +356,26 @@ export default function PartyCreate() {
 												</Grid.Col>
 
 												<Grid.Col span={6}>
-													<Card withBorder w={`100%`} style={{borderColor: `#f2d9ae`}}>
+													<Card
+														withBorder
+														w={`100%`}
+														style={{borderColor: `#f2d9ae`}}
+													>
 														<Grid>
 															<Grid.Col span={4}>
 																<Text mt={`3px`}>
-																	{formatter.format(Math.ceil(+exPositionCost / 2))}
+																	{formatter.format(
+																		Math.ceil(+exPositionCost / 2)
+																	)}
 																</Text>
 															</Grid.Col>
 
 															<Grid.Col span={8}>
-																<Text align={`right`} mt={`3px`} truncate>
+																<Text
+																	align={`right`}
+																	mt={`3px`}
+																	truncate
+																>
 																	{exMemberNameF}
 																</Text>
 															</Grid.Col>
@@ -345,16 +384,26 @@ export default function PartyCreate() {
 												</Grid.Col>
 
 												<Grid.Col span={6}>
-													<Card withBorder w={`100%`} style={{borderColor: `#f2d9ae`}}>
+													<Card
+														withBorder
+														w={`100%`}
+														style={{borderColor: `#f2d9ae`}}
+													>
 														<Grid>
 															<Grid.Col span={4}>
 																<Text mt={`3px`}>
-																	{formatter.format(Math.ceil(+exPositionCost / 2))}
+																	{formatter.format(
+																		Math.ceil(+exPositionCost / 2)
+																	)}
 																</Text>
 															</Grid.Col>
 
 															<Grid.Col span={8}>
-																<Text align={`right`} mt={`3px`} truncate>
+																<Text
+																	align={`right`}
+																	mt={`3px`}
+																	truncate
+																>
 																	{exMemberNameS}
 																</Text>
 															</Grid.Col>
@@ -374,8 +423,9 @@ export default function PartyCreate() {
 
 												<Grid.Col>
 													<Text>
-														При создании позиции выбираешь кто платит и после можно
-														посмотреть, сколько нужно вернуть какому человеку
+														При создании позиции выбираешь кто платит и после
+														можно посмотреть, сколько нужно вернуть какому
+														человеку
 													</Text>
 												</Grid.Col>
 											</Grid>
@@ -392,9 +442,10 @@ export default function PartyCreate() {
 						<Grid.Col>
 							<Card withBorder>
 								<Text>
-									Как видишь, пользоваться им легко, а вот пользы он приносит много. Теперь все будут
-									платить только за то, что используют сами, а ты будешь видеть всю картину в целом и
-									понимать, чего не хватает, что никто не использует, а что стоит прикупить побольше
+									Как видишь, пользоваться им легко, а вот пользы он приносит много.
+									Теперь все будут платить только за то, что используют сами, а ты
+									будешь видеть всю картину в целом и понимать, чего не хватает, что
+									никто не использует, а что стоит прикупить побольше
 								</Text>
 							</Card>
 						</Grid.Col>

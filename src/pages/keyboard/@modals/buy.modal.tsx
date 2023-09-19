@@ -1,5 +1,5 @@
 import {Card, Divider, Grid, Modal, Title, UnstyledButton, Text} from "@mantine/core";
-import { formatter } from "../../../context";
+import {formatter} from "../../../context";
 
 type TProps = {
 	opened: boolean;
@@ -37,17 +37,15 @@ export default function KeyboardBuyModal(props: TProps) {
 
 					<Grid.Col>
 						<Text>
-							Временно принимаем заказы только через Telegram. Чтобы написать - 
-							нажми на кнопку ниже или найди нас в поиске
+							Временно принимаем заказы только через Telegram. Чтобы написать - нажми на
+							кнопку ниже или найди нас в поиске
 						</Text>
 					</Grid.Col>
 
 					<Grid.Col>
 						<UnstyledButton onClick={toTelegram} w={`100%`}>
 							<Card withBorder>
-								<Text align={`center`}>
-									@jourloy
-								</Text>
+								<Text align={`center`}>@jourloy</Text>
 							</Card>
 						</UnstyledButton>
 					</Grid.Col>

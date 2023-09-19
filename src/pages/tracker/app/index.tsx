@@ -1,6 +1,18 @@
 import {useEffect, useState} from "react";
 import {store} from "../../../store/store";
-import {Flex, Grid, Button, Card, Title, Divider, Progress, Text, Accordion, Space} from "@mantine/core";
+import {
+	Flex,
+	Grid,
+	Button,
+	Card,
+	Title,
+	Divider,
+	Progress,
+	Text,
+	Accordion,
+	Space,
+	Group,
+} from "@mantine/core";
 import {formatter} from "../../../context";
 import TrackerLogic from "../logic";
 import IncomeModal from "./@modals/income";
@@ -12,7 +24,7 @@ import TrackerAPI from "../api";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import DefaultLoading from "../../../components/loading";
-import { IconCup } from "@tabler/icons-react";
+import {IconCup} from "@tabler/icons-react";
 
 export default function TrackerApp() {
 	const backend = new TrackerAPI();
@@ -28,25 +40,26 @@ export default function TrackerApp() {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		if (!loading) return;
+		setLoading(true);
 
 		const source = backend.getSource();
 		backend
 			.autoUpdateTracker(source.token)
-			.then(() => {
-				setLoading(false);
-			})
-			.catch(s => {
+			.then(s => {
 				if (s === 403) navigate(`/login`);
 				if (s === 404) navigate(`/tracker/create`);
-				else {
+				else if (s !== 200) {
 					toast.error(`Что-то пошло не так`);
 					navigate(`/tracker`);
-				}
+				} else setLoading(false);
+			})
+			.catch(() => {
+				toast.error(`Что-то пошло не так`);
+				navigate(`/tracker`);
 			});
 
 		return () => source.cancel();
-	});
+	}, []);
 
 	if (loading) return <DefaultLoading />;
 
@@ -98,18 +111,14 @@ export default function TrackerApp() {
 						</Card>
 					</Grid.Col>
 
-					<Grid.Col span={4}>
-						<IncomeModal />
-					</Grid.Col>
+					<Grid.Col>
+						<Group grow>
+							<IncomeModal />
 
-					<Grid.Col span={4}>
-						<SpendModal />
-					</Grid.Col>
+							<SpendModal />
 
-					<Grid.Col span={4}>
-						<Button fullWidth disabled>
-							Не готово
-						</Button>
+							<Button disabled>Не готово</Button>
+						</Group>
 					</Grid.Col>
 
 					<Grid.Col md={8} sm={12}>
@@ -200,16 +209,16 @@ export default function TrackerApp() {
 								<Accordion.Control>Подробнее о настройках трекера</Accordion.Control>
 								<Accordion.Panel>
 									<Text>
-										Бюджет - сумма, которая на текущий момент доступна для трат.
-										Если она не совпадает с реальным бюджет, то лучше воспользоваться
-										кнопками "доход" и "расход", чтобы синхронизировать данные, так как
-										изменение через настройки может сломать твои расчеты.
+										Бюджет - сумма, которая на текущий момент доступна для трат. Если
+										она не совпадает с реальным бюджет, то лучше воспользоваться
+										кнопками "доход" и "расход", чтобы синхронизировать данные, так
+										как изменение через настройки может сломать твои расчеты.
 									</Text>
 									<Space h={`xs`} />
 									<Text>
-										Дата начала отсчета - этот параметр стоит менять только после создания
-										трекера, так как он участвует в большинстве расчетов и его изменения
-										напрямую влияет на лимит денег.
+										Дата начала отсчета - этот параметр стоит менять только после
+										создания трекера, так как он участвует в большинстве расчетов и
+										его изменения напрямую влияет на лимит денег.
 									</Text>
 								</Accordion.Panel>
 							</Accordion.Item>
@@ -227,7 +236,8 @@ export default function TrackerApp() {
 									<Space h={`xs`} />
 									<Text>
 										Обычно нужно что-то сделать, чтобы ее разблокировать. Например,
-										изменить поле в настройках и тогда кнопка сохранения станет активной
+										изменить поле в настройках и тогда кнопка сохранения станет
+										активной
 									</Text>
 									<Space h={`xs`} />
 									<Text>Но есть некоторые кнопки, над которыми я еще работаю.</Text>

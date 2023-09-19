@@ -19,14 +19,15 @@ import TrackerLogic from "../../logic";
 import {formatter} from "../../../../context";
 import {useState} from "react";
 import {useForm} from "@mantine/form";
-import {DateInput} from "@mantine/dates";
-import DeleteButton from "../../../../components/deleteButton";
+import {DatePickerInput} from "@mantine/dates";
 import TrackerAPI from "../../api";
 import {toast} from "react-toastify";
+import LongPressButton from "../../../../components/longPressButton";
 
 type TPlannedSpendProps = {
 	spend: IPlannedSpend;
 	length: number;
+	index: number;
 };
 
 export default function PlannedSpend(props: TPlannedSpendProps) {
@@ -35,9 +36,9 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 	const spendData = logic.getSpendCategory();
 
 	const [modalShow, setModalShow] = useState(false);
-	const [deleteMode, setDeleteMode] = useState(false);
 
 	const [changeLoading, setChangeLoading] = useState(false);
+	const [deleteLoading, setDeleteLoading] = useState(false);
 
 	const form = useForm({
 		initialValues: {
@@ -67,8 +68,14 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 			.finally(() => setChangeLoading(false));
 	};
 
-	const onMove = async (values: {cost: number; category: string; description?: string; date: Date}) => {
-		return backend
+	const onMove = async (values: {
+		cost: number;
+		category: string;
+		description?: string;
+		date: Date;
+	}) => {
+		setDeleteLoading(true);
+		backend
 			.updateSpend(props.spend.id, {...values, date: null, createdAt: new Date().toString()})
 			.then(() => {
 				toast.success(`Расход успешно оплачен`);
@@ -77,17 +84,28 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 			})
 			.catch(() => {
 				toast.error(`Произошла ошибка, попробуй еще раз позже`);
-			});
+			})
+			.finally(() => setDeleteLoading(false));
+	};
+
+	const calculateSpan = () => {
+		if (props.length === 1) {
+			return 12;
+		}
+		if (props.length - 1 === props.index && props.length % 2 !== 0) {
+			return 12;
+		}
+		return 6;
 	};
 
 	const onClose = () => {
 		setModalShow(false);
-		setDeleteMode(false);
+		setDeleteLoading(false);
 		setChangeLoading(false);
 	};
 
 	return (
-		<Grid.Col md={props.length === 1 ? 12 : 6} sm={12}>
+		<Grid.Col md={calculateSpan()} sm={12}>
 			<Modal opened={modalShow} onClose={onClose} centered>
 				<Grid>
 					<Grid.Col>
@@ -107,9 +125,7 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 								description={`В рублях`}
 								withAsterisk
 								formatter={value =>
-									!Number.isNaN(parseInt(value))
-										? formatter.format(+value)
-										: value
+									!Number.isNaN(parseInt(value)) ? formatter.format(+value) : value
 								}
 								max={-1}
 								{...form.getInputProps(`cost`)}
@@ -127,7 +143,7 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 						</Grid.Col>
 
 						<Grid.Col>
-							<DateInput
+							<DatePickerInput
 								label={`Выбери дату`}
 								withAsterisk
 								valueFormat={`DD.MM.YY`}
@@ -163,28 +179,16 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 						<Divider />
 					</Grid.Col>
 
-					<Grid.Col hidden={deleteMode}>
-						<Button fullWidth color={`orange`} onClick={() => setDeleteMode(true)}>
-							Оплатить
-						</Button>
-					</Grid.Col>
-
-					<Grid.Col hidden={!deleteMode}>
-						<Title order={3} align={`center`} tt={`uppercase`}>
-							Точно оплатить?
-						</Title>
-					</Grid.Col>
-
-					<Grid.Col span={6} hidden={!deleteMode}>
-						<DeleteButton seconds={1} onEnd={() => {
-							return onMove(form.values);
-						}} />
-					</Grid.Col>
-
-					<Grid.Col span={6} hidden={!deleteMode}>
-						<Button fullWidth color={`green`} onClick={() => setDeleteMode(false)}>
-							Нет
-						</Button>
+					<Grid.Col>
+						<LongPressButton
+							label={`Оплатить`}
+							seconds={1}
+							color={`orange`}
+							variant={`outline`}
+							loading={deleteLoading}
+							onPressed={() => onMove(form.values)}
+							fullWidth
+						/>
 					</Grid.Col>
 				</Grid>
 			</Modal>

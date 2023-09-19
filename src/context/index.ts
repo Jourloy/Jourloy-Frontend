@@ -4,4 +4,4 @@ export const formatter = new Intl.NumberFormat("ru", {
 	maximumFractionDigits: 0,
 });
 
-export const DOMAIN = process.env.NODE_ENV === `production` ? `jourloy.com` : `jourloy.online`;
+export const DOMAIN = process.env.VITE_NODE_ENV === `production` ? `jourloy.com` : `jourloy.online`;

@@ -1,10 +1,20 @@
-import {Button, Divider, Grid, Modal, MultiSelect, NumberInput, Select, TextInput, Title} from "@mantine/core";
+import {
+	Button,
+	Divider,
+	Grid,
+	Modal,
+	MultiSelect,
+	NumberInput,
+	Select,
+	TextInput,
+	Title,
+} from "@mantine/core";
 import {useState} from "react";
 import {store} from "../../../../../store/store";
 import PartyAPI from "../../../api";
 import {toast} from "react-toastify";
 import PartyPositionLogic from "../../logic";
-import { partyActions } from "../../../../../store/features/party.slice";
+import {partyActions} from "../../../../../store/features/party.slice";
 
 type TProps = {
 	opened: boolean;
@@ -41,7 +51,8 @@ export default function PartyAddPositionModal(props: TProps) {
 	const getDataOrgs = () => {
 		const data = [];
 		for (const member of calculator.members) {
-			if (member.payer) data.push({value: member.id.toString(), label: member.name, image: member.avatar});
+			if (member.payer)
+				data.push({value: member.id.toString(), label: member.name, image: member.avatar});
 		}
 		return data;
 	};
@@ -79,7 +90,7 @@ export default function PartyAddPositionModal(props: TProps) {
 			})
 			.then(() => {
 				toast.success(`Позиция добавлена ✅`);
-				store.dispatch(partyActions.updateCalculator())
+				store.dispatch(partyActions.updateCalculator());
 				closeModal();
 			})
 			.catch(() => {
@@ -98,12 +109,12 @@ export default function PartyAddPositionModal(props: TProps) {
 
 	return (
 		<>
-			<Modal 
-				opened={props.opened} 
-				onClose={closeModal} 
+			<Modal
+				opened={props.opened}
+				onClose={closeModal}
 				centered
 				style={{
-					overflow: `visible`
+					overflow: `visible`,
 				}}
 			>
 				<Grid>
@@ -154,7 +165,12 @@ export default function PartyAddPositionModal(props: TProps) {
 					</Grid.Col>
 
 					<Grid.Col>
-						<Button fullWidth variant={`outline`} onClick={submit} loading={addPositionLoading}>
+						<Button
+							fullWidth
+							variant={`outline`}
+							onClick={submit}
+							loading={addPositionLoading}
+						>
 							Добавить
 						</Button>
 					</Grid.Col>

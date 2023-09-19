@@ -14,10 +14,13 @@ export default function SpendList() {
 
 	const [spendPage, setSpendPage] = useState(1);
 	const [spendSearch, setSpendSearch] = useState(``);
-	const [spendCategory, setSpendCategory] = useState(``);
+	// TODO
+	const [spendCategory] = useState(``);
 
 	const getSpendsComponents = () => {
-		return spends.map(s => <HistorySpend key={s.id} length={spends.length} spend={s} />);
+		return spends.map((s, i) => (
+			<HistorySpend key={s.id} length={spends.length} spend={s} index={i} />
+		));
 	};
 
 	const spendsArray = tracker.spends.filter(s => s.date == null).sort(() => -1);
@@ -39,7 +42,7 @@ export default function SpendList() {
 		}
 	}
 
-	const [spendPages] = useState(Math.ceil(spends.length / 6));
+	const [spendPages] = useState(Math.ceil(spendsArray.length / 6));
 
 	return (
 		<Card p={0} bg={`transparent`}>

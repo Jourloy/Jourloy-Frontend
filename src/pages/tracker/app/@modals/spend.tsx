@@ -1,21 +1,11 @@
-import {
-	Button,
-	Divider,
-	Grid,
-	Modal,
-	NumberInput,
-	Select,
-	Switch,
-	Textarea,
-	Title,
-} from "@mantine/core";
-import {DateInput} from "@mantine/dates";
+import {Button, Divider, Grid, Modal, NumberInput, Select, Switch, Textarea, Title} from "@mantine/core";
+import {DatePickerInput} from "@mantine/dates";
 import {useState} from "react";
 import TrackerAPI from "../../api";
 import {toast} from "react-toastify";
 import TrackerLogic from "../../logic";
 import {useForm} from "@mantine/form";
-import { formatter } from "../../../../context";
+import {formatter} from "../../../../context";
 
 export default function SpendModal() {
 	const backend = new TrackerAPI();
@@ -32,10 +22,12 @@ export default function SpendModal() {
 			cost: -1,
 			category: ``,
 			description: ``,
+			date: undefined,
 		},
 		validate: {
 			cost: value => (value >= 0 ? `Сумма должна быть меньше нуля` : null),
 			category: value => (value === `` ? `Выберите категорию` : null),
+			date: value => (value === undefined && planned ? `Выберите дату` : null),
 		},
 	});
 
@@ -58,8 +50,6 @@ export default function SpendModal() {
 				toast.error(`Произошла ошибка, попробуй еще раз позже`);
 			});
 	};
-
-	
 
 	const onClose = () => {
 		form.reset();
@@ -90,9 +80,7 @@ export default function SpendModal() {
 								placeholder={`В рублях`}
 								withAsterisk
 								formatter={value =>
-									!Number.isNaN(parseInt(value))
-										? formatter.format(+value)
-										: value
+									!Number.isNaN(parseInt(value)) ? formatter.format(+value) : value
 								}
 								max={-1}
 								{...form.getInputProps(`cost`)}
@@ -136,7 +124,7 @@ export default function SpendModal() {
 						</Grid.Col>
 
 						<Grid.Col hidden={!planned}>
-							<DateInput
+							<DatePickerInput
 								label={`Выбери дату`}
 								withAsterisk
 								valueFormat={`DD.MM.YY`}
@@ -158,9 +146,7 @@ export default function SpendModal() {
 				</Grid>
 			</Modal>
 
-			<Button fullWidth onClick={() => setModalShow(true)}>
-				Расход
-			</Button>
+			<Button onClick={() => setModalShow(true)}>Расход</Button>
 		</>
 	);
 }

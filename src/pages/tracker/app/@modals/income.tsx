@@ -4,7 +4,7 @@ import TrackerAPI from "../../api";
 import {toast} from "react-toastify";
 import {useState} from "react";
 import TrackerLogic from "../../logic";
-import { formatter } from "../../../../context";
+import {formatter} from "../../../../context";
 
 export default function IncomeModal() {
 	const backend = new TrackerAPI();
@@ -29,7 +29,7 @@ export default function IncomeModal() {
 		},
 	});
 
-	const sumbit = (values: {cost: number; category: string, description: string}) => {
+	const sumbit = (values: {cost: number; category: string; description: string}) => {
 		setAddLoading(true);
 
 		backend
@@ -71,9 +71,7 @@ export default function IncomeModal() {
 								description={`В рублях`}
 								withAsterisk
 								formatter={value =>
-									!Number.isNaN(parseInt(value))
-										? formatter.format(+value)
-										: value
+									!Number.isNaN(parseInt(value)) ? formatter.format(+value) : value
 								}
 								min={1}
 								{...form.getInputProps(`cost`)}
@@ -116,9 +114,7 @@ export default function IncomeModal() {
 				</Grid>
 			</Modal>
 
-			<Button fullWidth onClick={() => setModalShow(true)}>
-				Доход
-			</Button>
+			<Button onClick={() => setModalShow(true)}>Доход</Button>
 		</>
 	);
 }

@@ -50,16 +50,28 @@ export default function HeaderComponent(props: TProps) {
 			<HeaderSettingsModal opened={userSettings} onClose={() => setUserSettings(false)} />
 			<Header height={45} w={`100%`} bg={`dark`}>
 				<Flex h={40} w={`100%`} justify={`center`} align={`center`}>
-					<Container maw={props.ignoreWidthLimit ? `100%` : `850px`} w={`100%`} p={props.ignoreWidthLimit ? 20 : 0}>
+					<Container
+						maw={props.ignoreWidthLimit ? `100%` : `850px`}
+						w={`100%`}
+						p={props.ignoreWidthLimit ? 20 : 0}
+					>
 						<Center h={`100%`}>
 							<Group position={`apart`} w={`100%`} px={8} mt={`4px`}>
 								<UnstyledButton onClick={toMain}>
 									<Flex>
-										<Title color={`white`}>JOU</Title>
-										<Title color={`blue`} style={{rotate: `180deg`}}>
+										<Title color={`white`} style={{fontWeight: 500}}>
+											JOU
+										</Title>
+										<Title
+											color={`blue`}
+											mt={`2px`}
+											style={{rotate: `180deg`, fontWeight: 500}}
+										>
 											R
 										</Title>
-										<Title color={`red`}>LOY</Title>
+										<Title color={`red`} style={{fontWeight: 500}}>
+											LOY
+										</Title>
 									</Flex>
 								</UnstyledButton>
 								<UnstyledButton onClick={() => setUserSettings(true)}>

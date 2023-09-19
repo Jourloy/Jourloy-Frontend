@@ -1,4 +1,4 @@
-import { TCalculator } from "../../../types";
+import {TCalculator} from "../../../types";
 
 export default class PartyPositionLogic {
 	private calculator: TCalculator;
@@ -9,7 +9,7 @@ export default class PartyPositionLogic {
 
 	checkNumber(num: number | "", opt?: TCheckNumberOpts) {
 		if (isNaN(Number(num))) return {error: true, desc: `Это должно быть числом`};
-		if (!opt?.zero && (Number(num) <= 0)) return {error: true, desc: `Число должно быть больше нуля`};
+		if (!opt?.zero && Number(num) <= 0) return {error: true, desc: `Число должно быть больше нуля`};
 
 		return {error: false, result: Number(num)};
 	}
@@ -29,4 +29,4 @@ type TCheckNumberOpts = {
 	zero?: boolean;
 	min?: number;
 	max?: number;
-}
+};

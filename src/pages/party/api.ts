@@ -1,6 +1,8 @@
 import {CancelToken} from "axios";
 import BackendContext from "../../context/backend.context";
 import {TCalculator, TMember} from "../../types";
+import { store } from "../../store/store";
+import { partyActions } from "../../store/features/party.slice";
 
 export default class PartyAPI extends BackendContext {
 	constructor() {
@@ -10,11 +12,25 @@ export default class PartyAPI extends BackendContext {
 	/* CALCULATOR */
 
 	public createCalculator() {
-		return this.context.post(`/`, null, {withCredentials: true});
+		return this.context.post(`/`, null);
 	}
 
 	public getCalculator(token?: CancelToken) {
-		return this.context.get<TCalculator>(`/`, {withCredentials: true, cancelToken: token});
+		return this.context.get<TCalculator>(`/`, {cancelToken: token});
+	}
+
+	public async autoUpdateCalculator(token?: CancelToken) {
+		return this.getCalculator(token)
+			.then(d => {
+				if (d && d.data && d.data.id) {
+					store.dispatch(partyActions.forceUpdateCalculator(d.data));
+					store.dispatch(partyActions.updateMemberPages(Math.ceil(d.data.members.length / 5)));
+					store.dispatch(
+						partyActions.updatePositionPages(Math.ceil(d.data.positions.length / 10))
+					);
+				}
+			})
+			.catch(() => null);
 	}
 
 	/* MEMBERS */
@@ -24,15 +40,15 @@ export default class PartyAPI extends BackendContext {
 	}
 
 	public getMembers(calculatorId: number) {
-		return this.context.get<TMember[]>(`/member/all/${calculatorId}`, {withCredentials: true});
+		return this.context.get<TMember[]>(`/member/all/${calculatorId}`);
 	}
 
 	public updateMembers(props: {name?: string; avatar?: string}, memberId: number) {
-		return this.context.patch(`/member/${memberId}`, props, {withCredentials: true});
+		return this.context.patch(`/member/${memberId}`, props);
 	}
 
 	public removeMember(memberId: number) {
-		return this.context.delete(`/member/${memberId}`, {withCredentials: true});
+		return this.context.delete(`/member/${memberId}`);
 	}
 
 	public removeMembers(calculatorId: number) {

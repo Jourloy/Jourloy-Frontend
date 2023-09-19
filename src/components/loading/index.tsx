@@ -1,8 +1,7 @@
-import { Center, Container, Grid, Loader, Title } from "@mantine/core";
+import {Center, Container, Grid, Loader, Title} from "@mantine/core";
 
 export default function DefaultLoading() {
-
-	return(
+	return (
 		<Container
 			style={{
 				position: `absolute`,
@@ -22,13 +21,11 @@ export default function DefaultLoading() {
 						<Loader size={`50px`} variant={`dots`} color={`blue`} />
 					</Center>
 				</Grid.Col>
-				
+
 				<Grid.Col>
-					<Title align={`center`}>
-						Проверяем и загружаем
-					</Title>
+					<Title align={`center`}>Проверяем и загружаем</Title>
 				</Grid.Col>
 			</Grid>
 		</Container>
-	)
+	);
 }

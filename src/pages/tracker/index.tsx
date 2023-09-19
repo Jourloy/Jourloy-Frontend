@@ -4,10 +4,11 @@ import TrackerAPI from "./api";
 import {Paper, Group, Flex, Grid, Center, Title, Divider, Button, Text} from "@mantine/core";
 import ScrollHint from "../../components/scrollHint";
 import {toast} from "react-toastify";
-import { store } from "../../store/store";
+import {store} from "../../store/store";
+import {useDocumentTitle} from "@mantine/hooks";
 
 export default function TrackerIndex() {
-	document.title = `Трекер`;
+	useDocumentTitle(`Трекер`);
 
 	const navigate = useNavigate();
 	const backend = new TrackerAPI();
@@ -104,10 +105,10 @@ export default function TrackerIndex() {
 											<Center>
 												<Button fullWidth onClick={toTracker}>
 													<Text>
-													Начать пользоваться {` `}
-													<Text span color={`red`}>
-														[ БЕТА ]
-													</Text>
+														Начать пользоваться {` `}
+														<Text span color={`red`}>
+															[ БЕТА ]
+														</Text>
 													</Text>
 												</Button>
 											</Center>
