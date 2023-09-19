@@ -151,9 +151,9 @@ export default function HeaderSettingsModal(props: TProps) {
 
 					<Divider />
 
-					<Button fullWidth variant={`outline`} onClick={() => setBugMode(true)}>
+					{!bugMode && <Button fullWidth variant={`outline`} onClick={() => setBugMode(true)}>
 						Сообщить о баге
-					</Button>
+					</Button>}
 
 					{bugMode && (
 						<form onSubmit={form.onSubmit(onSubmit)}>
