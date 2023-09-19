@@ -17,14 +17,14 @@ export default function Check() {
 		if (avatar) store.dispatch(userActions.changeAvatar(avatar));
 
 		if (success) {
-			navigate(-2);
+			navigate(`/`);
 			store.dispatch(userActions.login());
 			toast.success(`Авторизация прошла успешно`);
 		} else {
 			navigate(`/login`);
 			toast.error(`Произошла ошибка, попробуй еще раз`);
 		}
-	}, []);
+	});
 
 	return <></>;
 }
