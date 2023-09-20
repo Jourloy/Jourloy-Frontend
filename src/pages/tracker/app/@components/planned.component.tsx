@@ -5,6 +5,7 @@ import {
 	Center,
 	Divider,
 	Grid,
+	Indicator,
 	Modal,
 	NumberInput,
 	Select,
@@ -194,29 +195,38 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 			</Modal>
 
 			<UnstyledButton w={`100%`} onClick={() => setModalShow(true)}>
-				<Card withBorder py={`sm`} px={`md`}>
-					<Grid>
-						<Grid.Col span={4}>
-							<Text align={`left`}>{formatter.format(props.spend.cost)}</Text>
-						</Grid.Col>
+				<Indicator
+					radius={`xs`}
+					label={`Нужно оплатить`}
+					color={`orange`}
+					size={18}
+					position={`bottom-center`}
+					disabled={new Date(props.spend.date).getTime() > Date.now()}
+				>
+					<Card withBorder py={`sm`} px={`md`}>
+						<Grid>
+							<Grid.Col span={4}>
+								<Text align={`left`}>{formatter.format(props.spend.cost)}</Text>
+							</Grid.Col>
 
-						<Grid.Col span={4}>
-							<Center h={`100%`} w={`100%`}>
-								<Badge
-									color={logic.getBadgeColor(props.spend)}
-									radius={`sm`}
-									variant={`outline`}
-								>
-									{logic.formatCategory(props.spend.category)}
-								</Badge>
-							</Center>
-						</Grid.Col>
+							<Grid.Col span={4}>
+								<Center h={`100%`} w={`100%`}>
+									<Badge
+										color={logic.getBadgeColor(props.spend)}
+										radius={`sm`}
+										variant={`outline`}
+									>
+										{logic.formatCategory(props.spend.category)}
+									</Badge>
+								</Center>
+							</Grid.Col>
 
-						<Grid.Col span={4}>
-							<Text align={`right`}>{dayjs(props.spend.date).format(`DD.MM.YY`)}</Text>
-						</Grid.Col>
-					</Grid>
-				</Card>
+							<Grid.Col span={4}>
+								<Text align={`right`}>{dayjs(props.spend.date).format(`DD.MM.YY`)}</Text>
+							</Grid.Col>
+						</Grid>
+					</Card>
+				</Indicator>
 			</UnstyledButton>
 		</Grid.Col>
 	);

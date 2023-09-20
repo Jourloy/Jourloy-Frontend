@@ -10,8 +10,8 @@ import {
 	Progress,
 	Text,
 	Accordion,
-	Space,
 	Group,
+	Stack,
 } from "@mantine/core";
 import {formatter} from "../../../context";
 import TrackerLogic from "../logic";
@@ -25,8 +25,11 @@ import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import DefaultLoading from "../../../components/loading";
 import {IconCup} from "@tabler/icons-react";
+import {useDocumentTitle} from "@mantine/hooks";
 
 export default function TrackerApp() {
+	useDocumentTitle(`Трекер`);
+
 	const backend = new TrackerAPI();
 	const logic = new TrackerLogic();
 	const navigate = useNavigate();
@@ -208,39 +211,64 @@ export default function TrackerApp() {
 							<Accordion.Item value={`org`}>
 								<Accordion.Control>Подробнее о настройках трекера</Accordion.Control>
 								<Accordion.Panel>
-									<Text>
-										Бюджет - сумма, которая на текущий момент доступна для трат. Если
-										она не совпадает с реальным бюджет, то лучше воспользоваться
-										кнопками "доход" и "расход", чтобы синхронизировать данные, так
-										как изменение через настройки может сломать твои расчеты.
-									</Text>
-									<Space h={`xs`} />
-									<Text>
-										Дата начала отсчета - этот параметр стоит менять только после
-										создания трекера, так как он участвует в большинстве расчетов и
-										его изменения напрямую влияет на лимит денег.
-									</Text>
+									<Stack>
+										<Text>
+											Бюджет - сумма, которая на текущий момент доступна для трат.
+											Если она не совпадает с реальным бюджет, то лучше
+											воспользоваться кнопками "доход" и "расход", чтобы
+											синхронизировать данные, так как изменение через настройки
+											может сломать твои расчеты.
+										</Text>
+
+										<Text>
+											Дата начала отсчета - этот параметр стоит менять только после
+											создания трекера, так как он участвует в большинстве расчетов
+											и его изменения напрямую влияет на лимит денег.
+										</Text>
+									</Stack>
+								</Accordion.Panel>
+							</Accordion.Item>
+
+							<Accordion.Item value={`plannedSpend`}>
+								<Accordion.Control>
+									Подробнее о запланированных расходах
+								</Accordion.Control>
+								<Accordion.Panel>
+									<Stack>
+										<Text>
+											Ты можешь добавить расход заранее. Он не будет учитываться в
+											расчете лимита, пока не будет оплачен. В выбранный день он
+											будет отмечен, напоминая о том, что его стоит оплатить
+										</Text>
+										<Text>
+											Это удобно для того, чтобы держать в памяти определенные
+											траты, такие как плата за Интернет или квартиру, и быть
+											заранее готовым к этому дню
+										</Text>
+									</Stack>
 								</Accordion.Panel>
 							</Accordion.Item>
 
 							<Accordion.Item value={`disabled`}>
 								<Accordion.Control>Почему некоторые кнопки не жмутся</Accordion.Control>
 								<Accordion.Panel>
-									<Text>
-										Если кнопка серая (как ниже), то значит она заблокирована.
-									</Text>
-									<Space h={`xs`} />
-									<Button fullWidth disabled>
-										Я заблокированная кнопка
-									</Button>
-									<Space h={`xs`} />
-									<Text>
-										Обычно нужно что-то сделать, чтобы ее разблокировать. Например,
-										изменить поле в настройках и тогда кнопка сохранения станет
-										активной
-									</Text>
-									<Space h={`xs`} />
-									<Text>Но есть некоторые кнопки, над которыми я еще работаю.</Text>
+									<Stack>
+										<Text>
+											Если кнопка серая (как ниже), то значит она заблокирована.
+										</Text>
+										<Button fullWidth disabled>
+											Я заблокированная кнопка
+										</Button>
+
+										<Text>
+											Обычно нужно что-то сделать, чтобы ее разблокировать.
+											Например, изменить поле в настройках и тогда кнопка
+											сохранения станет активной
+										</Text>
+										<Text>
+											Но есть некоторые кнопки, над которыми я еще работаю.
+										</Text>
+									</Stack>
 								</Accordion.Panel>
 							</Accordion.Item>
 						</Accordion>
