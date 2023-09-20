@@ -196,7 +196,7 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 
 			<UnstyledButton w={`100%`} onClick={() => setModalShow(true)}>
 				<Indicator
-					radius={`xs`}
+					radius={`sm`}
 					label={`Нужно оплатить`}
 					color={`orange`}
 					size={18}

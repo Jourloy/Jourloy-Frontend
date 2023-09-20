@@ -13,6 +13,7 @@ import TrackerCreate from "./pages/tracker/create";
 import Blocked from "./pages/blocked";
 import {Page404} from "./pages/404";
 import TutorialFramework from "./pages/tutorial/framewok";
+import AdminIndex from "./pages/admin";
 
 export default function App() {
 	return (
@@ -48,6 +49,13 @@ export default function App() {
 				<Route
 					element={<LayoutContainer children={<TutorialFramework />} />}
 					path="/tutorial/framework"
+				/>
+
+				{/* ADMIN */}
+
+				<Route
+					element={<LayoutContainer children={<AdminIndex />} isForAdmin />}
+					path="/admin"
 				/>
 
 				{/* BLOCKED */}
