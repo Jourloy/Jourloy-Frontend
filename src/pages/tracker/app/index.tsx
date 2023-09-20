@@ -26,6 +26,7 @@ import {toast} from "react-toastify";
 import DefaultLoading from "../../../components/loading";
 import {IconCup} from "@tabler/icons-react";
 import {useDocumentTitle} from "@mantine/hooks";
+import BugForm from "../../../components/bugForm";
 
 export default function TrackerApp() {
 	useDocumentTitle(`Трекер`);
@@ -289,6 +290,15 @@ export default function TrackerApp() {
 										<Text>
 											Но есть некоторые кнопки, над которыми я еще работаю.
 										</Text>
+									</Stack>
+								</Accordion.Panel>
+							</Accordion.Item>
+
+							<Accordion.Item value={`help`}>
+								<Accordion.Control>Что делать если нужна помощь?</Accordion.Control>
+								<Accordion.Panel>
+									<Stack>
+										<BugForm />
 									</Stack>
 								</Accordion.Panel>
 							</Accordion.Item>

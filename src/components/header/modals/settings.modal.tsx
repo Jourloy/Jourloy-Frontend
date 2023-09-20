@@ -8,7 +8,6 @@ import {
 	useMantineColorScheme,
 	useMantineTheme,
 	Text,
-	Textarea,
 	Stack,
 } from "@mantine/core";
 import {store} from "../../../store/store";
@@ -18,9 +17,7 @@ import {toast} from "react-toastify";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {IconSun, IconMoonStars} from "@tabler/icons-react";
-import {useForm} from "@mantine/form";
-import * as Sentry from "@sentry/browser";
-import * as _ from "lodash";
+import BugForm from "../../bugForm";
 
 type TProps = {
 	opened: boolean;
@@ -55,39 +52,12 @@ export default function HeaderSettingsModal(props: TProps) {
 			});
 	};
 
-	const form = useForm({
-		initialValues: {
-			description: ``,
-		},
-		validate: {
-			description: value => (value.length < 10 ? `Минимум 10 символов` : null),
-		},
-	});
-
-	const onSubmit = (values: {description: string}) => {
-		const eventId = Sentry.captureMessage(_.uniqueId(`Profile-FeedBack-`));
-
-		const userFeedBack = {
-			event_id: eventId,
-			name: store.getState().userReducer.username,
-			comments: values.description,
-			email: ``,
-		};
-
-		Sentry.captureUserFeedback(userFeedBack);
-
-		toast.success(`Спасибо что сообщили об ошибке`);
-
-		onCloseBugMode();
-	};
-
 	const login = () => {
 		closeModal();
 		navigate(`/login`);
 	};
 
 	const onCloseBugMode = () => {
-		form.reset();
 		setBugMode(false);
 	};
 
@@ -113,75 +83,58 @@ export default function HeaderSettingsModal(props: TProps) {
 	}
 
 	return (
-			<Modal opened={props.opened} onClose={closeModal} centered style={{position: `absolute`}}>
-				<Stack>
-					<Title align={`center`}>{store.getState().userReducer.username}</Title>
+		<Modal opened={props.opened} onClose={closeModal} centered style={{position: `absolute`}}>
+			<Stack>
+				<Title align={`center`}>{store.getState().userReducer.username}</Title>
 
-					<Divider />
+				<Divider />
 
-					<Group w={`100%`} position={`center`}>
-						<Text>Изменить тему сайта</Text>
-						<Switch
-							checked={colorScheme === `light`}
-							onChange={() => toggleColorScheme()}
-							radius={`md`}
-							size={`md`}
-							onLabel={
-								<IconSun
-									color={theme.white}
-									stroke={1.3}
-									size={`20px`}
-									style={{
-										marginRight: `5px`,
-									}}
-								/>
-							}
-							offLabel={
-								<IconMoonStars
-									color={theme.colors.gray[6]}
-									stroke={1.3}
-									size={`20px`}
-									style={{
-										marginLeft: `5px`,
-									}}
-								/>
-							}
-						/>
-					</Group>
+				<Group w={`100%`} position={`center`}>
+					<Text>Изменить тему сайта</Text>
+					<Switch
+						checked={colorScheme === `light`}
+						onChange={() => toggleColorScheme()}
+						radius={`md`}
+						size={`md`}
+						onLabel={
+							<IconSun
+								color={theme.white}
+								stroke={1.3}
+								size={`20px`}
+								style={{
+									marginRight: `5px`,
+								}}
+							/>
+						}
+						offLabel={
+							<IconMoonStars
+								color={theme.colors.gray[6]}
+								stroke={1.3}
+								size={`20px`}
+								style={{
+									marginLeft: `5px`,
+								}}
+							/>
+						}
+					/>
+				</Group>
 
-					<Divider />
+				<Divider />
 
-					{!bugMode && <Button fullWidth variant={`outline`} onClick={() => setBugMode(true)}>
+				{!bugMode && (
+					<Button fullWidth variant={`outline`} onClick={() => setBugMode(true)}>
 						Сообщить о баге
-					</Button>}
-
-					{bugMode && (
-						<form onSubmit={form.onSubmit(onSubmit)}>
-							<Stack>
-								<Textarea
-									label={`В чем проблема?`}
-									placeholder={`Можешь вкратце описать действия`}
-									minRows={3}
-									maxRows={5}
-									{...form.getInputProps(`description`)}
-								/>
-
-								<Button fullWidth type={`submit`}>
-									Отправить
-								</Button>
-
-								<Button fullWidth variant={`outline`} onClick={onCloseBugMode}>
-									Отменить
-								</Button>
-							</Stack>
-						</form>
-					)}
-					{bugMode && <Divider />}
-
-					<Button color={`red`} fullWidth onClick={logout}>
-						Выйти
 					</Button>
-				</Stack>
-			</Modal>
+				)}
+
+				{bugMode && <BugForm onClose={onCloseBugMode} />}
+				
+				{bugMode && <Divider />}
+
+				<Button color={`red`} fullWidth onClick={logout}>
+					Выйти
+				</Button>
+			</Stack>
+		</Modal>
 	);
 }
