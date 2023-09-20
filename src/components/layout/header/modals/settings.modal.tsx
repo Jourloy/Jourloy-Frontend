@@ -118,6 +118,10 @@ export default function HeaderSettingsModal(props: TProps) {
 					<>
 						<BugForm onClose={onCloseBugMode} />
 
+						<Button fullWidth variant={`outline`} onClick={onCloseBugMode}>
+							Отменить
+						</Button>
+
 						<Divider />
 					</>
 				)}
