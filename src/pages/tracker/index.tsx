@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import TrackerAPI from "./api";
 import {Paper, Group, Flex, Grid, Center, Title, Divider, Button, Text} from "@mantine/core";
-import ScrollHint from "../../components/scrollHint";
+import ScrollHint from "../../components/layout/scrollHint";
 import {toast} from "react-toastify";
 import {store} from "../../store/store";
 import {useDocumentTitle} from "@mantine/hooks";

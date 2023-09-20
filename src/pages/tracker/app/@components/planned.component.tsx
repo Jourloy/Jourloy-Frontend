@@ -23,7 +23,7 @@ import {useForm} from "@mantine/form";
 import {DatePickerInput} from "@mantine/dates";
 import TrackerAPI from "../../api";
 import {toast} from "react-toastify";
-import LongPressButton from "../../../../components/longPressButton";
+import LongPressButton from "../../../../components/actions/longPressButton";
 
 type TPlannedSpendProps = {
 	spend: IPlannedSpend;

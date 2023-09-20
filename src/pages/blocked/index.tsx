@@ -1,8 +1,11 @@
-import {Container, Grid, Card, Title, Text} from "@mantine/core";
+import {Container, Card, Title, Text, Stack, Button} from "@mantine/core";
 import {useDocumentTitle} from "@mantine/hooks";
+import { useNavigate } from "react-router-dom";
 
 export default function Blocked() {
 	useDocumentTitle(`Нет доступа`);
+
+	const navigate = useNavigate();
 
 	return (
 		<>
@@ -19,22 +22,25 @@ export default function Blocked() {
 					width: `100%`,
 				}}
 			>
-				<Grid columns={6} maw={`700px`} w={`100%`} p={0} align={`center`}>
-					<Card ml={`15px`} withBorder w={`100%`} h={`100%`}>
-						<Grid gutter={10}>
-							<Grid.Col>
-								<Title align={`center`}>Упс</Title>
-							</Grid.Col>
+				<Stack maw={`700px`} w={`100%`} p={0} align={`center`}>
+					<Card withBorder w={`100%`} h={`100%`}>
+						<Stack>
+							<Title align={`center`} tt={`uppercase`}>Упс</Title>
 
-							<Grid.Col>
-								<Text c={`dimmed`} align={`center`} mt={`-10px`}>
-									Кажется у тебя нет доступа к страницам. Войди в свой аккаунт, чтобы
-									получить его
-								</Text>
-							</Grid.Col>
-						</Grid>
+							<Text align={`center`}>
+								Кажется у тебя нет доступа к этой странице
+							</Text>
+
+							<Text align={`center`} mt={`-15px`}>
+								Попробуй авторизоваться, возможно это решит проблему
+							</Text>
+						</Stack>
 					</Card>
-				</Grid>
+
+					<Button onClick={() => navigate(`/`)} fullWidth>
+						На главную
+					</Button>
+				</Stack>
 			</Container>
 		</>
 	);

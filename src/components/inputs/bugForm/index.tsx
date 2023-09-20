@@ -1,7 +1,7 @@
 import * as Sentry from "@sentry/browser";
 import * as _ from "lodash";
 import {toast} from "react-toastify";
-import {store} from "../../store/store";
+import {store} from "../../../store/store";
 import {Stack, Textarea, Button, TextInput} from "@mantine/core";
 import {useForm} from "@mantine/form";
 

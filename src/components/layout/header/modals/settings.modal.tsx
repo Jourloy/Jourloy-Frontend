@@ -1,23 +1,18 @@
 import {
 	Button,
 	Divider,
-	Group,
 	Modal,
-	Switch,
 	Title,
-	useMantineColorScheme,
-	useMantineTheme,
-	Text,
 	Stack,
 } from "@mantine/core";
-import {store} from "../../../store/store";
-import {userActions} from "../../../store/features/user.slice";
-import LoginAPI from "../../../pages/login/api";
+import {store} from "../../../../store/store";
+import {userActions} from "../../../../store/features/user.slice";
+import LoginAPI from "../../../../pages/login/api";
 import {toast} from "react-toastify";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {IconSun, IconMoonStars} from "@tabler/icons-react";
-import BugForm from "../../bugForm";
+import BugForm from "../../../inputs/bugForm";
+import ThemeSwitch from "../../../actions/themeSwitch";
 
 type TProps = {
 	opened: boolean;
@@ -27,17 +22,18 @@ type TProps = {
 export default function HeaderSettingsModal(props: TProps) {
 	const loginBackend = new LoginAPI();
 	const navigate = useNavigate();
-	const {colorScheme, toggleColorScheme} = useMantineColorScheme();
-	const theme = useMantineTheme();
 
 	const [logined, setLogined] = useState(store.getState().userReducer.logined);
-
-	const [bugMode, setBugMode] = useState(false);
+	const [admin, setAdmin] = useState(store.getState().userReducer.role === `admin`);
 
 	store.subscribe(() => {
 		const _logined = store.getState().userReducer.logined;
+		const _admin = store.getState().userReducer.role === `admin`;
 		if (logined !== _logined) setLogined(_logined);
+		if (admin !== _admin) setAdmin(_admin);
 	});
+
+	const [bugMode, setBugMode] = useState(false);
 
 	const logout = () => {
 		loginBackend
@@ -50,6 +46,11 @@ export default function HeaderSettingsModal(props: TProps) {
 			.catch(() => {
 				toast.error(`Что-то пошло не так`);
 			});
+	};
+
+	const toAdmin = () => {
+		closeModal();
+		navigate(`/admin`);
 	};
 
 	const login = () => {
@@ -77,6 +78,10 @@ export default function HeaderSettingsModal(props: TProps) {
 					<Button fullWidth onClick={login}>
 						Войти
 					</Button>
+
+					<Divider />
+
+					<ThemeSwitch />
 				</Stack>
 			</Modal>
 		);
@@ -89,37 +94,19 @@ export default function HeaderSettingsModal(props: TProps) {
 
 				<Divider />
 
-				<Group w={`100%`} position={`center`}>
-					<Text>Изменить тему сайта</Text>
-					<Switch
-						checked={colorScheme === `light`}
-						onChange={() => toggleColorScheme()}
-						radius={`md`}
-						size={`md`}
-						onLabel={
-							<IconSun
-								color={theme.white}
-								stroke={1.3}
-								size={`20px`}
-								style={{
-									marginRight: `5px`,
-								}}
-							/>
-						}
-						offLabel={
-							<IconMoonStars
-								color={theme.colors.gray[6]}
-								stroke={1.3}
-								size={`20px`}
-								style={{
-									marginLeft: `5px`,
-								}}
-							/>
-						}
-					/>
-				</Group>
+				<ThemeSwitch />
 
 				<Divider />
+
+				{admin && (
+					<>
+						<Button fullWidth onClick={toAdmin}>
+							Панель управления
+						</Button>
+
+						<Divider />
+					</>
+				)}
 
 				{!bugMode && (
 					<Button fullWidth variant={`outline`} onClick={() => setBugMode(true)}>
@@ -127,9 +114,13 @@ export default function HeaderSettingsModal(props: TProps) {
 					</Button>
 				)}
 
-				{bugMode && <BugForm onClose={onCloseBugMode} />}
-				
-				{bugMode && <Divider />}
+				{bugMode && (
+					<>
+						<BugForm onClose={onCloseBugMode} />
+
+						<Divider />
+					</>
+				)}
 
 				<Button color={`red`} fullWidth onClick={logout}>
 					Выйти

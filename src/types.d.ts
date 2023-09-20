@@ -3,6 +3,7 @@ export type TUser = {
 	username: string;
 	lowercaseUsername: string;
 	avatar: string;
+	role: string;
 	createdAt: Date;
 	updatedAt: Date;
 };

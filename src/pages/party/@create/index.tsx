@@ -20,7 +20,7 @@ import {store} from "../../../store/store";
 import {useState} from "react";
 import {formatter} from "../../../context";
 import {useNavigate} from "react-router-dom";
-import ScrollHint from "../../../components/scrollHint";
+import ScrollHint from "../../../components/layout/scrollHint";
 
 export default function PartyCreate() {
 	const backend = new PartyAPI();

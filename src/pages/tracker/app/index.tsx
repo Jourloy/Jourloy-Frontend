@@ -23,10 +23,10 @@ import PlannedList from "./@components/plannedList.component";
 import TrackerAPI from "../api";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
-import DefaultLoading from "../../../components/loading";
+import DefaultLoading from "../../../components/layout/loading";
 import {IconCup} from "@tabler/icons-react";
 import {useDocumentTitle} from "@mantine/hooks";
-import BugForm from "../../../components/bugForm";
+import BugForm from "../../../components/inputs/bugForm";
 
 export default function TrackerApp() {
 	useDocumentTitle(`Трекер`);

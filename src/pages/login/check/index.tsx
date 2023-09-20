@@ -12,9 +12,11 @@ export default function Check() {
 		const success = searchParams.get(`success`);
 		const avatar = searchParams.get(`avatar`);
 		const username = searchParams.get(`username`);
+		const role = searchParams.get(`role`);
 
 		if (username) store.dispatch(userActions.changeUsername(username));
 		if (avatar) store.dispatch(userActions.changeAvatar(avatar));
+		if (role) store.dispatch(userActions.changeRole(role));
 
 		if (success) {
 			navigate(`/`);

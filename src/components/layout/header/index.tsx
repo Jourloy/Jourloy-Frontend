@@ -8,11 +8,10 @@ import {
 	MantineProvider,
 	Title,
 	UnstyledButton,
-	Text,
 } from "@mantine/core";
-import {store} from "../../store/store";
+import {store} from "../../../store/store";
 import {useEffect, useState} from "react";
-import LoginAPI from "../../pages/login/api";
+import LoginAPI from "../../../pages/login/api";
 import HeaderSettingsModal from "./modals/settings.modal";
 import {useNavigate} from "react-router-dom";
 
@@ -77,9 +76,6 @@ export default function HeaderComponent(props: TProps) {
 								<UnstyledButton onClick={() => setUserSettings(true)}>
 									<Flex>
 										<Group position={`right`} spacing={`xs`}>
-											<Text color={`white`}>
-												{store.getState().userReducer.username?.split(` `)[0]}
-											</Text>
 											<MantineProvider
 												inherit
 												theme={{

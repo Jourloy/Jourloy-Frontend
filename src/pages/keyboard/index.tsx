@@ -11,7 +11,7 @@ import {
 	Group,
 	Paper,
 } from "@mantine/core";
-import ScrollHint from "../../components/scrollHint";
+import ScrollHint from "../../components/layout/scrollHint/index.tsx";
 import {useState} from "react";
 import KeyboardBuyModal from "./@modals/buy.modal";
 import {useNavigate} from "react-router-dom";

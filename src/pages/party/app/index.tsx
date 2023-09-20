@@ -25,7 +25,7 @@ import LoginAPI from "../../login/api";
 import {userActions} from "../../../store/features/user.slice";
 import {formatter} from "../../../context";
 import {IconCup} from "@tabler/icons-react";
-import BugForm from "../../../components/bugForm";
+import BugForm from "../../../components/inputs/bugForm";
 
 export default function PartyApp() {
 	const backend = new PartyAPI();

@@ -21,7 +21,7 @@ import {toast} from "react-toastify";
 import {trackerActions} from "../../../../store/features/tracker.slice";
 import {useNavigate} from "react-router-dom";
 import {formatter} from "../../../../context";
-import LongPressButton from "../../../../components/longPressButton";
+import LongPressButton from "../../../../components/actions/longPressButton";
 
 export default function SettingsModal() {
 	const backend = new TrackerAPI();
