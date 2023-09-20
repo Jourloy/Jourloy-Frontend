@@ -85,15 +85,15 @@ export default function KeyboardIndex() {
 						</Text>
 					</Stack>
 
-                                <FeatureList />
+					<FeatureList />
 
-                                <Title my={50} align={`center`} tt={`uppercase`} order={1}>
-                                    Помогаем всем сферам
-                                </Title>
+					<Title my={50} align={`center`} tt={`uppercase`} order={1}>
+						Помогаем всем сферам
+					</Title>
 
-                                <FeatureCards/>
+					<FeatureCards />
 
-                                <Divider/>
+					<Divider />
 
 					<Title order={2} align={`center`}>
 						Частые вопросы
