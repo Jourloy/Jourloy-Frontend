@@ -6,19 +6,18 @@ import {
 	Text,
 	Title,
 	Image,
-	Card,
 	Container,
 	Stack,
 	Group,
 	Paper,
 } from "@mantine/core";
 import ScrollHint from "../../components/scrollHint";
-import {motion} from "framer-motion";
 import {useState} from "react";
 import KeyboardBuyModal from "./@modals/buy.modal";
 import {useNavigate} from "react-router-dom";
 import {useDocumentTitle} from "@mantine/hooks";
 import FeatureList from "./feature.list.tsx";
+import FeatureCards from "./feature.card.tsx";
 
 export default function KeyboardIndex() {
 	useDocumentTitle(`Framework`);
@@ -86,73 +85,15 @@ export default function KeyboardIndex() {
 						</Text>
 					</Stack>
 
-					<FeatureList />
-					<Title my={50} align={`center`} tt={`uppercase`} order={1}>
-						Помогаем всем сферам
-					</Title>
+                                <FeatureList />
 
-					<motion.div
-						initial={{opacity: 0}}
-						whileInView={{opacity: 1}}
-						transition={{duration: 2}}
-					>
-						<Card withBorder>
-							<Stack>
-								<Title>Киберспорт</Title>
-								<Text>
-									Частота опроса клавиатуры - 1мс. Далеко не все кастомные клавиатуры
-									позволяют достичь такого значения
-								</Text>
+                                <Title my={50} align={`center`} tt={`uppercase`} order={1}>
+                                    Помогаем всем сферам
+                                </Title>
 
-								<Text>
-									Также стоит отметить, что все клавиши, которые ты зажмешь в один
-									момент, они все будут обработаны
-								</Text>
-							</Stack>
-						</Card>
-					</motion.div>
+                                <FeatureCards/>
 
-					<motion.div
-						initial={{opacity: 0}}
-						whileInView={{opacity: 1}}
-						transition={{duration: 2}}
-					>
-						<Card withBorder>
-							<Stack>
-								<Title>Офисы</Title>
-								<Text>
-									Если ты или твои сотрудники часто работают в Excel или подобных
-									приложениях, то значительно облегчить работу помогут макросы - наборы
-									действий, которые пользователь может настроить сам
-								</Text>
-
-								<Text>
-									Также стоит отметить, что все клавиши, которые ты зажмешь в один
-									момент, они все будут обработаны
-								</Text>
-							</Stack>
-						</Card>
-					</motion.div>
-
-					<motion.div
-						initial={{opacity: 0}}
-						whileInView={{opacity: 1}}
-						transition={{duration: 2}}
-					>
-						<Card withBorder>
-							<Stack>
-								<Title>Разработчики</Title>
-
-								<Text>
-									Благодаря наличию слоев, ты можешь назначить все необходимые символы
-									и сочетания рядом, как тебе удобно. Это позволяет не только ускорить
-									свою работу, но и снижает нагрузку на пальцы.
-								</Text>
-							</Stack>
-						</Card>
-					</motion.div>
-
-					<Divider w={`100%`} my={`md`}/>
+                                <Divider/>
 
 					<Title order={2} align={`center`}>
 						Частые вопросы
