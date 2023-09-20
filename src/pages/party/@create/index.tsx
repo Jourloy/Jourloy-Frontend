@@ -109,7 +109,12 @@ export default function PartyCreate() {
 										<Grid.Col>
 											<Center>
 												<Button fullWidth onClick={createCalculator}>
-													Начать пользоваться
+													<Text>
+														Начать пользоваться {` `}
+														<Text span color={`red`}>
+															[ БЕТА ]
+														</Text>
+													</Text>
 												</Button>
 											</Center>
 										</Grid.Col>
