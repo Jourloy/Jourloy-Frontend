@@ -41,6 +41,12 @@ export default function TrackerApp() {
 	});
 
 	const [loading, setLoading] = useState(true);
+	const [settingsButton, setSettingsButton] = useState(localStorage.getItem(`trackerSettingsEnabled`) != null);
+
+	const onUnlockSettings = () => {
+		localStorage.setItem(`trackerSettingsEnabled`, `true`);
+		setSettingsButton(true);
+	}
 
 	useEffect(() => {
 		setLoading(true);
@@ -225,6 +231,21 @@ export default function TrackerApp() {
 											создания трекера, так как он участвует в большинстве расчетов
 											и его изменения напрямую влияет на лимит денег.
 										</Text>
+
+										<Divider />
+
+										<Text>
+											Если ты точно хочешь изменять эти параметры, то нажми на
+											кнопку ниже
+										</Text>
+
+										<Button
+											color={`red`}
+											onClick={onUnlockSettings}
+											disabled={settingsButton}
+										>
+											Я хочу
+										</Button>
 									</Stack>
 								</Accordion.Panel>
 							</Accordion.Item>
