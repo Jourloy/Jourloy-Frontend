@@ -141,7 +141,7 @@ export default function TrackerIndex() {
 							</Stack>
 						</Grid.Col>
 
-						<Grid.Col md={4} sm={12}>
+						<Grid.Col md={4} sm={12} order={1}>
 							<Card withBorder h={`100%`}>
 								<Stack>
 									<Title order={3}>Представь себе инструмент</Title>
@@ -151,7 +151,7 @@ export default function TrackerIndex() {
 							</Card>
 						</Grid.Col>
 
-						<Grid.Col md={8} sm={12}>
+						<Grid.Col md={8} sm={12} order={2}>
 							<Card withBorder>
 								<Stack spacing={0}>
 									<HistorySpend
@@ -184,7 +184,7 @@ export default function TrackerIndex() {
 							</Card>
 						</Grid.Col>
 
-						<Grid.Col md={8} sm={12}>
+						<Grid.Col md={8} sm={12} orderMd={3} orderSm={4}>
 							<Card withBorder h={`100%`}>
 								<Center h={`100%`} w={`100%`}>
 									<Stack spacing={0} w={`100%`}>
@@ -206,7 +206,7 @@ export default function TrackerIndex() {
 							</Card>
 						</Grid.Col>
 
-						<Grid.Col md={4} sm={12}>
+						<Grid.Col md={4} sm={12} orderMd={4} orderSm={3}>
 							<Card withBorder h={`100%`}>
 								<Stack>
 									<Title order={3}>Представь себе инструмент</Title>
@@ -216,7 +216,7 @@ export default function TrackerIndex() {
 							</Card>
 						</Grid.Col>
 
-						<Grid.Col md={4} sm={12}>
+						<Grid.Col md={4} sm={12} order={5}>
 							<Card withBorder h={`100%`}>
 								<Stack>
 									<Title order={3}>Представь себе инструмент</Title>
@@ -226,7 +226,7 @@ export default function TrackerIndex() {
 							</Card>
 						</Grid.Col>
 
-						<Grid.Col md={8} sm={12}>
+						<Grid.Col md={8} sm={12} order={6}>
 							<Card withBorder>
 								<Stack spacing={0}>
 									<PlannedSpend
@@ -261,7 +261,7 @@ export default function TrackerIndex() {
 							</Card>
 						</Grid.Col>
 
-						<Grid.Col>
+						<Grid.Col order={7}>
 							<Card withBorder>
 								<Stack>
 									<Title align={`center`}>Представь себе инструмент</Title>
@@ -275,11 +275,11 @@ export default function TrackerIndex() {
 							</Card>
 						</Grid.Col>
 
-						<Grid.Col>
+						<Grid.Col order={8}>
 							<Divider />
 						</Grid.Col>
 
-						<Grid.Col mb={`100px`}>
+						<Grid.Col mb={`100px`} order={9}>
 							<Button fullWidth onClick={toTracker}>
 								<Text>
 									Начать пользоваться {` `}

@@ -64,7 +64,7 @@ export default function PlannedList() {
 					/>
 				</Grid.Col>
 
-				<Grid.Col hidden={plannedSpends.length > 0}>
+				<Grid.Col hidden={plannedSpends.length > 0} mt={`35px`}>
 					<Title align={`center`} c={`dimmed`} tt={`uppercase`} opacity={`20%`}>
 						Нет запланированных расходов
 					</Title>

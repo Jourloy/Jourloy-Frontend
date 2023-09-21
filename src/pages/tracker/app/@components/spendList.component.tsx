@@ -56,7 +56,7 @@ export default function SpendList() {
 					/>
 				</Grid.Col>
 
-				<Grid.Col hidden={spends.length > 0}>
+				<Grid.Col hidden={spends.length > 0} mt={`25px`} mb={`15px`}>
 					<Title align={`center`} c={`dimmed`} tt={`uppercase`} opacity={`20%`}>
 						Нет ни трат, ни доходов
 					</Title>
