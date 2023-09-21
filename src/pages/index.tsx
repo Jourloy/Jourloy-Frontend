@@ -11,7 +11,6 @@ import {
 	Flex,
 	Center,
 	Space,
-	Stack,
 } from "@mantine/core";
 import {useDocumentTitle} from "@mantine/hooks";
 import {IconBrandDiscord, IconBrandGithub, IconBrandTwitch} from "@tabler/icons-react";
@@ -86,6 +85,10 @@ export default function Main() {
 								<Title align={`center`}>Мои проекты</Title>
 							</Grid.Col>
 
+							<Grid.Col>
+								<Divider w={"100%"} />
+							</Grid.Col>
+
 							<Grid.Col md={6} sm={12}>
 								<Button fullWidth onClick={() => navigate(`/tracker`)}>
 									Денежный трекер
@@ -103,15 +106,27 @@ export default function Main() {
 
 				<Grid.Col>
 					<Card withBorder>
-						<Stack align={"center"}>
-							<Title align={`center`}>Инструменты</Title>
+						<Grid>
+							<Grid.Col>
+								<Title align={`center`}>Инструменты</Title>
+							</Grid.Col>
 
-							<Divider w={"100%"} />
+							<Grid.Col>
+								<Divider w={"100%"} />
+							</Grid.Col>
 
-							<Button fullWidth onClick={() => navigate(`/party`)} variant={`outline`}>
-								Party калькулятор
-							</Button>
-						</Stack>
+							<Grid.Col md={6} sm={12}>
+								<Button fullWidth onClick={() => navigate(`/party`)} variant={`outline`}>
+									Party калькулятор
+								</Button>
+							</Grid.Col>
+
+							<Grid.Col md={6} sm={12}>
+								<Button fullWidth onClick={() => navigate(`/dark`)} variant={`outline`}>
+									Dark and Darker
+								</Button>
+							</Grid.Col>
+						</Grid>
 					</Card>
 				</Grid.Col>
 
