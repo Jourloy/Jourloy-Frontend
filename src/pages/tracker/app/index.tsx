@@ -27,6 +27,7 @@ import DefaultLoading from "../../../components/layout/loading";
 import {IconCup} from "@tabler/icons-react";
 import {useDocumentTitle} from "@mantine/hooks";
 import BugForm from "../../../components/inputs/bugForm";
+import ChangeDays from "./@components/changeDays.component";
 
 export default function TrackerApp() {
 	useDocumentTitle(`Трекер`);
@@ -42,12 +43,14 @@ export default function TrackerApp() {
 	});
 
 	const [loading, setLoading] = useState(true);
-	const [settingsButton, setSettingsButton] = useState(localStorage.getItem(`trackerSettingsEnabled`) != null);
+	const [settingsButton, setSettingsButton] = useState(
+		localStorage.getItem(`trackerSettingsEnabled`) != null
+	);
 
 	const onUnlockSettings = () => {
 		localStorage.setItem(`trackerSettingsEnabled`, `true`);
 		setSettingsButton(true);
-	}
+	};
 
 	useEffect(() => {
 		setLoading(true);
@@ -85,7 +88,7 @@ export default function TrackerApp() {
 
 					<Grid.Col>
 						<Card p={15} withBorder>
-							<Grid columns={1} gutter={3}>
+							<Grid gutter={5}>
 								<Grid.Col>
 									<Flex align={`center`} justify={`space-between`}>
 										<Title order={2}>{logic.getCalcMode()} бюджет</Title>
@@ -129,6 +132,14 @@ export default function TrackerApp() {
 
 							<Button disabled>Не готово</Button>
 						</Group>
+					</Grid.Col>
+
+					<Grid.Col md={6} sm={12}>
+						<ChangeDays add />
+					</Grid.Col>
+
+					<Grid.Col md={6} sm={12}>
+						<ChangeDays />
 					</Grid.Col>
 
 					<Grid.Col md={8} sm={12}>
@@ -224,13 +235,14 @@ export default function TrackerApp() {
 											Если она не совпадает с реальным бюджет, то лучше
 											воспользоваться кнопками "доход" и "расход", чтобы
 											синхронизировать данные, так как изменение через настройки
-											может сломать твои расчеты.
+											может сломать твои расчеты
 										</Text>
 
 										<Text>
-											Дата начала отсчета - этот параметр стоит менять только после
-											создания трекера, так как он участвует в большинстве расчетов
-											и его изменения напрямую влияет на лимит денег.
+											Дата начала отсчета - этот параметр стоит менять только если
+											создали трекер позже, чем планировали. Если ты уже пользуешь
+											трекером, то эта дата напрямую влияет на расчеты и может быть
+											автоматически изменена системой
 										</Text>
 
 										<Divider />
@@ -271,12 +283,35 @@ export default function TrackerApp() {
 								</Accordion.Panel>
 							</Accordion.Item>
 
+							<Accordion.Item value={`days`}>
+								<Accordion.Control>
+									Подробнее о добавить / забрать день
+								</Accordion.Control>
+								<Accordion.Panel>
+									<Stack>
+										<Text>
+											Под прогрессом можно увидеть счетчик дней. Это число, сколько ты
+											еще можешь прожить в таком темпе
+										</Text>
+										<Text>
+											Количество жней можно изменять. Если вчера не был полностью потрачен лимит, то
+											сегодня он будет выше. Поэтому, ты можешь вычесть свой дневной лимит из
+											текущего дня и увеличить максимум дней на 1
+										</Text>
+										<Text>
+											А если ты хочешь потратить сегодня больше сумму и количество дней у тебя
+											большое, то можешь забрать день и это увеличит твой сегодняшний лимит
+										</Text>
+									</Stack>
+								</Accordion.Panel>
+							</Accordion.Item>
+
 							<Accordion.Item value={`disabled`}>
 								<Accordion.Control>Почему некоторые кнопки не жмутся</Accordion.Control>
 								<Accordion.Panel>
 									<Stack>
 										<Text>
-											Если кнопка серая (как ниже), то значит она заблокирована.
+											Если кнопка серая (как ниже), то значит она заблокирована
 										</Text>
 										<Button fullWidth disabled>
 											Я заблокированная кнопка
@@ -287,9 +322,7 @@ export default function TrackerApp() {
 											Например, изменить поле в настройках и тогда кнопка
 											сохранения станет активной
 										</Text>
-										<Text>
-											Но есть некоторые кнопки, над которыми я еще работаю.
-										</Text>
+										<Text>Но есть некоторые кнопки, над которыми я еще работаю</Text>
 									</Stack>
 								</Accordion.Panel>
 							</Accordion.Item>
