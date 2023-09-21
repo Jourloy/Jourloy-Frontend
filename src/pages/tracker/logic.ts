@@ -1,8 +1,16 @@
 import {store} from "../../store/store";
 import {TSpend} from "../../types";
+import TrackerAPI from "./api";
 
 export default class TrackerLogic {
 	private tracker = store.getState().trackerReducer.tracker;
+	private api = new TrackerAPI();
+
+	constructor() {
+		store.subscribe(() => {
+			this.tracker = store.getState().trackerReducer.tracker;
+		});
+	}
 
 	/**
 	 * Returns the calculation mode.
@@ -237,16 +245,13 @@ export default class TrackerLogic {
 		}
 	}
 
-	/**
-	 * Returns the number of days based on the budget and day limit.
-	 * @returns {number} The number of days.
-	 */
 	public getDaysCount() {
-		// Get the budget for today
-		const budget = this.getTodayBudget();
+		const startDate = new Date(this.tracker.startDate).getTime();
+		const today = Date.now();
+		const days = Math.floor((today - startDate) / 1000 / 60 / 60 / 24);
 
-		// Calculate the number of days based on the budget and day limit
-		return Math.floor(budget / this.tracker.dayLimit);
+		const startBudget = this.tracker.limit;
+		return Math.floor(startBudget / 500 - days);
 	}
 
 	/**
@@ -267,32 +272,18 @@ export default class TrackerLogic {
 		return this.tracker.limit + sums;
 	}
 
-	/**
-	 * Calculates the spending limit for today, based on the day limit and the total cost of the spends made today.
-	 * @returns {number} The spending limit for today.
-	 */
 	public getTodayLimit() {
-		// Filter the spends made today
 		const spends = this.tracker.spends.filter(s => {
-			// Ignore spends with a date (not made today)
 			if (s.date) return false;
-
-			const todayMilliseconds = Date.now();
-
-			// Check if the spend was made today
-			if (new Date(s.createdAt).getTime() <= todayMilliseconds) return true;
-			return false;
+			return true;
 		});
 
-		// Calculate the total cost of the spends made today
 		const sums = spends.reduce((a, b) => a + b.cost, 0);
 
-		// Calculate the number of days
 		const days = Math.ceil(
 			(Date.now() - new Date(this.tracker.startDate).getTime()) / 1000 / 60 / 60 / 24
 		);
 
-		// Return the spending limit for today (day limit + total cost of spends made today)
 		return this.tracker.dayLimit * days + sums;
 	}
 
@@ -330,6 +321,16 @@ export default class TrackerLogic {
 		});
 
 		return spends.reduce((a, b) => a + b.cost, 0);
+	}
+
+	public addDay() {
+		const newStartDate = new Date(this.tracker.startDate).getTime() + 1000 * 60 * 60 * 24;
+		return this.api.updateTracker({...this.tracker, startDate: new Date(newStartDate).toString()});
+	}
+
+	public removeDay() {
+		const newStartDate = new Date(this.tracker.startDate).getTime() - 1000 * 60 * 60 * 24;
+		return this.api.updateTracker({...this.tracker, startDate: new Date(newStartDate).toString()});
 	}
 }
 

@@ -10,8 +10,8 @@ import {
 	Progress,
 	Text,
 	Accordion,
-	Space,
 	Group,
+	Stack,
 } from "@mantine/core";
 import {formatter} from "../../../context";
 import TrackerLogic from "../logic";
@@ -23,10 +23,15 @@ import PlannedList from "./@components/plannedList.component";
 import TrackerAPI from "../api";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
-import DefaultLoading from "../../../components/loading";
+import DefaultLoading from "../../../components/layout/loading";
 import {IconCup} from "@tabler/icons-react";
+import {useDocumentTitle} from "@mantine/hooks";
+import BugForm from "../../../components/inputs/bugForm";
+import ChangeDays from "./@components/changeDays.component";
 
 export default function TrackerApp() {
+	useDocumentTitle(`Трекер`);
+
 	const backend = new TrackerAPI();
 	const logic = new TrackerLogic();
 	const navigate = useNavigate();
@@ -38,6 +43,14 @@ export default function TrackerApp() {
 	});
 
 	const [loading, setLoading] = useState(true);
+	const [settingsButton, setSettingsButton] = useState(
+		localStorage.getItem(`trackerSettingsEnabled`) != null
+	);
+
+	const onUnlockSettings = () => {
+		localStorage.setItem(`trackerSettingsEnabled`, `true`);
+		setSettingsButton(true);
+	};
 
 	useEffect(() => {
 		setLoading(true);
@@ -75,7 +88,7 @@ export default function TrackerApp() {
 
 					<Grid.Col>
 						<Card p={15} withBorder>
-							<Grid columns={1} gutter={3}>
+							<Grid gutter={5}>
 								<Grid.Col>
 									<Flex align={`center`} justify={`space-between`}>
 										<Title order={2}>{logic.getCalcMode()} бюджет</Title>
@@ -119,6 +132,14 @@ export default function TrackerApp() {
 
 							<Button disabled>Не готово</Button>
 						</Group>
+					</Grid.Col>
+
+					<Grid.Col md={6} sm={12}>
+						<ChangeDays add />
+					</Grid.Col>
+
+					<Grid.Col md={6} sm={12}>
+						<ChangeDays />
 					</Grid.Col>
 
 					<Grid.Col md={8} sm={12}>
@@ -208,39 +229,110 @@ export default function TrackerApp() {
 							<Accordion.Item value={`org`}>
 								<Accordion.Control>Подробнее о настройках трекера</Accordion.Control>
 								<Accordion.Panel>
-									<Text>
-										Бюджет - сумма, которая на текущий момент доступна для трат. Если
-										она не совпадает с реальным бюджет, то лучше воспользоваться
-										кнопками "доход" и "расход", чтобы синхронизировать данные, так
-										как изменение через настройки может сломать твои расчеты.
-									</Text>
-									<Space h={`xs`} />
-									<Text>
-										Дата начала отсчета - этот параметр стоит менять только после
-										создания трекера, так как он участвует в большинстве расчетов и
-										его изменения напрямую влияет на лимит денег.
-									</Text>
+									<Stack>
+										<Text>
+											Бюджет - сумма, которая на текущий момент доступна для трат.
+											Если она не совпадает с реальным бюджет, то лучше
+											воспользоваться кнопками "доход" и "расход", чтобы
+											синхронизировать данные, так как изменение через настройки
+											может сломать твои расчеты
+										</Text>
+
+										<Text>
+											Дата начала отсчета - этот параметр стоит менять только если
+											создали трекер позже, чем планировали. Если ты уже пользуешь
+											трекером, то эта дата напрямую влияет на расчеты и может быть
+											автоматически изменена системой
+										</Text>
+
+										<Divider />
+
+										<Text>
+											Если ты точно хочешь изменять эти параметры, то нажми на
+											кнопку ниже
+										</Text>
+
+										<Button
+											color={`red`}
+											onClick={onUnlockSettings}
+											disabled={settingsButton}
+										>
+											Я хочу
+										</Button>
+									</Stack>
+								</Accordion.Panel>
+							</Accordion.Item>
+
+							<Accordion.Item value={`plannedSpend`}>
+								<Accordion.Control>
+									Подробнее о запланированных расходах
+								</Accordion.Control>
+								<Accordion.Panel>
+									<Stack>
+										<Text>
+											Ты можешь добавить расход заранее. Он не будет учитываться в
+											расчете лимита, пока не будет оплачен. В выбранный день он
+											будет отмечен, напоминая о том, что его стоит оплатить
+										</Text>
+										<Text>
+											Это удобно для того, чтобы держать в памяти определенные
+											траты, такие как плата за Интернет или квартиру, и быть
+											заранее готовым к этому дню
+										</Text>
+									</Stack>
+								</Accordion.Panel>
+							</Accordion.Item>
+
+							<Accordion.Item value={`days`}>
+								<Accordion.Control>
+									Подробнее о добавить / забрать день
+								</Accordion.Control>
+								<Accordion.Panel>
+									<Stack>
+										<Text>
+											Под прогрессом можно увидеть счетчик дней. Это число, сколько ты
+											еще можешь прожить в таком темпе
+										</Text>
+										<Text>
+											Количество жней можно изменять. Если вчера не был полностью потрачен лимит, то
+											сегодня он будет выше. Поэтому, ты можешь вычесть свой дневной лимит из
+											текущего дня и увеличить максимум дней на 1
+										</Text>
+										<Text>
+											А если ты хочешь потратить сегодня больше сумму и количество дней у тебя
+											большое, то можешь забрать день и это увеличит твой сегодняшний лимит
+										</Text>
+									</Stack>
 								</Accordion.Panel>
 							</Accordion.Item>
 
 							<Accordion.Item value={`disabled`}>
 								<Accordion.Control>Почему некоторые кнопки не жмутся</Accordion.Control>
 								<Accordion.Panel>
-									<Text>
-										Если кнопка серая (как ниже), то значит она заблокирована.
-									</Text>
-									<Space h={`xs`} />
-									<Button fullWidth disabled>
-										Я заблокированная кнопка
-									</Button>
-									<Space h={`xs`} />
-									<Text>
-										Обычно нужно что-то сделать, чтобы ее разблокировать. Например,
-										изменить поле в настройках и тогда кнопка сохранения станет
-										активной
-									</Text>
-									<Space h={`xs`} />
-									<Text>Но есть некоторые кнопки, над которыми я еще работаю.</Text>
+									<Stack>
+										<Text>
+											Если кнопка серая (как ниже), то значит она заблокирована
+										</Text>
+										<Button fullWidth disabled>
+											Я заблокированная кнопка
+										</Button>
+
+										<Text>
+											Обычно нужно что-то сделать, чтобы ее разблокировать.
+											Например, изменить поле в настройках и тогда кнопка
+											сохранения станет активной
+										</Text>
+										<Text>Но есть некоторые кнопки, над которыми я еще работаю</Text>
+									</Stack>
+								</Accordion.Panel>
+							</Accordion.Item>
+
+							<Accordion.Item value={`help`}>
+								<Accordion.Control>Что делать если нужна помощь?</Accordion.Control>
+								<Accordion.Panel>
+									<Stack>
+										<BugForm />
+									</Stack>
 								</Accordion.Panel>
 							</Accordion.Item>
 						</Accordion>

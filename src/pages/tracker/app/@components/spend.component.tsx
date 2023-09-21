@@ -21,7 +21,7 @@ import {useState} from "react";
 import {useForm} from "@mantine/form";
 import TrackerAPI from "../../api";
 import {toast} from "react-toastify";
-import LongPressButton from "../../../../components/longPressButton";
+import LongPressButton from "../../../../components/actions/longPressButton";
 
 type THistorySpendProps = {
 	spend: TSpend;

@@ -17,7 +17,10 @@ export default function PlannedList() {
 	// TODO
 	const [plannedCategory] = useState(``);
 
-	const plannedSpendsArray = tracker.spends.filter(s => s.date != null);
+	const plannedSpendsArray = tracker.spends.filter(s => s.date != null).sort((s1, s2) => {
+		return new Date(s1.date!).getTime() - new Date(s2.date!).getTime();
+	});
+
 	const plannedSpends: TSpend[] = [];
 	if (plannedSearch === ``) {
 		for (let i = (plannedPage - 1) * 6; i < plannedPage * 6; i++) {
@@ -61,7 +64,7 @@ export default function PlannedList() {
 					/>
 				</Grid.Col>
 
-				<Grid.Col hidden={plannedSpends.length > 0}>
+				<Grid.Col hidden={plannedSpends.length > 0} mt={`35px`}>
 					<Title align={`center`} c={`dimmed`} tt={`uppercase`} opacity={`20%`}>
 						Нет запланированных расходов
 					</Title>

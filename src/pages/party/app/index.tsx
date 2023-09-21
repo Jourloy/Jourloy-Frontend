@@ -9,7 +9,7 @@ import {
 	Modal,
 	Text,
 	Accordion,
-	Space,
+	Stack,
 } from "@mantine/core";
 import {useEffect, useState} from "react";
 import {store} from "../../../store/store";
@@ -25,6 +25,7 @@ import LoginAPI from "../../login/api";
 import {userActions} from "../../../store/features/user.slice";
 import {formatter} from "../../../context";
 import {IconCup} from "@tabler/icons-react";
+import BugForm from "../../../components/inputs/bugForm";
 
 export default function PartyApp() {
 	const backend = new PartyAPI();
@@ -112,7 +113,7 @@ export default function PartyApp() {
 		else setRemoveAllPositionsDisable(false);
 		setRemoveAllPositionsLoading(false);
 	}, [calculator]);
-	
+
 	useEffect(() => {
 		const source = loginBackend.getSource();
 
@@ -367,17 +368,18 @@ export default function PartyApp() {
 								<Accordion.Item value={`org`}>
 									<Accordion.Control>Кто такой организатор?</Accordion.Control>
 									<Accordion.Panel>
-										<Text>
-											Организатор - человек, который закупается для вечеринки. Он
-											как и все, может кушать или использовать позиции, но если
-											нажать на его карточку, то можно посмотреть, сколько нужно
-											ему вернуть денег.
-										</Text>
-										<Space h={`xs`} />
-										<Text>
-											Среди участников организатор отмечен другой обводкой
-											карточки.
-										</Text>
+										<Stack>
+											<Text>
+												Организатор - человек, который закупается для вечеринки.
+												Он как и все, может кушать или использовать позиции, но
+												если нажать на его карточку, то можно посмотреть, сколько
+												нужно ему вернуть денег.
+											</Text>
+											<Text>
+												Среди участников организатор отмечен другой обводкой
+												карточки.
+											</Text>
+										</Stack>
 									</Accordion.Panel>
 								</Accordion.Item>
 
@@ -386,18 +388,19 @@ export default function PartyApp() {
 										Я не помню как использовать калькулятор
 									</Accordion.Control>
 									<Accordion.Panel>
-										<Text>
-											Чтобы вспомнить как им пользоваться, ты можешь перейти на
-											страницу создания и пролистать чуть ниже
-										</Text>
-										<Space h={`xs`} />
-										<Button
-											fullWidth
-											variant={`outline`}
-											onClick={() => navigate(`/party`)}
-										>
-											Перейти
-										</Button>
+										<Stack>
+											<Text>
+												Чтобы вспомнить как им пользоваться, ты можешь перейти на
+												страницу создания и пролистать чуть ниже
+											</Text>
+											<Button
+												fullWidth
+												variant={`outline`}
+												onClick={() => navigate(`/party`)}
+											>
+												Перейти
+											</Button>
+										</Stack>
 									</Accordion.Panel>
 								</Accordion.Item>
 
@@ -406,23 +409,32 @@ export default function PartyApp() {
 										Почему некоторые кнопки не жмутся
 									</Accordion.Control>
 									<Accordion.Panel>
-										<Text>
-											Если кнопка серая (как ниже), то значит она заблокирована.
-										</Text>
-										<Space h={`xs`} />
-										<Button fullWidth disabled>
-											Я заблокированная кнопка
-										</Button>
-										<Space h={`xs`} />
-										<Text>
-											Обычно нужно что-то сделать, чтобы ее разблокировать.
-											Например, добавить участников и тогда кнопка очистки списка
-											участников станет рабочей.
-										</Text>
-										<Space h={`xs`} />
-										<Text>
-											Но есть некоторые кнопки, над которыми я еще работаю.
-										</Text>
+										<Stack>
+											<Text>
+												Если кнопка серая (как ниже), то значит она
+												заблокирована.
+											</Text>
+											<Button fullWidth disabled>
+												Я заблокированная кнопка
+											</Button>
+											<Text>
+												Обычно нужно что-то сделать, чтобы ее разблокировать.
+												Например, добавить участников и тогда кнопка очистки
+												списка участников станет рабочей.
+											</Text>
+											<Text>
+												Но есть некоторые кнопки, над которыми я еще работаю.
+											</Text>
+										</Stack>
+									</Accordion.Panel>
+								</Accordion.Item>
+
+								<Accordion.Item value={`help`}>
+									<Accordion.Control>Что делать если нужна помощь?</Accordion.Control>
+									<Accordion.Panel>
+										<Stack>
+											<BugForm />
+										</Stack>
 									</Accordion.Panel>
 								</Accordion.Item>
 							</Accordion>

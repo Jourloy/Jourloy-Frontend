@@ -4,10 +4,12 @@ type UserState = {
 	username: string;
 	avatar: string;
 	logined: boolean;
+	role: string;
 };
 
 const initialState = {
 	logined: false,
+	role: `user`,
 } as UserState;
 
 export const userSlice = createSlice({
@@ -27,6 +29,9 @@ export const userSlice = createSlice({
 		changeAvatar: (state, action: PayloadAction<string>) => {
 			state.avatar = action.payload;
 		},
+		changeRole: (state, action: PayloadAction<string>) => {
+			state.role = action.payload;
+		}
 	},
 });
 

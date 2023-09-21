@@ -13,115 +13,58 @@ import TrackerCreate from "./pages/tracker/create";
 import Blocked from "./pages/blocked";
 import {Page404} from "./pages/404";
 import TutorialFramework from "./pages/tutorial/framewok";
+import AdminIndex from "./pages/admin";
 
 export default function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route
-					element={
-						<LayoutContainer>
-							<Main />
-						</LayoutContainer>
-					}
-					path="/"
-				/>
-				<Route
-					element={
-						<LayoutContainer ignoreDomainCheck>
-							<Login />
-						</LayoutContainer>
-					}
-					path="/login"
-				/>
-				<Route
-					element={
-						<LayoutContainer ignoreDomainCheck>
-							<Check />
-						</LayoutContainer>
-					}
-					path="/login/check"
-				/>
+				<Route element={<LayoutContainer children={<Main />} />} path="/" />
 
-				<Route
-					element={
-						<LayoutContainer>
-							<PartyIndex />
-						</LayoutContainer>
-					}
-					path="/party"
-				/>
-				<Route
-					element={
-						<LayoutContainer>
-							<PartyApp />
-						</LayoutContainer>
-					}
-					path="/party/app"
-				/>
+				{/* LOGIN */}
 
-				<Route
-					element={
-						<LayoutContainer>
-							<KeyboardIndex />
-						</LayoutContainer>
-					}
-					path="/keyboard"
-				/>
+				<Route element={<LayoutContainer children={<Login />} />} path="/login"></Route>
+				<Route element={<LayoutContainer children={<Check />} />} path="/login/check" />
 
-				<Route
-					element={
-						<LayoutContainer>
-							<TrackerIndex />
-						</LayoutContainer>
-					}
-					path="/tracker"
-				/>
+				{/* PARTY */}
 
+				<Route element={<LayoutContainer children={<PartyIndex />} />} path="/party"></Route>
+				<Route element={<LayoutContainer children={<PartyApp />} />} path="/party/app" />
+
+				{/* KEYBOARD */}
+
+				<Route element={<LayoutContainer children={<KeyboardIndex />} />} path="/keyboard" />
+
+				{/* TRACKER */}
+
+				<Route element={<LayoutContainer children={<TrackerIndex />} />} path="/tracker"></Route>
 				<Route
-					element={
-						<LayoutContainer>
-							<TrackerCreate />
-						</LayoutContainer>
-					}
+					element={<LayoutContainer children={<TrackerCreate />} />}
 					path="/tracker/create"
 				/>
+				<Route element={<LayoutContainer children={<TrackerApp />} />} path="/tracker/app" />
+
+				{/* TUTORIAL */}
 
 				<Route
-					element={
-						<LayoutContainer>
-							<TrackerApp />
-						</LayoutContainer>
-					}
-					path="/tracker/app"
-				/>
-
-				<Route
-					element={
-						<LayoutContainer>
-							<TutorialFramework />
-						</LayoutContainer>
-					}
+					element={<LayoutContainer children={<TutorialFramework />} />}
 					path="/tutorial/framework"
 				/>
 
-				<Route
-					element={
-						<LayoutContainer>
-							<Blocked />
-						</LayoutContainer>
-					}
-					path="/blocked"
-				/>
+				{/* ADMIN */}
 
 				<Route
-					element={
-						<LayoutContainer>
-							<Page404 />
-						</LayoutContainer>
-					}
-					path="*"
+					element={<LayoutContainer children={<AdminIndex />} isForAdmin />}
+					path="/admin"
 				/>
+
+				{/* BLOCKED */}
+
+				<Route element={<LayoutContainer children={<Blocked />} />} path="/blocked" />
+
+				{/* 404 */}
+
+				<Route element={<LayoutContainer children={<Page404 />} />} path="*" />
 			</Routes>
 		</BrowserRouter>
 	);

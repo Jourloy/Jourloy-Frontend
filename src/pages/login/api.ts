@@ -22,6 +22,9 @@ export default class LoginAPI extends BackendContext {
 				if (d.data.user.avatar) {
 					store.dispatch(userActions.changeAvatar(d.data.user.avatar));
 				}
+				if (d.data.user.role) {
+					store.dispatch(userActions.changeRole(d.data.user.role));
+				}
 				if (d.data.user) {
 					store.dispatch(userActions.login());
 					return true;

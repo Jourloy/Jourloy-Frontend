@@ -20,7 +20,7 @@ import {store} from "../../../store/store";
 import {useState} from "react";
 import {formatter} from "../../../context";
 import {useNavigate} from "react-router-dom";
-import ScrollHint from "../../../components/scrollHint";
+import ScrollHint from "../../../components/layout/scrollHint";
 
 export default function PartyCreate() {
 	const backend = new PartyAPI();
@@ -109,7 +109,12 @@ export default function PartyCreate() {
 										<Grid.Col>
 											<Center>
 												<Button fullWidth onClick={createCalculator}>
-													Начать пользоваться
+													<Text>
+														Начать пользоваться {` `}
+														<Text span color={`red`}>
+															[ БЕТА ]
+														</Text>
+													</Text>
 												</Button>
 											</Center>
 										</Grid.Col>

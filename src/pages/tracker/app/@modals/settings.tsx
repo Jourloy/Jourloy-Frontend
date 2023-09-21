@@ -10,6 +10,7 @@ import {
 	Group,
 	Space,
 	Text,
+	Stack,
 } from "@mantine/core";
 import {useState} from "react";
 import {store} from "../../../../store/store";
@@ -20,7 +21,7 @@ import {toast} from "react-toastify";
 import {trackerActions} from "../../../../store/features/tracker.slice";
 import {useNavigate} from "react-router-dom";
 import {formatter} from "../../../../context";
-import LongPressButton from "../../../../components/longPressButton";
+import LongPressButton from "../../../../components/actions/longPressButton";
 
 export default function SettingsModal() {
 	const backend = new TrackerAPI();
@@ -35,6 +36,8 @@ export default function SettingsModal() {
 	const [modalShow, setModalShow] = useState(false);
 	const [deleteLoading, setDeleteLoading] = useState(false);
 	const [changeLoading, setChangeLoading] = useState(false);
+
+	const settingEnabled = localStorage.getItem(`trackerSettingsEnabled`) === `true`;
 
 	const form = useForm({
 		initialValues: {
@@ -87,19 +90,15 @@ export default function SettingsModal() {
 	return (
 		<>
 			<Modal opened={modalShow} onClose={onClose} centered>
-				<Grid>
-					<Grid.Col>
-						<Title order={2} align={`center`}>
-							Настройки трекера
-						</Title>
-					</Grid.Col>
+				<Stack>
+					<Title order={2} align={`center`}>
+						Настройки трекера
+					</Title>
 
-					<Grid.Col>
-						<Divider />
-					</Grid.Col>
+					<Divider />
 
 					<form onSubmit={form.onSubmit(values => onSubmit(values))} style={{width: `100%`}}>
-						<Grid.Col>
+						<Stack>
 							<NumberInput
 								label={`Лимит на период`}
 								formatter={value =>
@@ -109,33 +108,7 @@ export default function SettingsModal() {
 								withAsterisk
 								{...form.getInputProps(`dayLimit`)}
 							/>
-						</Grid.Col>
 
-						<Grid.Col>
-							<NumberInput
-								label={`Бюджет`}
-								formatter={value =>
-									!Number.isNaN(parseInt(value)) ? formatter.format(+value) : value
-								}
-								min={1}
-								description={`Подробнее об этой настройке можно прочесть под трекером`}
-								{...form.getInputProps(`limit`)}
-							/>
-						</Grid.Col>
-
-						<Grid.Col>
-							<DatePickerInput
-								label={`Дата начала отсчета`}
-								valueFormat={`DD.MM.YY`}
-								description={`Подробнее об этой настройке можно прочесть под трекером`}
-								popoverProps={{
-									withinPortal: true,
-								}}
-								{...form.getInputProps(`startDate`)}
-							/>
-						</Grid.Col>
-
-						<Grid.Col>
 							<Center>
 								<Radio.Group
 									name={`calc`}
@@ -153,9 +126,41 @@ export default function SettingsModal() {
 									</Group>
 								</Radio.Group>
 							</Center>
-						</Grid.Col>
 
-						<Grid.Col>
+							<Divider />
+
+							<Text align={`center`} color={`dimmed`} size={`xs`} mt={`-10px`}>
+								Чтобы настраивать эти параметры - разблокируй их под трекером в разделе{" "}
+								{` `}
+								<Text span weight={800}>
+									"Подробнее о настройках трекера"
+								</Text>
+							</Text>
+
+							<NumberInput
+								label={`Бюджет`}
+								formatter={value =>
+									!Number.isNaN(parseInt(value)) ? formatter.format(+value) : value
+								}
+								min={1}
+								description={`Подробнее об этой настройке можно прочесть под трекером`}
+								disabled={!settingEnabled}
+								{...form.getInputProps(`limit`)}
+							/>
+
+							<DatePickerInput
+								label={`Дата начала отсчета`}
+								valueFormat={`DD.MM.YY`}
+								description={`Подробнее об этой настройке можно прочесть под трекером`}
+								popoverProps={{
+									withinPortal: true,
+								}}
+								disabled={!settingEnabled}
+								{...form.getInputProps(`startDate`)}
+							/>
+
+							<Divider />
+
 							<Button
 								fullWidth
 								variant={`outline`}
@@ -165,37 +170,23 @@ export default function SettingsModal() {
 							>
 								Сохранить
 							</Button>
-						</Grid.Col>
+						</Stack>
 					</form>
 
-					<Grid.Col>
-						<Divider />
-					</Grid.Col>
-
-					<Grid.Col>
-						<LongPressButton
-							loading={deleteLoading}
-							seconds={3}
-							color={`red`}
-							fullWidth
-							variant={`outline`}
-							label={`Удалить трекер`}
-							onPressed={onRemove}
-						/>
-					</Grid.Col>
-
-					<Grid.Col>
-						<Text
-							color={`dimmed`}
-							align={`center`}
-							size={`xs`}
-							tt={`lowercase`}
-							mt={`-10px`}
-						>
-							Это действие нельзя будет отменить
-						</Text>
-					</Grid.Col>
-				</Grid>
+					<Divider />
+					<LongPressButton
+						loading={deleteLoading}
+						seconds={3}
+						color={`red`}
+						fullWidth
+						variant={`outline`}
+						label={`Удалить трекер`}
+						onPressed={onRemove}
+					/>
+					<Text color={`dimmed`} align={`center`} size={`xs`} tt={`lowercase`} mt={`-10px`}>
+						Это действие нельзя будет отменить
+					</Text>
+				</Stack>
 			</Modal>
 
 			<Grid.Col>

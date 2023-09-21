@@ -3,6 +3,7 @@ export type TUser = {
 	username: string;
 	lowercaseUsername: string;
 	avatar: string;
+	role: string;
 	createdAt: Date;
 	updatedAt: Date;
 };
@@ -57,11 +58,11 @@ export type TSpend = {
 	cost: number;
 	category: string;
 	description?: string;
-	date?: Date;
+	date?: string;
 	createdAt: string;
 	updatedAt: string;
 }
 
 export interface IPlannedSpend extends TSpend {
-	date: Date;
+	date: string;
 }

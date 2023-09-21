@@ -17,8 +17,11 @@ import TrackerLogic from "../logic";
 import TrackerAPI from "../api";
 import {useNavigate} from "react-router-dom";
 import {formatter} from "../../../context";
+import {useDocumentTitle} from "@mantine/hooks";
 
 export default function TrackerCreate() {
+	useDocumentTitle(`Трекер`);
+
 	const logic = new TrackerLogic();
 	const backend = new TrackerAPI();
 	const navigate = useNavigate();

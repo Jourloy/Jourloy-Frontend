@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import PartyAPI from "./api";
 import {CancelToken} from "axios";
 import {partyActions} from "../../store/features/party.slice";
-import DefaultLoading from "../../components/loading";
+import DefaultLoading from "../../components/layout/loading";
 import {useDocumentTitle} from "@mantine/hooks";
 
 export default function PartyIndex() {

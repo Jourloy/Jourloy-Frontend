@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import {store} from "../../store/store";
 import {userActions} from "../../store/features/user.slice";
 import {useLocation, useNavigate} from "react-router-dom";
-import DefaultLoading from "../../components/loading";
+import DefaultLoading from "../../components/layout/loading";
 import {useDocumentTitle} from "@mantine/hooks";
 
 export default function Login() {
