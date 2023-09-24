@@ -4,7 +4,6 @@ import TrackerAPI from "../../api";
 import {toast} from "react-toastify";
 import {useState} from "react";
 import TrackerLogic from "../../logic";
-import {formatter} from "../../../../context";
 
 export default function IncomeModal() {
 	const backend = new TrackerAPI();
@@ -70,9 +69,6 @@ export default function IncomeModal() {
 								label={`Сколько пришло`}
 								description={`В рублях`}
 								withAsterisk
-								formatter={value =>
-									!Number.isNaN(parseInt(value)) ? formatter.format(+value) : value
-								}
 								min={1}
 								{...form.getInputProps(`cost`)}
 							/>

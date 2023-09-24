@@ -5,7 +5,6 @@ import TrackerAPI from "../../api";
 import {toast} from "react-toastify";
 import TrackerLogic from "../../logic";
 import {useForm} from "@mantine/form";
-import {formatter} from "../../../../context";
 
 export default function SpendModal() {
 	const backend = new TrackerAPI();
@@ -79,10 +78,8 @@ export default function SpendModal() {
 								label={`Сколько потрачено`}
 								placeholder={`В рублях`}
 								withAsterisk
-								formatter={value =>
-									!Number.isNaN(parseInt(value)) ? formatter.format(+value) : value
-								}
 								max={-1}
+								
 								{...form.getInputProps(`cost`)}
 							/>
 						</Grid.Col>
