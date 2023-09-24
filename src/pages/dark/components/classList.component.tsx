@@ -16,11 +16,13 @@ export default function ClassList() {
 	});
 
 	const classesArray = classes.filter(c => {
-		if (c.enName && search) {
-			return c.enName.toLowerCase().includes(search.toLowerCase());
-		} else if (c.ruName && search) {
-			return c.ruName.toLowerCase().includes(search.toLowerCase());
+		const enName = c.enName.toLowerCase().includes(search.toLowerCase());
+		const ruName = c.ruName.toLowerCase().includes(search.toLowerCase());
+		
+		if (search) {
+			return enName || ruName;
 		}
+
 		return true;
 	});
 
@@ -43,7 +45,7 @@ export default function ClassList() {
 		<>
 			<TextInput
 				icon={<IconSearch stroke={1.3} />}
-				placeholder={`Английское название`}
+				placeholder={`Название`}
 				value={search}
 				onChange={e => setSearch(e.target.value)}
 			/>

@@ -3,9 +3,10 @@ import AttributeList from "./components/attributeList.components";
 import BuyCoffeButton from "../../components/actions/buyCoffeButton";
 import ClassList from "./components/classList.component";
 import BugButton from "./components/bugButton";
-import { useState } from "react";
-import { store } from "../../store/store";
+import {useState} from "react";
+import {store} from "../../store/store";
 import AddClassButton from "./components/addClassButton.component";
+import AddAttributeButton from "./components/addAttributeButton.component";
 
 export default function DarkIndex() {
 	const [logined, setLogined] = useState(store.getState().userReducer.logined);
@@ -16,7 +17,7 @@ export default function DarkIndex() {
 		if (logined !== _logined) setLogined(_logined);
 		if (admin !== _admin) setAdmin(_admin);
 	});
-	
+
 	return (
 		<Flex justify={`center`} py={20} px={20}>
 			<Grid maw={`850px`} w={`100%`}>
@@ -44,20 +45,6 @@ export default function DarkIndex() {
 					</Card>
 				</Grid.Col>
 
-				<div hidden={!admin} style={{width: `100%`}}>
-					<Grid.Col>
-						<Divider />
-					</Grid.Col>
-
-					<Grid.Col>
-						<Title order={2} align={`center`}>Раздел администратора</Title>
-					</Grid.Col>
-
-					<Grid.Col md={6} sm={12}>
-						<AddClassButton />
-					</Grid.Col>
-				</div>
-
 				<Grid.Col>
 					<Divider />
 				</Grid.Col>
@@ -71,8 +58,29 @@ export default function DarkIndex() {
 				<Grid.Col md={6} sm={12}>
 					<BugButton />
 				</Grid.Col>
+
 				<Grid.Col>
 					<BuyCoffeButton />
+				</Grid.Col>
+
+				<Grid.Col>
+					<Card withBorder hidden={!admin} style={{width: `100%`}}>
+						<Grid>
+							<Grid.Col>
+								<Title order={2} align={`center`}>
+									Раздел администратора
+								</Title>
+							</Grid.Col>
+
+							<Grid.Col md={6} sm={12}>
+								<AddClassButton />
+							</Grid.Col>
+
+							<Grid.Col md={6} sm={12}>
+								<AddAttributeButton />
+							</Grid.Col>
+						</Grid>
+					</Card>
 				</Grid.Col>
 			</Grid>
 		</Flex>

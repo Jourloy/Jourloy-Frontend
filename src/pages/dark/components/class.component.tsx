@@ -8,7 +8,7 @@ type TProps = {
 export default function Class(props: TProps) {
 	return (
 		<UnstyledButton w={`100%`}>
-			<Card withBorder>{props.class.enName}</Card>
+			<Card withBorder>{props.class.enName} - {props.class.ruName}</Card>
 		</UnstyledButton>
 	);
 }

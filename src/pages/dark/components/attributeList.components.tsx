@@ -10,7 +10,7 @@ export default function AttributeList() {
 		<>
 			<TextInput
 				icon={<IconSearch stroke={1.3} />}
-				placeholder={`Английское название`}
+				placeholder={`Название`}
 				value={search}
 				onChange={e => setSearch(e.target.value)}
 			/>
