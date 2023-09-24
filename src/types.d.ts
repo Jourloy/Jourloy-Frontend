@@ -51,7 +51,7 @@ export type TTracker = {
 	startDate: string;
 	createdAt: string;
 	updatedAt: string;
-}
+};
 
 export type TSpend = {
 	id: number;
@@ -61,8 +61,16 @@ export type TSpend = {
 	date?: string;
 	createdAt: string;
 	updatedAt: string;
-}
+};
 
 export interface IPlannedSpend extends TSpend {
 	date: string;
 }
+
+export type TDarkClass = {
+	id: number;
+	enName: string;
+	ruName: string;
+	enDescription: string;
+	ruDescription: string;
+};
