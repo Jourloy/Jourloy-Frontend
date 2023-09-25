@@ -1,4 +1,4 @@
-import {Card, UnstyledButton} from "@mantine/core";
+import {Avatar, Text, Card, Group, UnstyledButton} from "@mantine/core";
 import {TDarkClass} from "../../../types";
 
 type TProps = {
@@ -8,7 +8,12 @@ type TProps = {
 export default function Class(props: TProps) {
 	return (
 		<UnstyledButton w={`100%`}>
-			<Card withBorder>{props.class.enName} - {props.class.ruName}</Card>
+			<Card withBorder>
+				<Group>
+					<Avatar>{props.class.ruName[0]}</Avatar>
+					<Text>{props.class.ruName}</Text>
+				</Group>
+			</Card>
 		</UnstyledButton>
 	);
 }

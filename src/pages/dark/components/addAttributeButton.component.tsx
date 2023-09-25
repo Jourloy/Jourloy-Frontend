@@ -1,4 +1,14 @@
-import {Button, Divider, Grid, LoadingOverlay, Modal, Stack, TextInput, Title} from "@mantine/core";
+import {
+	Button,
+	Divider,
+	Grid,
+	LoadingOverlay,
+	Modal,
+	Stack,
+	TextInput,
+	Textarea,
+	Title,
+} from "@mantine/core";
 import {useForm, zodResolver} from "@mantine/form";
 import {useState} from "react";
 import {z} from "zod";
@@ -20,6 +30,14 @@ export default function AddAttributeButton() {
 			.string()
 			.min(3, {message: `Минимум 3 символов`})
 			.max(15, {message: `Максимум 15 символов`}),
+		enDescription: z
+			.string()
+			.min(3, {message: `Минимум 3 символов`})
+			.max(30, {message: `Максимум 30 символов`}),
+		ruDescription: z
+			.string()
+			.min(3, {message: `Минимум 3 символов`})
+			.max(30, {message: `Максимум 30 символов`}),
 	});
 
 	const form = useForm({
@@ -39,9 +57,8 @@ export default function AddAttributeButton() {
 		ruDescription: string;
 	}) => {
 		setLoading(true);
-		console.log(values);
 		backend
-			.addClass(values)
+			.addAttribute(values)
 			.then(() => {
 				toast.success(`Атрибут успешно добавлен`);
 				onCloseModal();
@@ -51,7 +68,7 @@ export default function AddAttributeButton() {
 			})
 			.finally(() => {
 				setLoading(false);
-				backend.getAllClassesInStore();
+				backend.getAllAttributesInStore();
 			});
 	};
 
@@ -72,18 +89,32 @@ export default function AddAttributeButton() {
 
 					<form style={{width: `100%`}} onSubmit={form.onSubmit(submit)}>
 						<Grid>
-							<Grid.Col md={6} sm={12}>
+							<Grid.Col>
 								<TextInput
 									label={`Название`}
 									placeholder={`На английском`}
 									{...form.getInputProps(`enName`)}
 								/>
 							</Grid.Col>
-							<Grid.Col md={6} sm={12}>
+							<Grid.Col>
+								<Textarea
+									label={`Описание`}
+									placeholder={`На английском`}
+									{...form.getInputProps(`enDescription`)}
+								/>
+							</Grid.Col>
+							<Grid.Col>
 								<TextInput
 									label={`Название`}
 									placeholder={`На русском`}
 									{...form.getInputProps(`ruName`)}
+								/>
+							</Grid.Col>
+							<Grid.Col>
+								<Textarea
+									label={`Описание`}
+									placeholder={`На русском`}
+									{...form.getInputProps(`ruDescription`)}
 								/>
 							</Grid.Col>
 							<Grid.Col>

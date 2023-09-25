@@ -74,3 +74,19 @@ export type TDarkClass = {
 	enDescription: string;
 	ruDescription: string;
 };
+
+export type TDarkAttribute = {
+	id: number;
+	enName: string;
+	ruName: string;
+	enDescription: string;
+	ruDescription: string;
+	levels: TDarkLevel[];
+};
+
+export type TDarkLevel = {
+	id: number;
+	depth: string;
+	classes: string[];
+	attributeId: number;
+}

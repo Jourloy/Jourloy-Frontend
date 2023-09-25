@@ -1,4 +1,4 @@
-import {Button, Card, Divider, Flex, Grid, Stack, Title} from "@mantine/core";
+import {Button, Card, Divider, Flex, Grid, Title} from "@mantine/core";
 import AttributeList from "./components/attributeList.components";
 import BuyCoffeButton from "../../components/actions/buyCoffeButton";
 import ClassList from "./components/classList.component";
@@ -23,25 +23,29 @@ export default function DarkIndex() {
 			<Grid maw={`850px`} w={`100%`}>
 				<Grid.Col>
 					<Card withBorder>
-						<Stack>
-							<Title order={2} align={`center`}>
-								Поиск по атрибутам
-							</Title>
+						<Grid>
+							<Grid.Col>
+								<Title order={2} align={`center`}>
+									Поиск по атрибутам
+								</Title>
+							</Grid.Col>
 
 							<AttributeList />
-						</Stack>
+						</Grid>
 					</Card>
 				</Grid.Col>
 
 				<Grid.Col>
 					<Card withBorder>
-						<Stack>
-							<Title order={2} align={`center`}>
-								Классы
-							</Title>
+						<Grid>
+							<Grid.Col>
+								<Title order={2} align={`center`}>
+									Классы
+								</Title>
+							</Grid.Col>
 
 							<ClassList />
-						</Stack>
+						</Grid>
 					</Card>
 				</Grid.Col>
 

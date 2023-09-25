@@ -1,4 +1,4 @@
-import {TextInput} from "@mantine/core";
+import {Grid, TextInput} from "@mantine/core";
 import {IconSearch} from "@tabler/icons-react";
 import {useEffect, useState} from "react";
 import {TDarkClass} from "../../../types";
@@ -18,7 +18,7 @@ export default function ClassList() {
 	const classesArray = classes.filter(c => {
 		const enName = c.enName.toLowerCase().includes(search.toLowerCase());
 		const ruName = c.ruName.toLowerCase().includes(search.toLowerCase());
-		
+
 		if (search) {
 			return enName || ruName;
 		}
@@ -26,8 +26,22 @@ export default function ClassList() {
 		return true;
 	});
 
+	const calculateSpan = (index: number) => {
+		if (classes.length === 1) {
+			return 12;
+		}
+		if (classes.length - 1 === index && classes.length % 2 !== 0) {
+			return 12;
+		}
+		return 6;
+	};
+
 	const classesComponents = () => {
-		return classesArray.map(c => <Class key={c.id} class={c} />);
+		return classesArray.map((c, i) => (
+			<Grid.Col key={c.id} span={calculateSpan(i)}>
+				<Class class={c} />
+			</Grid.Col>
+		));
 	};
 
 	useEffect(() => {
@@ -43,12 +57,14 @@ export default function ClassList() {
 
 	return (
 		<>
-			<TextInput
-				icon={<IconSearch stroke={1.3} />}
-				placeholder={`Название`}
-				value={search}
-				onChange={e => setSearch(e.target.value)}
-			/>
+			<Grid.Col>
+				<TextInput
+					icon={<IconSearch stroke={1.3} />}
+					placeholder={`Название`}
+					value={search}
+					onChange={e => setSearch(e.target.value)}
+				/>
+			</Grid.Col>
 
 			{classesComponents()}
 		</>
