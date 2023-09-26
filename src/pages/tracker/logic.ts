@@ -280,9 +280,29 @@ export default class TrackerLogic {
 
 		const sums = spends.reduce((a, b) => a + b.cost, 0);
 
-		const days = Math.ceil(
-			(Date.now() - new Date(this.tracker.startDate).getTime()) / 1000 / 60 / 60 / 24
-		);
+		let startDate = new Date(this.tracker.startDate).getTime();
+		if (new Date(this.tracker.startDate).getHours() > 0) {
+			startDate -= 1000 * 60 * 60 * new Date(this.tracker.startDate).getHours();
+		}
+		if (new Date(this.tracker.startDate).getMinutes() > 0) {
+			startDate -= 1000 * 60 * new Date(this.tracker.startDate).getMinutes();
+		}
+		if (new Date(this.tracker.startDate).getSeconds() > 0) {
+			startDate -= 1000 *new Date(this.tracker.startDate).getSeconds();
+		}
+
+		let today = Date.now();
+		if (new Date(today).getHours() > 0) {
+			today -= 1000 * 60 * 60 * new Date(today).getHours();
+		}
+		if (new Date(today).getMinutes() > 0) {
+			today -= 1000 * 60 * new Date(today).getMinutes();
+		}
+		if (new Date(today).getSeconds() > 0) {
+			today -= 1000 *new Date(today).getSeconds();
+		}
+
+		const days = Math.ceil((today - startDate) / 1000 / 60 / 60 / 24);
 
 		return this.tracker.dayLimit * days + sums;
 	}
