@@ -16,6 +16,8 @@ export default function ClassList() {
 	});
 
 	const classesArray = classes.filter(c => {
+		if (c.enName === `Druid`) return false;
+
 		const enName = c.enName.toLowerCase().includes(search.toLowerCase());
 		const ruName = c.ruName.toLowerCase().includes(search.toLowerCase());
 
@@ -26,19 +28,9 @@ export default function ClassList() {
 		return true;
 	});
 
-	const calculateSpan = (index: number) => {
-		if (classes.length === 1) {
-			return 12;
-		}
-		if (classes.length - 1 === index && classes.length % 2 !== 0) {
-			return 12;
-		}
-		return 6;
-	};
-
 	const classesComponents = () => {
-		return classesArray.map((c, i) => (
-			<Grid.Col key={c.id} span={calculateSpan(i)}>
+		return classesArray.map((c) => (
+			<Grid.Col key={c.id} span={6} mt={`80px`}>
 				<Class class={c} />
 			</Grid.Col>
 		));

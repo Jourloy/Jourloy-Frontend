@@ -49,6 +49,18 @@ export default function DarkIndex() {
 					</Card>
 				</Grid.Col>
 
+				<Grid.Col md={6} sm={12}>
+					<Card withBorder h={`100%`}>
+						<Grid>
+							<Grid.Col>
+								<Title order={2} align={`center`}>
+									Гайды
+								</Title>
+							</Grid.Col>
+						</Grid>
+					</Card>
+				</Grid.Col>
+
 				<Grid.Col>
 					<Divider />
 				</Grid.Col>

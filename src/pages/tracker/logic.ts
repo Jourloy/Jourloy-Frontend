@@ -299,7 +299,7 @@ export default class TrackerLogic {
 			today -= 1000 * 60 * new Date(today).getMinutes();
 		}
 		if (new Date(today).getSeconds() > 0) {
-			today -= 1000 *new Date(today).getSeconds();
+			today -= 1000 * new Date(today).getSeconds();
 		}
 
 		const days = Math.ceil((today - startDate) / 1000 / 60 / 60 / 24);
