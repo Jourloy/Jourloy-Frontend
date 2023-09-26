@@ -1,5 +1,4 @@
-import {Grid, TextInput} from "@mantine/core";
-import {IconSearch} from "@tabler/icons-react";
+import {Grid} from "@mantine/core";
 import {useEffect, useState} from "react";
 import {TDarkClass} from "../../../types";
 import {store} from "../../../store/store";
@@ -7,8 +6,6 @@ import Class from "./class.component";
 import DarkAPI from "../api";
 
 export default function ClassList() {
-	const [search, setSearch] = useState(``);
-
 	const [classes, setClasses] = useState<TDarkClass[]>(store.getState().darkReducer.classes);
 	store.subscribe(() => {
 		const _classes = store.getState().darkReducer.classes;
@@ -17,14 +14,6 @@ export default function ClassList() {
 
 	const classesArray = classes.filter(c => {
 		if (c.enName === `Druid`) return false;
-
-		const enName = c.enName.toLowerCase().includes(search.toLowerCase());
-		const ruName = c.ruName.toLowerCase().includes(search.toLowerCase());
-
-		if (search) {
-			return enName || ruName;
-		}
-
 		return true;
 	});
 
@@ -49,15 +38,6 @@ export default function ClassList() {
 
 	return (
 		<>
-			<Grid.Col>
-				<TextInput
-					icon={<IconSearch stroke={1.3} />}
-					placeholder={`Название`}
-					value={search}
-					onChange={e => setSearch(e.target.value)}
-				/>
-			</Grid.Col>
-
 			{classesComponents()}
 		</>
 	);

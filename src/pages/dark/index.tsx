@@ -22,7 +22,7 @@ export default function DarkIndex() {
 		<Flex justify={`center`} py={20} px={20}>
 			<Grid maw={`850px`} w={`100%`}>
 				<Grid.Col>
-					<Card withBorder>
+					<Card>
 						<Grid>
 							<Grid.Col>
 								<Title order={2} align={`center`}>
@@ -36,27 +36,19 @@ export default function DarkIndex() {
 				</Grid.Col>
 
 				<Grid.Col>
-					<Card withBorder>
+					<Card>
 						<Grid>
 							<Grid.Col>
-								<Title order={2} align={`center`}>
+								<Title order={1} align={`center`}>
 									Классы
 								</Title>
 							</Grid.Col>
 
-							<ClassList />
-						</Grid>
-					</Card>
-				</Grid.Col>
-
-				<Grid.Col md={6} sm={12}>
-					<Card withBorder h={`100%`}>
-						<Grid>
 							<Grid.Col>
-								<Title order={2} align={`center`}>
-									Гайды
-								</Title>
+								<Divider />
 							</Grid.Col>
+							
+							<ClassList />
 						</Grid>
 					</Card>
 				</Grid.Col>
@@ -66,7 +58,7 @@ export default function DarkIndex() {
 				</Grid.Col>
 
 				<Grid.Col md={6} sm={12}>
-					<Button fullWidth variant={`outline`}>
+					<Button fullWidth variant={`outline`} style={{color: `white`, borderColor: `white`}}>
 						API
 					</Button>
 				</Grid.Col>
@@ -80,7 +72,7 @@ export default function DarkIndex() {
 				</Grid.Col>
 
 				<Grid.Col>
-					<Card withBorder hidden={!admin} style={{width: `100%`}}>
+					<Card hidden={!admin}>
 						<Grid>
 							<Grid.Col>
 								<Title order={2} align={`center`}>

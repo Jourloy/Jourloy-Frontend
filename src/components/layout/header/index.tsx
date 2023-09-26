@@ -47,7 +47,7 @@ export default function HeaderComponent(props: TProps) {
 	return (
 		<>
 			<HeaderSettingsModal opened={userSettings} onClose={() => setUserSettings(false)} />
-			<Header height={45} w={`100%`} bg={`dark`}>
+			<Header height={45} w={`100%`}>
 				<Flex h={40} w={`100%`} justify={`center`} align={`center`}>
 					<Container
 						maw={props.ignoreWidthLimit ? `100%` : `850px`}

@@ -15,7 +15,7 @@ export default function BugButton() {
 				</Stack>
 			</Modal>
 
-			<Button fullWidth variant={`outline`} onClick={() => setBugModal(true)}>
+			<Button fullWidth variant={`outline`} onClick={() => setBugModal(true)}  style={{color: `white`, borderColor: `white`}}>
 				Сообщить об ошибке
 			</Button>
 		</>
