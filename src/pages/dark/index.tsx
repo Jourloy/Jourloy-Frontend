@@ -20,8 +20,27 @@ export default function DarkIndex() {
 
 	return (
 		<Flex justify={`center`} py={20} px={20}>
-			<Grid maw={`850px`} w={`100%`}>
-				<Grid.Col>
+			<Grid w={`100%`}>
+
+				<Grid.Col xl={4} lg={6} md={7} sm={12}>
+					<Card>
+						<Grid>
+							<Grid.Col>
+								<Title order={1} align={`center`}>
+									Классы
+								</Title>
+							</Grid.Col>
+
+							<Grid.Col>
+								<Divider />
+							</Grid.Col>
+
+							<ClassList />
+						</Grid>
+					</Card>
+				</Grid.Col>
+
+				<Grid.Col xl={4} lg={6} md={5} sm={12}>
 					<Card>
 						<Grid>
 							<Grid.Col>
@@ -35,20 +54,16 @@ export default function DarkIndex() {
 					</Card>
 				</Grid.Col>
 
-				<Grid.Col>
+				<Grid.Col xl={4} lg={12} md={12} sm={12}>
 					<Card>
 						<Grid>
 							<Grid.Col>
-								<Title order={1} align={`center`}>
-									Классы
+								<Title order={2} align={`center`}>
+									Гайды
 								</Title>
 							</Grid.Col>
 
-							<Grid.Col>
-								<Divider />
-							</Grid.Col>
-							
-							<ClassList />
+							<AttributeList />
 						</Grid>
 					</Card>
 				</Grid.Col>

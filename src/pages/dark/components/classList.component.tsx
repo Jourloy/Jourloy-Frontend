@@ -19,7 +19,7 @@ export default function ClassList() {
 
 	const classesComponents = () => {
 		return classesArray.map((c) => (
-			<Grid.Col key={c.id} span={6} mt={`80px`}>
+			<Grid.Col key={c.id} sm={6} xs={12} mt={`80px`}>
 				<Class class={c} />
 			</Grid.Col>
 		));
