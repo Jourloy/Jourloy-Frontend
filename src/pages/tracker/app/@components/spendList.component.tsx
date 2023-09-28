@@ -45,7 +45,7 @@ export default function SpendList() {
 	const [spendPages] = useState(Math.ceil(spendsArray.length / 6));
 
 	return (
-		<Card p={0} bg={`transparent`}>
+		<Card p={0} bg={`transparent`} withBorder={false} radius={`xs`}>
 			<Grid>
 				<Grid.Col hidden={spends.length === 0 && spendSearch === ``}>
 					<TextInput

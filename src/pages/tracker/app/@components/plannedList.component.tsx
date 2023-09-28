@@ -53,7 +53,7 @@ export default function PlannedList() {
 	};
 
 	return (
-		<Card p={0} bg={`transparent`}>
+		<Card p={0} bg={`transparent`} withBorder={false} radius={`xs`}>
 			<Grid>
 				<Grid.Col hidden={plannedSpends.length === 0 && plannedSearch === ``}>
 					<TextInput
