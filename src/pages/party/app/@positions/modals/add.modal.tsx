@@ -10,11 +10,12 @@ import {
 	Title,
 } from "@mantine/core";
 import {useState} from "react";
-import {store} from "../../../../../store/store";
-import PartyAPI from "../../../api";
-import {toast} from "react-toastify";
 import PartyPositionLogic from "../../logic";
+import {store} from "../../../../../store/store";
+import ErrorNotification from "../../../../../components/logical/notification/error.notification";
+import SuccessNotification from "../../../../../components/logical/notification/success.notification";
 import {partyActions} from "../../../../../store/features/party.slice";
+import PartyAPI from "../../../api";
 
 type TProps = {
 	opened: boolean;
@@ -89,12 +90,12 @@ export default function PartyAddPositionModal(props: TProps) {
 				payerId: positionPayer ? +positionPayer : undefined,
 			})
 			.then(() => {
-				toast.success(`Позиция добавлена ✅`);
+				SuccessNotification({message: `Позиция добавлена`});
 				store.dispatch(partyActions.updateCalculator());
 				closeModal();
 			})
 			.catch(() => {
-				toast.error(`Что-то пошло не так ❌`);
+				ErrorNotification();
 			});
 	};
 

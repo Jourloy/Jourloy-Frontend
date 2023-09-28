@@ -2,9 +2,10 @@ import {Button, Divider, Grid, Modal, NumberInput, Select, Switch, Textarea, Tit
 import {DatePickerInput} from "@mantine/dates";
 import {useState} from "react";
 import TrackerAPI from "../../api";
-import {toast} from "react-toastify";
 import TrackerLogic from "../../logic";
 import {useForm} from "@mantine/form";
+import ErrorNotification from "../../../../components/logical/notification/error.notification";
+import SuccessNotification from "../../../../components/logical/notification/success.notification";
 
 export default function SpendModal() {
 	const backend = new TrackerAPI();
@@ -42,11 +43,11 @@ export default function SpendModal() {
 		backend
 			.addSpend(values, source.token)
 			.then(() => {
-				toast.success(`Расход успешно добавлен`);
+				SuccessNotification({message: `Расход успешно добавлен`});
 				onClose();
 			})
 			.catch(() => {
-				toast.error(`Произошла ошибка, попробуй еще раз позже`);
+				ErrorNotification();
 			});
 	};
 

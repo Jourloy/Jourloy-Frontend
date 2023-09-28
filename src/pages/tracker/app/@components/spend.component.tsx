@@ -20,8 +20,9 @@ import {formatter} from "../../../../context";
 import {useState} from "react";
 import {useForm} from "@mantine/form";
 import TrackerAPI from "../../api";
-import {toast} from "react-toastify";
 import LongPressButton from "../../../../components/actions/longPressButton";
+import ErrorNotification from "../../../../components/logical/notification/error.notification";
+import SuccessNotification from "../../../../components/logical/notification/success.notification";
 
 type THistorySpendProps = {
 	spend: TSpend;
@@ -46,12 +47,12 @@ export default function HistorySpend(props: THistorySpendProps) {
 		return backend
 			.removeSpend(props.spend.id)
 			.then(() => {
-				toast.success(`Расход успешно удален`);
+				SuccessNotification({message: `Расход успешно удален`})
 				backend.autoUpdateTracker();
 				onClose();
 			})
 			.catch(() => {
-				toast.error(`Что-то пошло не так`);
+				ErrorNotification();
 			})
 			.finally(() => setDeleteLoading(false));
 	};
@@ -61,12 +62,12 @@ export default function HistorySpend(props: THistorySpendProps) {
 		backend
 			.updateSpend(props.spend.id, {...values, createdAt: props.spend.createdAt})
 			.then(() => {
-				toast.success(`Расход успешно изменен`);
+				SuccessNotification({message: `Расход успешно изменен`})
 				backend.autoUpdateTracker();
 				onClose();
 			})
 			.catch(() => {
-				toast.error(`Произошла ошибка, попробуй еще раз позже`);
+				ErrorNotification();
 			})
 			.finally(() => setChangeLoading(false));
 	};

@@ -1,9 +1,6 @@
-import * as Sentry from "@sentry/browser";
-import * as _ from "lodash";
-import {toast} from "react-toastify";
-import {store} from "../../../store/store";
 import {Stack, Textarea, Button, TextInput} from "@mantine/core";
 import {useForm} from "@mantine/form";
+import SuccessNotification from "../../logical/notification/success.notification";
 
 type TProps = {
 	onClose?: () => void;
@@ -20,19 +17,8 @@ export default function BugForm(props: TProps) {
 		},
 	});
 
-	const onSubmit = (values: {description: string, contact: string}) => {
-		const eventId = Sentry.captureMessage(_.uniqueId(`Profile-FeedBack-`));
-
-		const userFeedBack = {
-			event_id: eventId,
-			name: store.getState().userReducer.username,
-			comments: values.description,
-			email: values.contact,
-		};
-
-		Sentry.captureUserFeedback(userFeedBack);
-
-		toast.success(`Спасибо что сообщили об ошибке`);
+	const onSubmit = () => {
+		SuccessNotification({message: `Ошибка принята в обработку`});
 
 		form.reset();
 		if (props.onClose) props.onClose();

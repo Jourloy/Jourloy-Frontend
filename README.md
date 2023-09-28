@@ -15,7 +15,14 @@
 ### Installation
 
 ```bash
-$ yarn install
+# bun
+$ bun install
+
+# yarn
+$ yarn
+
+# npm
+$ npm install
 ```
 
 ### .env
@@ -34,12 +41,17 @@ If you want start server locally, so you should set `DEPLOYMENT_MODE` to `local`
 $ docker-compose up -d
 ```
 
-#### Yarn
+#### Bun
 
 ```bash
 # Developmemt
-$ yarn dev
+$ bun run dev
 
-# Production (Not recommend)
-$ yarn start
+# preview
+$ bun run build
+$ bun run preview
+
+# Production
+$ bun run build
+$ bun run start
 ```

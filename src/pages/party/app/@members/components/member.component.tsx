@@ -10,13 +10,14 @@ import {
 	Checkbox,
 	Button,
 } from "@mantine/core";
-import {TMember} from "../../../../../types";
-import {formatter} from "../../../../../context";
-import {store} from "../../../../../store/store";
 import {useState} from "react";
-import PartyAPI from "../../../api";
-import {toast} from "react-toastify";
+import ErrorNotification from "../../../../../components/logical/notification/error.notification";
+import SuccessNotification from "../../../../../components/logical/notification/success.notification";
+import {formatter} from "../../../../../context";
 import {partyActions} from "../../../../../store/features/party.slice";
+import {store} from "../../../../../store/store";
+import {TMember} from "../../../../../types";
+import PartyAPI from "../../../api";
 
 type TProps = {
 	member: TMember;
@@ -70,10 +71,10 @@ export default function PartyMemberComponent(props: TProps) {
 		backend
 			.removeMember(member.id)
 			.then(() => {
-				toast.success(`Участник удален`);
+				SuccessNotification({message: `Участник удален`});
 			})
 			.catch(() => {
-				toast.error(`Что-то пошло не так`);
+				ErrorNotification();
 			})
 			.finally(() => {
 				store.dispatch(partyActions.updateCalculator());

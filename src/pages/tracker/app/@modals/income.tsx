@@ -1,9 +1,10 @@
 import {Button, Divider, Grid, Modal, NumberInput, Select, Textarea, Title} from "@mantine/core";
 import {useForm} from "@mantine/form";
 import TrackerAPI from "../../api";
-import {toast} from "react-toastify";
 import {useState} from "react";
 import TrackerLogic from "../../logic";
+import SuccessNotification from "../../../../components/logical/notification/success.notification";
+import ErrorNotification from "../../../../components/logical/notification/error.notification";
 
 export default function IncomeModal() {
 	const backend = new TrackerAPI();
@@ -34,11 +35,11 @@ export default function IncomeModal() {
 		backend
 			.addSpend({cost: values.cost, category: values.category, description: values.description})
 			.then(() => {
-				toast.success(`Доход успешно добавлен`);
+				SuccessNotification({message: `Доход успешно добавлен`});
 				onClose();
 			})
 			.catch(() => {
-				toast.error(`Произошла ошибка, попробуй еще раз позже`);
+				ErrorNotification();
 			});
 	};
 

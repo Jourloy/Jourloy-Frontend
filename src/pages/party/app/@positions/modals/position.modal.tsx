@@ -9,12 +9,13 @@ import {
 	TextInput,
 	Title,
 } from "@mantine/core";
-import {TPosition} from "../../../../../types";
-import {store} from "../../../../../store/store";
-import {partyActions} from "../../../../../store/features/party.slice";
-import {toast} from "react-toastify";
-import PartyAPI from "../../../api";
 import {useState} from "react";
+import ErrorNotification from "../../../../../components/logical/notification/error.notification";
+import SuccessNotification from "../../../../../components/logical/notification/success.notification";
+import {partyActions} from "../../../../../store/features/party.slice";
+import {store} from "../../../../../store/store";
+import {TPosition} from "../../../../../types";
+import PartyAPI from "../../../api";
 import PartyPositionLogic from "../../logic";
 
 type TProps = {
@@ -100,12 +101,12 @@ export default function PositionModal(props: TProps) {
 				payerId: positionPayer,
 			})
 			.then(() => {
-				toast.success(`Позиция обновлена`);
+				SuccessNotification({message: `Позиция обновлена`});
 				store.dispatch(partyActions.updateCalculator());
 				closeModal();
 			})
 			.catch(() => {
-				toast.error(`Что-то пошло не так`);
+				ErrorNotification();
 			})
 			.finally(() => {
 				setChangePositionLoading(false);
@@ -127,10 +128,10 @@ export default function PositionModal(props: TProps) {
 		backend
 			.removePosition(positionId)
 			.then(() => {
-				toast.success(`Позиция удалена`);
+				SuccessNotification({message: `Позиция удалена`});
 			})
 			.catch(() => {
-				toast.error(`Что-то пошло не так`);
+				ErrorNotification();
 			})
 			.finally(() => {
 				store.dispatch(partyActions.updateCalculator());

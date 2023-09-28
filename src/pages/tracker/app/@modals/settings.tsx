@@ -17,11 +17,12 @@ import {store} from "../../../../store/store";
 import {useForm} from "@mantine/form";
 import {DatePickerInput} from "@mantine/dates";
 import TrackerAPI from "../../api";
-import {toast} from "react-toastify";
 import {trackerActions} from "../../../../store/features/tracker.slice";
 import {useNavigate} from "react-router-dom";
 import {formatter} from "../../../../context";
 import LongPressButton from "../../../../components/actions/longPressButton";
+import ErrorNotification from "../../../../components/logical/notification/error.notification";
+import SuccessNotification from "../../../../components/logical/notification/success.notification";
 
 export default function SettingsModal() {
 	const backend = new TrackerAPI();
@@ -61,13 +62,13 @@ export default function SettingsModal() {
 	const onSubmit = (values: {dayLimit: number; calc: string; startDate: Date; limit: number}) => {
 		setChangeLoading(true);
 		backend
-			.updateTracker(values)
+			.updateTracker({...values, startDate: values.startDate.toString()})
 			.then(() => {
-				toast.success(`Настройки успешно сохранены`);
+				SuccessNotification({message: `Настройки успешно сохранены`});
 				onClose();
 			})
 			.catch(() => {
-				toast.error(`Что-то пошло не так`);
+				ErrorNotification();
 			})
 			.finally(() => setChangeLoading(false));
 	};
@@ -77,12 +78,12 @@ export default function SettingsModal() {
 		return backend
 			.removeTracker(tracker.id)
 			.then(() => {
-				toast.success(`Трекер удален`);
+				SuccessNotification({message: `Трекер удален`});
 				onClose();
 				navigate(`/tracker`);
 			})
 			.catch(() => {
-				toast.error(`Что-то пошло не так`);
+				ErrorNotification();
 			})
 			.finally(() => setDeleteLoading(false));
 	};

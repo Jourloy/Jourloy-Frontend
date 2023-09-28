@@ -22,12 +22,12 @@ import SpendList from "./@components/spendList.component";
 import PlannedList from "./@components/plannedList.component";
 import TrackerAPI from "../api";
 import {useNavigate} from "react-router-dom";
-import {toast} from "react-toastify";
 import DefaultLoading from "../../../components/layout/loading";
 import {IconCup} from "@tabler/icons-react";
 import {useDocumentTitle} from "@mantine/hooks";
 import BugForm from "../../../components/inputs/bugForm";
 import ChangeDays from "./@components/changeDays.component";
+import ErrorNotification from "../../../components/logical/notification/error.notification";
 
 export default function TrackerApp() {
 	useDocumentTitle(`Трекер`);
@@ -62,12 +62,12 @@ export default function TrackerApp() {
 				if (s === 403) navigate(`/login`);
 				if (s === 404) navigate(`/tracker/create`);
 				else if (s !== 200) {
-					toast.error(`Что-то пошло не так`);
+					ErrorNotification();
 					navigate(`/tracker`);
 				} else setLoading(false);
 			})
 			.catch(() => {
-				toast.error(`Что-то пошло не так`);
+				ErrorNotification();
 				navigate(`/tracker`);
 			});
 
@@ -240,9 +240,9 @@ export default function TrackerApp() {
 
 										<Text>
 											Дата начала отсчета - этот параметр стоит менять только если
-											создали трекер позже, чем планировали. Если ты уже пользуешься
-											трекером, то эта дата напрямую влияет на расчеты и может быть
-											автоматически изменена системой
+											создали трекер позже, чем планировали. Если ты уже
+											пользуешься трекером, то эта дата напрямую влияет на расчеты
+											и может быть автоматически изменена системой
 										</Text>
 
 										<Divider />
@@ -290,17 +290,19 @@ export default function TrackerApp() {
 								<Accordion.Panel>
 									<Stack>
 										<Text>
-											Под прогрессом можно увидеть счетчик дней. Это число, сколько ты
-											еще можешь прожить в таком темпе
+											Под прогрессом можно увидеть счетчик дней. Это число, сколько
+											ты еще можешь прожить в таком темпе
 										</Text>
 										<Text>
-											Количество дней можно изменять. Если вчера не был полностью потрачен лимит, то
-											сегодня он будет выше. Поэтому, ты можешь вычесть свой дневной лимит из
-											текущего дня и увеличить максимум дней на 1
+											Количество дней можно изменять. Если вчера не был полностью
+											потрачен лимит, то сегодня он будет выше. Поэтому, ты можешь
+											вычесть свой дневной лимит из текущего дня и увеличить
+											максимум дней на 1
 										</Text>
 										<Text>
-											А если ты хочешь потратить сегодня больше сумму и количество дней у тебя
-											большое, то можешь забрать день и это увеличит твой сегодняшний лимит
+											А если ты хочешь потратить сегодня больше сумму и количество
+											дней у тебя большое, то можешь забрать день и это увеличит
+											твой сегодняшний лимит
 										</Text>
 									</Stack>
 								</Accordion.Panel>

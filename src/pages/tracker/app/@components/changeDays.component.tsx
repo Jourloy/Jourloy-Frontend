@@ -2,7 +2,8 @@ import LongPressButton from "../../../../components/actions/longPressButton";
 import {useState} from "react";
 import TrackerLogic from "../../logic";
 import TrackerAPI from "../../api";
-import {toast} from "react-toastify";
+import ErrorNotification from "../../../../components/logical/notification/error.notification";
+import SuccessNotification from "../../../../components/logical/notification/success.notification";
 
 type TProps = {
 	add?: boolean;
@@ -21,22 +22,22 @@ export default function ChangeDays(props: TProps) {
 			logic
 				.addDay()
 				.then(() => {
-					toast.success(`День успешно добавлен`);
+					SuccessNotification({message: `День успешно добавлен`});
 					api.autoUpdateTracker();
 				})
 				.catch(() => {
-					toast.error(`Что-то пошло не так`);
+					ErrorNotification();
 				})
 				.finally(() => setLoading(false));
 		} else {
 			logic
 				.removeDay()
 				.then(() => {
-					toast.success(`День успешно убран`);
+					SuccessNotification({message: `День успешно убран`});
 					api.autoUpdateTracker();
 				})
 				.catch(() => {
-					toast.error(`Что-то пошло не так`);
+					ErrorNotification();
 				})
 				.finally(() => setLoading(false));
 		}
