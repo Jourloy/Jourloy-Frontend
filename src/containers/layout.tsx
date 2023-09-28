@@ -54,7 +54,10 @@ export default function LayoutContainer(props: TProps) {
 	if (props.ignoreAppShell) return body();
 	else {
 		return (
-			<AppShell header={<HeaderComponent />} footer={<FooterComponent />}>
+			<AppShell
+				header={<HeaderComponent />}
+				footer={<FooterComponent />}
+			>
 				{body()}
 			</AppShell>
 		);

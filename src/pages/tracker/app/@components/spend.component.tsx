@@ -197,11 +197,11 @@ export default function HistorySpend(props: THistorySpendProps) {
 			<UnstyledButton w={`100%`} onClick={() => setModalShow(true)}>
 				<Card withBorder py={`sm`} px={`md`}>
 					<Grid>
-						<Grid.Col span={4}>
+						<Grid.Col span={3}>
 							<Text align={`left`}>{formatter.format(props.spend.cost)}</Text>
 						</Grid.Col>
 
-						<Grid.Col span={4}>
+						<Grid.Col span={6}>
 							<Center h={`100%`} w={`100%`}>
 								<Badge
 									color={logic.getBadgeColor(props.spend)}
@@ -215,7 +215,7 @@ export default function HistorySpend(props: THistorySpendProps) {
 							</Center>
 						</Grid.Col>
 
-						<Grid.Col span={4}>
+						<Grid.Col span={3}>
 							<Text align={`right`}>
 								{dayjs(props.spend.createdAt).format(`DD.MM.YY`)}
 							</Text>

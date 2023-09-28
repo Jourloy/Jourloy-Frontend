@@ -8,6 +8,7 @@ import {useColorScheme, useLocalStorage} from "@mantine/hooks";
 
 export default function DefaultContainer(props: PropsWithChildren) {
 	const prefersColorScheme = useColorScheme();
+	// const prefersColorScheme = `dark`;
 	const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
 		key: "mantine-color-scheme",
 		defaultValue: prefersColorScheme,
@@ -38,14 +39,30 @@ export default function DefaultContainer(props: PropsWithChildren) {
 							},
 						},
 						Card: {
-							defaultProps: {
+							defaultProps: theme => ({
 								radius: `md`,
-							},
+								withBorder: theme.colorScheme === `dark` ? false : true,
+							}),
 						},
 						Pagination: {
 							defaultProps: theme => ({
 								color: theme.colorScheme === `dark` ? `gray` : `dark`,
 								variant: theme.colorScheme === `dark` ? `white` : `filled`,
+							}),
+						},
+						Header: {
+							defaultProps: theme => ({
+								style: {
+									backgroundColor:
+										theme.colorScheme === `dark` ? `black` : theme.colors.dark[7],
+								},
+							}),
+						},
+						Footer: {
+							defaultProps: theme => ({
+								style: {
+									backgroundColor: theme.colorScheme === `dark` ? `black` : `white`,
+								},
 							}),
 						},
 					},

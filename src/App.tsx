@@ -14,6 +14,7 @@ import Blocked from "./pages/blocked";
 import {Page404} from "./pages/404";
 import TutorialFramework from "./pages/tutorial/framewok";
 import AdminIndex from "./pages/admin";
+import DarkIndex from "./pages/dark";
 
 export default function App() {
 	return (
@@ -57,6 +58,10 @@ export default function App() {
 					element={<LayoutContainer children={<AdminIndex />} isForAdmin />}
 					path="/admin"
 				/>
+
+				{/* DARK */}
+
+				<Route element={<LayoutContainer children={<DarkIndex />} />} path="/dark" />
 
 				{/* BLOCKED */}
 
