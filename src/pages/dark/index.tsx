@@ -22,7 +22,7 @@ export default function DarkIndex() {
 		<Flex justify={`center`} py={20} px={20}>
 			<Grid w={`100%`}>
 
-				<Grid.Col xl={4} lg={6} md={7} sm={12}>
+				<Grid.Col xl={4} lg={6} md={6} sm={12}>
 					<Card>
 						<Grid>
 							<Grid.Col>
@@ -40,7 +40,7 @@ export default function DarkIndex() {
 					</Card>
 				</Grid.Col>
 
-				<Grid.Col xl={4} lg={6} md={5} sm={12}>
+				<Grid.Col xl={4} lg={6} md={6} sm={12}>
 					<Card>
 						<Grid>
 							<Grid.Col>
