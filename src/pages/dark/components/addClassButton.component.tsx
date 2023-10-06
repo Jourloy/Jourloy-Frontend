@@ -3,7 +3,8 @@ import {useForm, zodResolver} from "@mantine/form";
 import {useState} from "react";
 import {z} from "zod";
 import DarkAPI from "../api";
-import { toast } from "react-toastify";
+import SuccessNotification from "../../../components/logical/notification/success.notification";
+import ErrorNotification from "../../../components/logical/notification/error.notification";
 
 export default function AddClassButton() {
 	const backend = new DarkAPI();
@@ -42,11 +43,11 @@ export default function AddClassButton() {
 		console.log(values);
 		backend.addClass(values)
 			.then(() => {
-				toast.success(`Класс успешно добавлен`);
+				SuccessNotification({message: `Класс успешно добавлен`})
 				onCloseModal();
 			})
 			.catch(() => {
-				toast.error(`Произошла ошибка, попробуй еще раз позже`);
+				ErrorNotification();
 			})
 			.finally(() => {
 				setLoading(false);

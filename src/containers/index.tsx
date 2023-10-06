@@ -1,10 +1,10 @@
+import "dayjs/locale/ru";
 import {ColorScheme, ColorSchemeProvider, MantineProvider} from "@mantine/core";
 import {DatesProvider} from "@mantine/dates";
 import {PropsWithChildren} from "react";
-import {ToastContainer} from "react-toastify";
-import "dayjs/locale/ru";
 import {Providers} from "../store/provider";
 import {useColorScheme, useLocalStorage} from "@mantine/hooks";
+import {Notifications} from "@mantine/notifications";
 
 export default function DefaultContainer(props: PropsWithChildren) {
 	const prefersColorScheme = useColorScheme();
@@ -71,7 +71,7 @@ export default function DefaultContainer(props: PropsWithChildren) {
 				<DatesProvider settings={{locale: `ru`}}>
 					<Providers>{props.children}</Providers>
 				</DatesProvider>
-				<ToastContainer />
+				<Notifications position={`top-right`} limit={5}/>
 			</MantineProvider>
 		</ColorSchemeProvider>
 	);

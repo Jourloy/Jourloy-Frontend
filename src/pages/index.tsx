@@ -115,9 +115,15 @@ export default function Main() {
 								<Divider w={"100%"} />
 							</Grid.Col>
 
-							<Grid.Col span={12}>
+							<Grid.Col md={6} sm={12}>
 								<Button fullWidth onClick={() => navigate(`/party`)} variant={`outline`}>
 									Party калькулятор
+								</Button>
+							</Grid.Col>
+
+							<Grid.Col md={6} sm={12}>
+								<Button fullWidth onClick={() => navigate(`/dark`)} variant={`outline`}>
+									Dark and Darker
 								</Button>
 							</Grid.Col>
 						</Grid>

@@ -1,8 +1,9 @@
 import {useEffect} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import {toast} from "react-toastify";
 import {userActions} from "../../../store/features/user.slice";
 import {store} from "../../../store/store";
+import SuccessNotification from "../../../components/logical/notification/success.notification";
+import ErrorNotification from "../../../components/logical/notification/error.notification";
 
 export default function Check() {
 	const [searchParams] = useSearchParams();
@@ -21,10 +22,10 @@ export default function Check() {
 		if (success) {
 			navigate(`/`);
 			store.dispatch(userActions.login());
-			toast.success(`Авторизация прошла успешно`);
+			SuccessNotification({message: `Авторизация прошла успешно`});
 		} else {
 			navigate(`/login`);
-			toast.error(`Произошла ошибка, попробуй еще раз`);
+			ErrorNotification();
 		}
 	});
 

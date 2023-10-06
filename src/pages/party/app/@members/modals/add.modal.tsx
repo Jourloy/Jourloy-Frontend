@@ -1,9 +1,10 @@
 import {Button, Checkbox, Divider, Grid, Modal, TextInput, Title, Text} from "@mantine/core";
 import {useState} from "react";
-import PartyAPI from "../../../api";
-import {toast} from "react-toastify";
-import {store} from "../../../../../store/store";
+import ErrorNotification from "../../../../../components/logical/notification/error.notification";
+import SuccessNotification from "../../../../../components/logical/notification/success.notification";
 import {partyActions} from "../../../../../store/features/party.slice";
+import {store} from "../../../../../store/store";
+import PartyAPI from "../../../api";
 
 type TProps = {
 	opened: boolean;
@@ -37,10 +38,10 @@ export default function PartyAddMemberModal(props: TProps) {
 			.createMember(calculator.id, memberName, payer)
 			.then(() => {
 				store.dispatch(partyActions.updateCalculator());
-				toast.success(`Участник добавлен 🎉`);
+				SuccessNotification({message: `Участник добавлен`});
 			})
 			.catch(() => {
-				toast.error(`Что-то пошло не так 😰`);
+				ErrorNotification();
 			})
 			.finally(() => {
 				closeModal();

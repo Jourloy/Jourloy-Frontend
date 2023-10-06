@@ -22,8 +22,9 @@ import {useState} from "react";
 import {useForm} from "@mantine/form";
 import {DatePickerInput} from "@mantine/dates";
 import TrackerAPI from "../../api";
-import {toast} from "react-toastify";
 import LongPressButton from "../../../../components/actions/longPressButton";
+import ErrorNotification from "../../../../components/logical/notification/error.notification";
+import SuccessNotification from "../../../../components/logical/notification/success.notification";
 
 type TPlannedSpendProps = {
 	spend: IPlannedSpend;
@@ -59,12 +60,12 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 		backend
 			.updateSpend(props.spend.id, {...values, createdAt: props.spend.createdAt})
 			.then(() => {
-				toast.success(`Расход успешно изменен`);
+				SuccessNotification({message: `Расход успешно изменен`})
 				backend.autoUpdateTracker();
 				onClose();
 			})
 			.catch(() => {
-				toast.error(`Произошла ошибка, попробуй еще раз позже`);
+				ErrorNotification();
 			})
 			.finally(() => setChangeLoading(false));
 	};
@@ -79,12 +80,12 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 		backend
 			.updateSpend(props.spend.id, {...values, date: null, createdAt: new Date().toString()})
 			.then(() => {
-				toast.success(`Расход успешно оплачен`);
+				SuccessNotification({message: `Расход успешно оплачен`});
 				backend.autoUpdateTracker();
 				onClose();
 			})
 			.catch(() => {
-				toast.error(`Произошла ошибка, попробуй еще раз позже`);
+				ErrorNotification();
 			})
 			.finally(() => setDeleteLoading(false));
 	};

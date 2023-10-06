@@ -16,12 +16,12 @@ import {
 	Progress,
 } from "@mantine/core";
 import ScrollHint from "../../components/layout/scrollHint";
-import {toast} from "react-toastify";
 import {store} from "../../store/store";
 import {useDocumentTitle} from "@mantine/hooks";
 import HistorySpend from "./app/@components/spend.component";
 import {formatter} from "../../context";
 import PlannedSpend from "./app/@components/planned.component";
+import ErrorNotification from "../../components/logical/notification/error.notification";
 
 export default function TrackerIndex() {
 	useDocumentTitle(`Трекер`);
@@ -51,7 +51,7 @@ export default function TrackerIndex() {
 			})
 			.catch(() => {
 				setTracker(false);
-				toast.error(`Сервер не доступен, попробуй позже`);
+				ErrorNotification({message: `Сервер не доступен, попробуй позже`});
 				setBlock(true);
 			});
 

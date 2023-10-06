@@ -14,13 +14,14 @@ import {
 	Title,
 } from "@mantine/core";
 import PartyAPI from "../api";
-import {toast} from "react-toastify";
 import {partyActions} from "../../../store/features/party.slice";
 import {store} from "../../../store/store";
 import {useState} from "react";
 import {formatter} from "../../../context";
 import {useNavigate} from "react-router-dom";
 import ScrollHint from "../../../components/layout/scrollHint";
+import SuccessNotification from "../../../components/logical/notification/success.notification";
+import ErrorNotification from "../../../components/logical/notification/error.notification";
 
 export default function PartyCreate() {
 	const backend = new PartyAPI();
@@ -35,7 +36,7 @@ export default function PartyCreate() {
 		backend
 			.createCalculator()
 			.then(() => {
-				toast.success(`Калькулятор создан`);
+				SuccessNotification({message: `Калькулятор создан`});
 				store.dispatch(partyActions.updateCalculator());
 				navigate(`/party/app`);
 			})
@@ -43,8 +44,8 @@ export default function PartyCreate() {
 				if (e && e.response) {
 					if (e.response.status === 400) {
 						navigate(`/party/app`);
-					} else toast.error(`Что-то пошло не так, попробуй позже`);
-				} else toast.error(`Что-то пошло не так, попробуй позже`);
+					} else ErrorNotification();
+				} else ErrorNotification();
 			});
 	};
 

@@ -12,12 +12,13 @@ import {
 	Title,
 } from "@mantine/core";
 import {useState} from "react";
-import {toast} from "react-toastify";
 import TrackerLogic from "../logic";
 import TrackerAPI from "../api";
 import {useNavigate} from "react-router-dom";
 import {formatter} from "../../../context";
 import {useDocumentTitle} from "@mantine/hooks";
+import ErrorNotification from "../../../components/logical/notification/error.notification";
+import SuccessNotification from "../../../components/logical/notification/success.notification";
 
 export default function TrackerCreate() {
 	useDocumentTitle(`Трекер`);
@@ -95,15 +96,15 @@ export default function TrackerCreate() {
 			.then(() => {
 				backend.autoUpdateTracker().then(s => {
 					if (s === 200) {
-						toast.success(`Трекер успешно создан`);
+						SuccessNotification({message: `Трекер успешно создан`});
 						navigate(`/tracker/app`);
 					} else {
-						toast.error(`Произошла ошибка, попробуй еще раз позже`);
+						ErrorNotification();
 					}
 				});
 			})
 			.catch(() => {
-				toast.error(`Произошла ошибка, попробуй еще раз позже`);
+				ErrorNotification();
 			});
 	};
 

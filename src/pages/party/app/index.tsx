@@ -11,21 +11,22 @@ import {
 	Accordion,
 	Stack,
 } from "@mantine/core";
-import {useEffect, useState} from "react";
-import {store} from "../../../store/store";
-import PartyMembers from "./@members";
-import PartyPositions from "./@positions";
-import PartyAddMemberModal from "./@members/modals/add.modal";
-import PartyAddPositionModal from "./@positions/modals/add.modal";
-import PartyAPI from "../api";
-import {toast} from "react-toastify";
-import {partyActions} from "../../../store/features/party.slice";
-import {useNavigate} from "react-router-dom";
-import LoginAPI from "../../login/api";
-import {userActions} from "../../../store/features/user.slice";
-import {formatter} from "../../../context";
 import {IconCup} from "@tabler/icons-react";
+import {useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom";
+import PartyAPI from "../api";
+import PartyMembers from "./@members";
+import PartyAddMemberModal from "./@members/modals/add.modal";
+import PartyPositions from "./@positions";
+import PartyAddPositionModal from "./@positions/modals/add.modal";
 import BugForm from "../../../components/inputs/bugForm";
+import ErrorNotification from "../../../components/logical/notification/error.notification";
+import SuccessNotification from "../../../components/logical/notification/success.notification";
+import {formatter} from "../../../context";
+import {partyActions} from "../../../store/features/party.slice";
+import {userActions} from "../../../store/features/user.slice";
+import {store} from "../../../store/store";
+import LoginAPI from "../../login/api";
 
 export default function PartyApp() {
 	const backend = new PartyAPI();
@@ -63,10 +64,10 @@ export default function PartyApp() {
 		backend
 			.removeMembers(calculator.id)
 			.then(() => {
-				toast.success(`Все участники удалены `);
+				SuccessNotification({message: `Все участники удалены`});
 			})
 			.catch(() => {
-				toast.error(`Что-то пошло не так`);
+				ErrorNotification();
 			})
 			.finally(() => {
 				store.dispatch(partyActions.updateCalculator());
@@ -79,10 +80,10 @@ export default function PartyApp() {
 		backend
 			.removePositions(calculator.id)
 			.then(() => {
-				toast.success(`Список позиций очищен`);
+				SuccessNotification({message: `Список позиций очищен`});
 			})
 			.catch(() => {
-				toast.error(`Что-то пошло не так`);
+				ErrorNotification();
 			})
 			.finally(() => {
 				store.dispatch(partyActions.updateCalculator());
@@ -145,7 +146,7 @@ export default function PartyApp() {
 					}
 				})
 				.catch(() => {
-					toast.error(`Не нашли калькулятор`);
+					ErrorNotification({message: `Не нашли калькулятор`});
 					navigate(`/party`);
 				});
 		}

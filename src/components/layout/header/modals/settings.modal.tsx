@@ -8,11 +8,11 @@ import {
 import {store} from "../../../../store/store";
 import {userActions} from "../../../../store/features/user.slice";
 import LoginAPI from "../../../../pages/login/api";
-import {toast} from "react-toastify";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import BugForm from "../../../inputs/bugForm";
 import ThemeSwitch from "../../../actions/themeSwitch";
+import ErrorNotification from "../../../logical/notification/error.notification";
 
 type TProps = {
 	opened: boolean;
@@ -44,7 +44,7 @@ export default function HeaderSettingsModal(props: TProps) {
 				navigate(`/`);
 			})
 			.catch(() => {
-				toast.error(`Что-то пошло не так`);
+				ErrorNotification();
 			});
 	};
 
