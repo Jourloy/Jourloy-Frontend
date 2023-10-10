@@ -210,7 +210,7 @@ export default function HistorySpend(props: THistorySpendProps) {
 									variant={`outline`}
 								>
 									<Center h={`100%`}>
-										<Text>{logic.formatCategory(props.spend.category)}</Text>
+										<Text truncate>{logic.formatCategory(props.spend.category)}</Text>
 									</Center>
 								</Badge>
 							</Center>

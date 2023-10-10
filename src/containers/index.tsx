@@ -53,15 +53,14 @@ export default function DefaultContainer(props: PropsWithChildren) {
 						Header: {
 							defaultProps: theme => ({
 								style: {
-									backgroundColor:
-										theme.colorScheme === `dark` ? `black` : theme.colors.dark[7],
+									backgroundColor: theme.colors.dark[7],
 								},
 							}),
 						},
 						Footer: {
 							defaultProps: theme => ({
 								style: {
-									backgroundColor: theme.colorScheme === `dark` ? `black` : `white`,
+									backgroundColor: theme.colorScheme === `dark` ? theme.colors.dark[7] : `white`,
 								},
 							}),
 						},

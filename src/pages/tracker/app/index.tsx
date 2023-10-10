@@ -78,7 +78,7 @@ export default function TrackerApp() {
 
 	return (
 		<>
-			<Flex justify={`center`} py={20} px={20}>
+			<Flex justify={`center`} py={20}>
 				<Grid maw={`850px`} w={`100%`}>
 					<Grid.Col>
 						<Button disabled fullWidth>

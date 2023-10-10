@@ -60,7 +60,7 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 		backend
 			.updateSpend(props.spend.id, {...values, createdAt: props.spend.createdAt})
 			.then(() => {
-				SuccessNotification({message: `Расход успешно изменен`})
+				SuccessNotification({message: `Расход успешно изменен`});
 				backend.autoUpdateTracker();
 				onClose();
 			})
@@ -217,7 +217,9 @@ export default function PlannedSpend(props: TPlannedSpendProps) {
 										radius={`sm`}
 										variant={`outline`}
 									>
-										{logic.formatCategory(props.spend.category)}
+										<Text truncate>
+											{logic.formatCategory(props.spend.category)}
+										</Text>
 									</Badge>
 								</Center>
 							</Grid.Col>

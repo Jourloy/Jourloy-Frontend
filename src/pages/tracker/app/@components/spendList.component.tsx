@@ -66,7 +66,7 @@ export default function SpendList() {
 
 				<Grid.Col hidden={spendSearch !== ``}>
 					<Center>
-						<Pagination total={spendPages} value={spendPage} onChange={setSpendPage} />
+						<Pagination siblings={1} total={spendPages} value={spendPage} onChange={setSpendPage} />
 					</Center>
 				</Grid.Col>
 			</Grid>
