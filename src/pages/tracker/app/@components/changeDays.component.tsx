@@ -50,7 +50,7 @@ export default function ChangeDays(props: TProps) {
 			label={props.add ? `Добавить день` : `Убрать день`}
 			variant={`outline`}
 			fullWidth
-			seconds={0.8}
+			seconds={0.5}
 		/>
 	);
 }
