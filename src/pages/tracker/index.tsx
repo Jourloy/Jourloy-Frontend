@@ -18,9 +18,9 @@ import {
 import ScrollHint from "../../components/layout/scrollHint";
 import {store} from "../../store/store";
 import {useDocumentTitle} from "@mantine/hooks";
-import HistorySpend from "./app/@components/spend.component";
+import HistorySpend from "./app/@components/spend";
 import {formatter} from "../../context";
-import PlannedSpend from "./app/@components/planned.component";
+import PlannedSpend from "./app/@components/planned";
 import ErrorNotification from "../../components/logical/notification/error.notification";
 
 export default function TrackerIndex() {
