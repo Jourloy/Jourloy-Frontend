@@ -1,17 +1,18 @@
-import {Card, Grid, TextInput, Title, Center, Pagination} from "@mantine/core";
-import {IconSearch} from "@tabler/icons-react";
+import {Button, Center, Modal, Pagination, Stack, TextInput, Title} from "@mantine/core";
 import {useState} from "react";
 import {store} from "../../../../store/store";
+import HistorySpend from "../@components/spend";
 import {TSpend} from "../../../../types";
-import HistorySpend from "./spend.component";
+import {IconSearch} from "@tabler/icons-react";
 
-export default function SpendList() {
+export default function SpendHistoryModal() {
 	const [tracker, setTracker] = useState(store.getState().trackerReducer.tracker);
 	store.subscribe(() => {
 		const _tracker = store.getState().trackerReducer.tracker;
 		if (tracker !== _tracker) setTracker(_tracker);
 	});
 
+	const [modalShow, setModalShow] = useState(false);
 	const [spendPage, setSpendPage] = useState(1);
 	const [spendSearch, setSpendSearch] = useState(``);
 	// TODO
@@ -44,32 +45,43 @@ export default function SpendList() {
 
 	const [spendPages] = useState(Math.ceil(spendsArray.length / 6));
 
+	const onClose = () => {
+		setSpendSearch(``);
+		setModalShow(false);
+	};
+	
 	return (
-		<Card p={0} bg={`transparent`} withBorder={false} radius={`xs`}>
-			<Grid>
-				<Grid.Col hidden={spends.length === 0 && spendSearch === ``}>
-					<TextInput
-						icon={<IconSearch stroke={1.3} />}
-						placeholder={`Описание`}
-						value={spendSearch}
-						onChange={e => setSpendSearch(e.target.value)}
-					/>
-				</Grid.Col>
-
-				<Grid.Col hidden={spends.length > 0} mt={`25px`} mb={`15px`}>
-					<Title align={`center`} c={`dimmed`} tt={`uppercase`} opacity={`20%`}>
-						Нет ни трат, ни доходов
-					</Title>
-				</Grid.Col>
-
-				{getSpendsComponents()}
-
-				<Grid.Col hidden={spendSearch !== ``}>
+		<>
+			<Modal centered opened={modalShow} onClose={onClose}>
+				<Stack>
+					{(spends.length > 0 || spendSearch !== ``) && (
+						<TextInput
+							icon={<IconSearch stroke={1.3} />}
+							placeholder={`Описание`}
+							value={spendSearch}
+							onChange={e => setSpendSearch(e.target.value)}
+						/>
+					)}
+					{spends.length === 0 && (
+						<Title align={`center`} c={`dimmed`} tt={`uppercase`} opacity={`20%`}>
+							Нет ни трат, ни доходов
+						</Title>
+					)}
+					{getSpendsComponents()}
 					<Center>
-						<Pagination total={spendPages} value={spendPage} onChange={setSpendPage} />
+						<Pagination
+							siblings={1}
+							total={spendPages}
+							value={spendPage}
+							onChange={setSpendPage}
+						/>
 					</Center>
-				</Grid.Col>
-			</Grid>
-		</Card>
+				</Stack>
+			</Modal>
+
+			<Button variant={`outline`} fullWidth onClick={() => setModalShow(true)}>
+				Все операции
+			</Button>
+		</>
 	);
 }

@@ -57,21 +57,9 @@ export default function HeaderComponent(props: TProps) {
 						<Center h={`100%`}>
 							<Group position={`apart`} w={`100%`} px={8} mt={`4px`}>
 								<UnstyledButton onClick={toMain}>
-									<Flex>
-										<Title color={`white`} style={{fontWeight: 500}}>
-											JOU
-										</Title>
-										<Title
-											color={`blue`}
-											mt={`2px`}
-											style={{rotate: `180deg`, fontWeight: 500}}
-										>
-											R
-										</Title>
-										<Title color={`red`} style={{fontWeight: 500}}>
-											LOY
-										</Title>
-									</Flex>
+									<Title color={`red`} style={{fontWeight: 500}}>
+										JOURLOY
+									</Title>
 								</UnstyledButton>
 								<UnstyledButton onClick={() => setUserSettings(true)}>
 									<Flex>

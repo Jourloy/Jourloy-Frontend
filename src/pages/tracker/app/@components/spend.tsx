@@ -47,7 +47,7 @@ export default function HistorySpend(props: THistorySpendProps) {
 		return backend
 			.removeSpend(props.spend.id)
 			.then(() => {
-				SuccessNotification({message: `Расход успешно удален`})
+				SuccessNotification({message: `Расход успешно удален`});
 				backend.autoUpdateTracker();
 				onClose();
 			})
@@ -62,7 +62,7 @@ export default function HistorySpend(props: THistorySpendProps) {
 		backend
 			.updateSpend(props.spend.id, {...values, createdAt: props.spend.createdAt})
 			.then(() => {
-				SuccessNotification({message: `Расход успешно изменен`})
+				SuccessNotification({message: `Расход успешно изменен`});
 				backend.autoUpdateTracker();
 				onClose();
 			})
@@ -89,16 +89,6 @@ export default function HistorySpend(props: THistorySpendProps) {
 		},
 	});
 
-	const calculateSpan = () => {
-		if (props.length === 1) {
-			return 12;
-		}
-		if (props.length - 1 === props.index && props.length % 2 !== 0) {
-			return 12;
-		}
-		return 6;
-	};
-
 	const onClose = () => {
 		setModalShow(false);
 		setDeleteLoading(false);
@@ -106,7 +96,7 @@ export default function HistorySpend(props: THistorySpendProps) {
 	};
 
 	return (
-		<Grid.Col md={calculateSpan()} sm={12}>
+		<>
 			<Modal opened={modalShow} onClose={onClose} centered>
 				<Grid>
 					<Grid.Col>
@@ -210,7 +200,9 @@ export default function HistorySpend(props: THistorySpendProps) {
 									variant={`outline`}
 								>
 									<Center h={`100%`}>
-										<Text>{logic.formatCategory(props.spend.category)}</Text>
+										<Text truncate>
+											{logic.formatCategory(props.spend.category)}
+										</Text>
 									</Center>
 								</Badge>
 							</Center>
@@ -224,6 +216,6 @@ export default function HistorySpend(props: THistorySpendProps) {
 					</Grid>
 				</Card>
 			</UnstyledButton>
-		</Grid.Col>
+		</>
 	);
 }

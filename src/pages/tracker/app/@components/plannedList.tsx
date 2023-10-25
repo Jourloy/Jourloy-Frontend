@@ -3,7 +3,7 @@ import {IconSearch} from "@tabler/icons-react";
 import {useState} from "react";
 import {store} from "../../../../store/store";
 import {TSpend, IPlannedSpend} from "../../../../types";
-import PlannedSpend from "./planned.component";
+import PlannedSpend from "./planned";
 
 export default function PlannedList() {
 	const [tracker, setTracker] = useState(store.getState().trackerReducer.tracker);

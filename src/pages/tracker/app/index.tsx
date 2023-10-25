@@ -18,15 +18,15 @@ import TrackerLogic from "../logic";
 import IncomeModal from "./@modals/income";
 import SettingsModal from "./@modals/settings";
 import SpendModal from "./@modals/spend";
-import SpendList from "./@components/spendList.component";
-import PlannedList from "./@components/plannedList.component";
+import SpendList from "./@components/spendList";
+import PlannedList from "./@components/plannedList";
 import TrackerAPI from "../api";
 import {useNavigate} from "react-router-dom";
 import DefaultLoading from "../../../components/layout/loading";
 import {IconCup} from "@tabler/icons-react";
 import {useDocumentTitle} from "@mantine/hooks";
 import BugForm from "../../../components/inputs/bugForm";
-import ChangeDays from "./@components/changeDays.component";
+import ChangeDays from "./@components/changeDays";
 import ErrorNotification from "../../../components/logical/notification/error.notification";
 
 export default function TrackerApp() {
@@ -78,7 +78,7 @@ export default function TrackerApp() {
 
 	return (
 		<>
-			<Flex justify={`center`} py={20} px={20}>
+			<Flex justify={`center`} py={20}>
 				<Grid maw={`850px`} w={`100%`}>
 					<Grid.Col>
 						<Button disabled fullWidth>
@@ -210,7 +210,7 @@ export default function TrackerApp() {
 						<Divider
 							label={
 								<Text size={`lg`} tt={`uppercase`}>
-									История
+									Последние операции
 								</Text>
 							}
 							labelPosition={`center`}
