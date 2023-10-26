@@ -15,6 +15,7 @@ import {Page404} from "./pages/404";
 import TutorialFramework from "./pages/tutorial/framewok";
 import AdminIndex from "./pages/admin";
 import DarkIndex from "./pages/dark";
+import HHPage from "./pages/hh";
 
 export default function App() {
 	return (
@@ -62,6 +63,10 @@ export default function App() {
 				{/* DARK */}
 
 				<Route element={<LayoutContainer children={<DarkIndex />} />} path="/dark" />
+
+				{/* HH */}
+
+				<Route element={<HHPage />} path="/hh" />
 
 				{/* BLOCKED */}
 

@@ -14,7 +14,7 @@ export default function SpendList() {
 
 	const spendsArray = tracker.spends.filter(s => s.date == null).sort(() => -1);
 	const spends: TSpend[] = [];
-	for (let i = 0; i <= 8; i++) {
+	for (let i = 0; i < 10; i++) {
 		if (spendsArray[i]) spends.push(spendsArray[i]);
 	}
 
